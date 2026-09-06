@@ -1,4330 +1,2052 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta name="theme-color" content="#128c45">
-<title>ঘুষ সাইট</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ঘুষ সাইট — দুর্নীতির বিরুদ্ধে জনতার কণ্ঠ</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
+*{
+  box-sizing:border-box;
   margin:0;
-  font-family:Arial,"Noto Sans",sans-serif;
-  background:#f0f2f5;
-  color:#17202a;
-}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-:root{
-  --green:#128c45;
-  --green2:#0b7136;
-  --light:#e9f7ef;
-  --white:#fff;
-  --border:#ddd;
-  --text:#17202a;
-  --muted:#667085;
-  --danger:#d92d20;
-  --blue:#1877f2;
+  padding:0;
 }
 
-/* AUTH */
-#authScreen{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  background:linear-gradient(135deg,#e8f8ef,#f5fff8);
-}
-.authBox{
-  width:100%;
-  max-width:420px;
-  background:#fff;
-  border-radius:18px;
-  padding:25px;
-  box-shadow:0 8px 35px rgba(0,0,0,.12);
-}
-.logo{
-  text-align:center;
-  color:var(--green);
-  font-size:32px;
-  font-weight:800;
-  margin-bottom:6px;
-}
-.logoSub{
-  text-align:center;
-  color:#777;
-  margin-bottom:22px;
-}
-.authTabs{
-  display:flex;
-  background:#f0f2f5;
-  border-radius:10px;
-  padding:4px;
-  margin-bottom:18px;
-}
-.authTabs button{
-  width:50%;
-  border:0;
-  padding:11px;
-  border-radius:8px;
-  background:transparent;
-  color:#555;
-  font-weight:bold;
-}
-.authTabs button.active{
-  background:#fff;
-  color:var(--green);
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-.inputGroup{margin-bottom:13px}
-.inputGroup label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:6px;
-}
-.inputGroup input{
-  width:100%;
-  border:1px solid #d0d5dd;
-  border-radius:10px;
-  padding:13px;
-  outline:none;
-}
-.inputGroup input:focus{
-  border-color:var(--green);
-}
-.primaryBtn{
-  width:100%;
-  border:0;
-  border-radius:10px;
-  background:var(--green);
-  color:#fff;
-  padding:13px;
-  font-weight:bold;
-}
-.primaryBtn:hover{background:var(--green2)}
-.smallText{
-  text-align:center;
-  color:#777;
-  font-size:12px;
-  margin-top:14px;
+html{
+  scroll-behavior:smooth;
 }
 
-/* APP */
-#appScreen{min-height:100vh}
-.topbar{
+body{
+  font-family:
+    Arial,
+    "Noto Sans Bengali",
+    "Noto Sans",
+    sans-serif;
+  background:#f4f7f5;
+  color:#17231c;
+}
+
+button,
+input,
+select,
+textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
   position:sticky;
   top:0;
-  z-index:50;
-  height:58px;
-  background:#fff;
-  border-bottom:1px solid #ddd;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 13px;
-}
-.brand{
-  font-size:21px;
-  font-weight:800;
-  color:var(--green);
-}
-.topActions{
-  display:flex;
-  gap:7px;
-}
-.iconBtn{
-  width:38px;
-  height:38px;
-  border:0;
-  border-radius:50%;
-  background:#f0f2f5;
-  font-size:18px;
-}
-
-.page{
-  width:100%;
-  max-width:700px;
-  margin:0 auto;
-  padding:10px 8px 85px;
-}
-.card{
-  background:#fff;
-  border-radius:12px;
-  border:1px solid #e1e4e8;
-  margin-bottom:10px;
-  overflow:hidden;
-}
-.cardPad{padding:13px}
-
-/* HERO */
-.hero{
-  background:linear-gradient(135deg,#0e873f,#1cab59);
-  color:#fff;
-  padding:22px 18px;
-  border-radius:13px;
-  margin-bottom:10px;
-}
-.hero h1{margin:0 0 7px;font-size:23px}
-.hero p{margin:0;font-size:14px;line-height:1.5}
-
-/* STORIES */
-.sectionTitle{
-  font-weight:800;
-  padding:12px 13px 7px;
-}
-.storyScroll{
-  display:flex;
-  gap:9px;
-  overflow-x:auto;
-  padding:5px 10px 12px;
-}
-.storyScroll::-webkit-scrollbar{display:none}
-.story{
-  min-width:85px;
-  height:115px;
-  border-radius:12px;
-  position:relative;
-  overflow:hidden;
-  background:linear-gradient(135deg,#159447,#0c6935);
-  color:#fff;
-  flex-shrink:0;
-  border:2px solid #fff;
-  box-shadow:0 2px 7px rgba(0,0,0,.12);
-}
-.story img,.story video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.storyOverlay{
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  padding:7px;
-  background:linear-gradient(transparent,rgba(0,0,0,.7));
-  font-size:11px;
-}
-.addStory{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  background:#eaf7ef;
-  color:var(--green);
-}
-
-/* COMPOSER */
-.composerTop{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  margin-bottom:10px;
-}
-.avatar{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:#d9f1e2;
-  color:var(--green);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  overflow:hidden;
-  flex-shrink:0;
-}
-.avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.userName{font-weight:bold}
-.muted{font-size:12px;color:var(--muted)}
-.composer textarea{
-  width:100%;
-  min-height:85px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:12px;
-  resize:vertical;
-  outline:none;
-}
-.composer textarea:focus{border-color:var(--green)}
-.composerBottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:7px;
-  margin-top:9px;
-}
-.mediaButtons{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-}
-.mediaLabel{
-  background:#f0f2f5;
-  padding:8px 10px;
-  border-radius:8px;
-  font-size:13px;
-  cursor:pointer;
-}
-.mediaLabel input{display:none}
-.anonymous{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-size:12px;
-}
-.postBtn{
-  border:0;
-  background:var(--green);
-  color:#fff;
-  padding:9px 15px;
-  border-radius:8px;
-  font-weight:bold;
-}
-.preview{
-  margin-top:10px;
-  border-radius:10px;
-  overflow:hidden;
-  max-height:350px;
-}
-.preview img,.preview video{
-  width:100%;
-  max-height:350px;
-  object-fit:contain;
-  background:#000;
-}
-
-/* POST */
-.postHead{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  padding:12px 13px 6px;
-}
-.postAuthor{
-  display:flex;
-  gap:9px;
-  align-items:center;
-}
-.postContent{
-  padding:7px 13px 10px;
-  line-height:1.55;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
-.postMedia{
-  width:100%;
-  max-height:550px;
-  object-fit:contain;
-  background:#000;
-  display:block;
-}
-.postStats{
-  display:flex;
-  justify-content:space-between;
-  color:#667085;
-  font-size:12px;
-  padding:7px 13px;
-  border-bottom:1px solid #eee;
-}
-.postActions{
-  display:flex;
-  border-bottom:1px solid #eee;
-}
-.postActions button{
-  flex:1;
-  border:0;
-  background:#fff;
-  padding:10px 5px;
-  color:#555;
-  font-weight:bold;
-}
-.postActions button:hover{background:#f5f5f5}
-.postActions button.liked{color:var(--green)}
-.comments{
-  padding:8px 12px;
-}
-.comment{
-  background:#f0f2f5;
-  border-radius:12px;
-  padding:8px 10px;
-  margin-bottom:6px;
-  font-size:13px;
-}
-.commentName{font-weight:bold;margin-right:5px}
-.commentBox{
-  display:flex;
-  gap:6px;
-  margin-top:8px;
-}
-.commentBox input{
-  flex:1;
-  border:1px solid #ddd;
-  border-radius:20px;
-  padding:9px 12px;
-  outline:none;
-}
-.commentBox button{
-  width:40px;
-  border:0;
-  border-radius:50%;
-  background:var(--green);
-  color:#fff;
-}
-
-/* BOTTOM NAV */
-.bottomNav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  z-index:60;
-  height:62px;
-  background:#fff;
-  border-top:1px solid #ddd;
-  display:flex;
-  justify-content:center;
-}
-.navInner{
-  width:100%;
-  max-width:700px;
-  display:flex;
-}
-.bottomNav button{
-  flex:1;
-  border:0;
-  background:#fff;
-  color:#777;
-  font-size:11px;
-}
-.bottomNav button span{
-  display:block;
-  font-size:21px;
-  margin-bottom:2px;
-}
-.bottomNav button.active{color:var(--green);font-weight:bold}
-
-/* CHAT */
-.chatLayout{
-  display:flex;
-  flex-direction:column;
-}
-.searchBox{
-  padding:10px;
-  background:#fff;
-  border-bottom:1px solid #ddd;
-}
-.searchBox input{
-  width:100%;
-  padding:11px 14px;
-  border:0;
-  background:#f0f2f5;
-  border-radius:20px;
-  outline:none;
-}
-.peopleList{
-  max-height:240px;
-  overflow:auto;
-}
-.person{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 12px;
-  background:#fff;
-  border-bottom:1px solid #eee;
-  cursor:pointer;
-}
-.person:hover{background:#f5f5f5}
-.personInfo{flex:1}
-.chatArea{
-  background:#e9edef;
-  min-height:470px;
-  display:flex;
-  flex-direction:column;
-}
-.chatHeader{
-  background:#fff;
-  padding:9px 12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid #ddd;
-}
-.chatUser{
-  display:flex;
-  align-items:center;
-  gap:9px;
-}
-.callBtns{
-  display:flex;
-  gap:5px;
-}
-.callBtn{
-  width:38px;
-  height:38px;
-  border:0;
-  border-radius:50%;
-  background:#e9f7ef;
-  color:var(--green);
-}
-.messages{
-  flex:1;
-  padding:12px;
-  overflow-y:auto;
-  min-height:330px;
-  max-height:470px;
-}
-.msg{
-  max-width:78%;
-  padding:8px 10px;
-  margin-bottom:7px;
-  border-radius:12px;
-  font-size:14px;
-  line-height:1.4;
-  word-break:break-word;
-}
-.msg.mine{
-  margin-left:auto;
-  background:#d9fdd3;
-  border-bottom-right-radius:3px;
-}
-.msg.theirs{
-  margin-right:auto;
-  background:#fff;
-  border-bottom-left-radius:3px;
-}
-.msgTime{
-  display:block;
-  font-size:9px;
-  color:#777;
-  text-align:right;
-  margin-top:3px;
-}
-.messageComposer{
-  display:flex;
-  gap:6px;
-  padding:8px;
-  background:#fff;
-}
-.messageComposer input{
-  flex:1;
-  border:0;
-  background:#f0f2f5;
-  border-radius:20px;
-  padding:10px 13px;
-  outline:none;
-}
-.messageComposer button{
-  width:40px;
-  height:40px;
-  border:0;
-  border-radius:50%;
-  background:var(--green);
-  color:#fff;
-}
-
-/* PROFILE */
-.profileCover{
-  height:105px;
-  background:linear-gradient(135deg,#0e873f,#22aa5a);
-}
-.profileInfo{
-  text-align:center;
-  padding:0 15px 18px;
-}
-.profileAvatar{
-  width:88px;
-  height:88px;
-  border-radius:50%;
-  background:#e9f7ef;
-  border:4px solid #fff;
-  margin:-44px auto 8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  font-size:30px;
-  color:var(--green);
-  font-weight:bold;
-}
-.profileAvatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.profileInfo h2{margin:4px 0}
-.profileInfo p{color:#777;font-size:13px}
-.profileActions{
-  display:flex;
-  gap:8px;
-  justify-content:center;
-}
-.secondaryBtn{
-  border:0;
-  background:#e9f7ef;
-  color:var(--green);
-  padding:9px 15px;
-  border-radius:8px;
-  font-weight:bold;
-}
-
-/* HELP */
-.helpItem{
-  padding:14px;
-  border-bottom:1px solid #eee;
-}
-.helpItem h3{margin:0 0 5px}
-.helpItem p{margin:0;color:#666;line-height:1.5;font-size:14px}
-
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
   z-index:100;
+  background:#087f3e;
+  color:white;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+
+.nav{
+  max-width:1150px;
+  margin:auto;
+  padding:13px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:white;
+  color:#087f3e;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:15px;
+  font-weight:900;
 }
-.modalBox{
-  width:100%;
-  max-width:430px;
-  max-height:90vh;
-  overflow:auto;
-  background:#fff;
+
+.nav-actions{
+  display:flex;
+  gap:8px;
+}
+
+.nav-btn{
+  border:0;
+  background:rgba(255,255,255,.14);
+  color:white;
+  padding:9px 13px;
+  border-radius:9px;
+  font-weight:700;
+}
+
+.hero{
+  background:linear-gradient(135deg,#087f3e,#0b9b50);
+  color:white;
+  padding:55px 18px 70px;
+}
+
+.hero-inner{
+  max-width:1050px;
+  margin:auto;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:42px;
+  line-height:1.15;
+  margin-bottom:15px;
+}
+
+.hero p{
+  max-width:700px;
+  margin:0 auto 25px;
+  font-size:17px;
+  line-height:1.7;
+  opacity:.96;
+}
+
+.primary{
+  border:0;
+  background:white;
+  color:#087f3e;
+  padding:14px 24px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:800;
+  box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+.secondary{
+  border:1px solid #d9e4dd;
+  background:white;
+  color:#087f3e;
+  padding:11px 17px;
+  border-radius:9px;
+  font-weight:700;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:25px 16px;
+}
+
+.stats{
+  margin-top:-30px;
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.stat{
+  background:white;
   border-radius:16px;
-  padding:18px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+  text-align:center;
 }
-.modalHeader{
+
+.stat-number{
+  color:#087f3e;
+  font-size:28px;
+  font-weight:900;
+}
+
+.stat-label{
+  color:#647168;
+  margin-top:6px;
+  font-size:14px;
+}
+
+.section{
+  margin-top:35px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.section-title h2{
+  font-size:23px;
+}
+
+.section-title p{
+  color:#6b756f;
+  font-size:14px;
+}
+
+.search-box{
+  background:white;
+  padding:15px;
+  border-radius:14px;
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.search-box input{
+  flex:1;
+  border:1px solid #d9e2dc;
+  padding:12px;
+  border-radius:9px;
+  outline:none;
+}
+
+.report-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.report{
+  background:white;
+  border-radius:15px;
+  padding:18px;
+  box-shadow:0 3px 14px rgba(0,0,0,.06);
+}
+
+.report-top{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  gap:10px;
   margin-bottom:13px;
 }
-.closeBtn{
-  border:0;
-  background:#f0f2f5;
-  border-radius:50%;
-  width:35px;
-  height:35px;
+
+.badge{
+  background:#e9f7ef;
+  color:#087f3e;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:800;
 }
 
-/* CALL */
-.callModal{
-  background:rgba(0,0,0,.85);
+.unverified{
+  background:#fff4d9;
+  color:#8a6200;
 }
-.callBox{
+
+.report h3{
+  font-size:18px;
+  margin-bottom:9px;
+}
+
+.report-info{
+  display:grid;
+  gap:7px;
+  color:#536159;
+  font-size:14px;
+}
+
+.report-details{
+  margin-top:13px;
+  line-height:1.6;
+  color:#303b34;
+  white-space:pre-wrap;
+}
+
+.report-media{
   width:100%;
-  max-width:450px;
-  color:#fff;
-  text-align:center;
+  max-height:300px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:13px;
 }
-.callAvatar{
-  width:100px;
-  height:100px;
-  margin:20px auto;
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.step{
+  background:white;
+  border-radius:15px;
+  padding:22px;
+  box-shadow:0 3px 13px rgba(0,0,0,.05);
+}
+
+.step-number{
+  width:40px;
+  height:40px;
   border-radius:50%;
-  background:#222;
+  background:#e8f6ee;
+  color:#087f3e;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:35px;
+  font-weight:900;
+  margin-bottom:13px;
+}
+
+.step h3{
+  margin-bottom:8px;
+}
+
+.step p{
+  color:#69736d;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.notice{
+  background:#fff8e5;
+  border:1px solid #f0dfa8;
+  color:#685314;
+  padding:16px;
+  border-radius:13px;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.footer{
+  margin-top:45px;
+  background:#102018;
+  color:#dbe7df;
+  padding:35px 18px;
+  text-align:center;
+}
+
+.footer strong{
+  color:white;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.58);
+  z-index:999;
+  overflow-y:auto;
+  padding:20px;
+}
+
+.modal.show{
+  display:block;
+}
+
+.modal-box{
+  background:white;
+  max-width:650px;
+  margin:25px auto;
+  border-radius:18px;
   overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
-.callAvatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.callControls{
+
+.modal-head{
+  background:#087f3e;
+  color:white;
+  padding:18px 20px;
   display:flex;
-  justify-content:center;
-  gap:18px;
-  margin-top:30px;
+  justify-content:space-between;
+  align-items:center;
 }
-.callControl{
-  width:55px;
-  height:55px;
-  border:0;
-  border-radius:50%;
-  background:#333;
-  color:#fff;
+
+.modal-head h2{
   font-size:21px;
 }
-.callControl.active{background:#fff;color:#222}
-.endCall{background:#e53935!important;color:#fff!important}
-.acceptCall{background:#19a85b!important}
-.rejectCall{background:#e53935!important}
 
-.videoArea{
-  position:relative;
-  width:100%;
-  max-width:450px;
-  height:500px;
-  margin:auto;
-  background:#111;
-  border-radius:14px;
-  overflow:hidden;
-}
-.remoteVideo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.localVideo{
-  position:absolute;
-  right:12px;
-  top:12px;
-  width:120px;
-  height:170px;
-  object-fit:cover;
-  background:#222;
-  border-radius:10px;
-  border:2px solid #fff;
+.close{
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:28px;
 }
 
-/* TOAST */
-#toast{
-  position:fixed;
-  left:50%;
-  bottom:75px;
-  transform:translateX(-50%);
-  background:#222;
-  color:#fff;
-  padding:10px 15px;
-  border-radius:20px;
-  z-index:200;
+.form{
+  padding:20px;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #d5dfd9;
+  border-radius:9px;
+  padding:12px;
+  outline:none;
+  background:white;
+  font-size:15px;
+}
+
+.field textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#087f3e;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.file-info{
+  font-size:12px;
+  color:#6c756f;
+  margin-top:6px;
+}
+
+.check{
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  background:#f4f8f5;
+  padding:12px;
+  border-radius:9px;
   font-size:13px;
+  line-height:1.5;
+  margin-bottom:15px;
+}
+
+.check input{
+  margin-top:3px;
+}
+
+.submit{
+  width:100%;
+  background:#087f3e;
+  color:white;
+  border:0;
+  padding:14px;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:900;
+}
+
+.submit:disabled{
+  opacity:.6;
+}
+
+.message{
   display:none;
-  max-width:90%;
-  text-align:center;
+  margin-bottom:15px;
+  padding:12px;
+  border-radius:9px;
+  font-size:14px;
 }
 
-/* LOADING */
+.success{
+  background:#e9f8ef;
+  color:#087f3e;
+}
+
+.error{
+  background:#ffecec;
+  color:#b00020;
+}
+
+.admin-panel{
+  display:none;
+}
+
+.admin-report{
+  background:white;
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.admin-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.publish-btn{
+  background:#087f3e;
+  color:white;
+  border:0;
+  padding:9px 13px;
+  border-radius:8px;
+  font-weight:700;
+}
+
+.reject-btn{
+  background:#fff0f0;
+  color:#b00020;
+  border:0;
+  padding:9px 13px;
+  border-radius:8px;
+  font-weight:700;
+}
+
 .loading{
-  padding:25px;
   text-align:center;
-  color:#777;
-}
-.empty{
   padding:30px;
-  text-align:center;
-  color:#777;
+  color:#66736b;
 }
 
-/* RESPONSIVE */
-@media(min-width:700px){
-  .page{padding-top:15px}
-  .bottomNav{height:65px}
+.empty{
+  text-align:center;
+  background:white;
+  border-radius:14px;
+  padding:35px;
+  color:#69746e;
+}
+
+@media(max-width:700px){
+
+  .hero{
+    padding:40px 15px 60px;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .report-grid,
+  .steps{
+    grid-template-columns:1fr;
+  }
+
+  .row{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .nav{
+    padding:10px 12px;
+  }
+
+  .logo{
+    font-size:18px;
+  }
+
+  .logo-icon{
+    width:32px;
+    height:32px;
+  }
+
+  .nav-btn{
+    padding:8px 9px;
+    font-size:12px;
+  }
+
+  .search-box{
+    flex-direction:column;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= AUTH ================= -->
-<div id="authScreen">
-  <div class="authBox">
+<header class="header">
+  <div class="nav">
 
-    <div class="logo">ঘুষ সাইট</div>
-    <div class="logoSub">Share responsibly. Speak safely.</div>
-
-    <div class="authTabs">
-      <button id="loginTab" class="active" onclick="showAuth('login')">Login</button>
-      <button id="signupTab" onclick="showAuth('signup')">Create Account</button>
+    <div class="logo">
+      <div class="logo-icon">ঘু</div>
+      <span>ঘুষ সাইট</span>
     </div>
 
-    <div id="loginForm">
-      <div class="inputGroup">
-        <label>Username</label>
-        <input id="loginUsername" type="text" placeholder="Enter username">
-      </div>
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="openReport()">
+        অভিযোগ করুন
+      </button>
 
-      <div class="inputGroup">
-        <label>Password</label>
-        <input id="loginPassword" type="password" placeholder="Enter password">
-      </div>
-
-      <button class="primaryBtn" onclick="loginUser()">Login</button>
-    </div>
-
-    <div id="signupForm" class="hidden">
-      <div class="inputGroup">
-        <label>Display Name</label>
-        <input id="signupName" type="text" placeholder="Your name">
-      </div>
-
-      <div class="inputGroup">
-        <label>Username</label>
-        <input id="signupUsername" type="text" placeholder="Choose username">
-      </div>
-
-      <div class="inputGroup">
-        <label>Phone</label>
-        <input id="signupPhone" type="tel" placeholder="01XXXXXXXXX">
-      </div>
-
-      <div class="inputGroup">
-        <label>Password</label>
-        <input id="signupPassword" type="password" placeholder="At least 6 characters">
-      </div>
-
-      <button class="primaryBtn" onclick="signupUser()">Create Account</button>
-    </div>
-
-    <div class="smallText">
-      By using ঘুষ সাইট, share information responsibly and avoid unsupported accusations.
+      <button class="nav-btn" onclick="openAdmin()">
+        Admin
+      </button>
     </div>
 
   </div>
-</div>
+</header>
 
 
-<!-- ================= APP ================= -->
-<div id="appScreen" class="hidden">
+<section class="hero">
 
-  <header class="topbar">
-    <div class="brand">ঘুষ সাইট</div>
+  <div class="hero-inner">
 
-    <div class="topActions">
-      <button class="iconBtn" onclick="openCreatePost()">✚</button>
-      <button class="iconBtn" onclick="openSearchPeople()">🔍</button>
-    </div>
-  </header>
+    <h1>ঘুষের বিরুদ্ধে আপনার কণ্ঠ</h1>
+
+    <p>
+      সরকারি বা বেসরকারি সেবা নিতে ঘুষ চাওয়া হলে
+      দায়িত্বশীলভাবে জানাতে পারেন।
+      আপনার পরিচয় না দিয়েই রিপোর্ট করতে পারবেন।
+    </p>
+
+    <button class="primary" onclick="openReport()">
+      + অভিযোগ / রিপোর্ট করুন
+    </button>
+
+  </div>
+
+</section>
 
 
-  <!-- HOME -->
-  <section id="homePage" class="page">
+<main class="container">
 
-    <div class="hero">
-      <h1>Welcome to ঘুষ সাইট</h1>
-      <p>
-        Share your experience responsibly. Report corruption, bribery,
-        middlemen, fraud and public-service problems.
-      </p>
-    </div>
+  <div class="stats">
 
-    <!-- STORIES -->
-    <div class="card">
-      <div class="sectionTitle">Stories</div>
-
-      <div class="storyScroll" id="storiesList">
-        <div class="story addStory" onclick="openStoryModal()">+</div>
-      </div>
+    <div class="stat">
+      <div class="stat-number" id="totalReports">0</div>
+      <div class="stat-label">প্রকাশিত রিপোর্ট</div>
     </div>
 
-    <!-- COMPOSER -->
-    <div class="card cardPad composer" id="composer">
+    <div class="stat">
+      <div class="stat-number" id="totalAmount">৳0</div>
+      <div class="stat-label">দাবিকৃত মোট অর্থ</div>
+    </div>
 
-      <div class="composerTop">
-        <div class="avatar" id="composerAvatar">A</div>
-        <div>
-          <div class="userName" id="composerName">User</div>
-          <div class="muted">Create a responsible report</div>
-        </div>
-      </div>
+    <div class="stat">
+      <div class="stat-number" id="todayReports">0</div>
+      <div class="stat-label">আজকের রিপোর্ট</div>
+    </div>
 
-      <textarea
-        id="postContent"
-        placeholder="What happened? Share your experience..."
-      ></textarea>
+  </div>
 
-      <div id="postPreview" class="preview hidden"></div>
 
-      <div class="composerBottom">
+  <section class="section">
 
-        <div class="mediaButtons">
-
-          <label class="mediaLabel">
-            📷 Photo
-            <input
-              type="file"
-              id="postImage"
-              accept="image/*"
-              onchange="previewPostMedia(this,'image')"
-            >
-          </label>
-
-          <label class="mediaLabel">
-            🎥 Video
-            <input
-              type="file"
-              id="postVideo"
-              accept="video/*"
-              onchange="previewPostMedia(this,'video')"
-            >
-          </label>
-
-          <label class="mediaLabel">
-            📸 Story
-            <input
-              type="file"
-              id="storyFile"
-              accept="image/*,video/*"
-              onchange="openStoryWithFile(this)"
-            >
-          </label>
-
-        </div>
-
-        <div>
-          <label class="anonymous">
-            <input type="checkbox" id="anonymousPost">
-            Anonymous
-          </label>
-
-          <button class="postBtn" onclick="createPost()">Post</button>
-        </div>
-
+    <div class="section-title">
+      <div>
+        <h2>প্রকাশিত রিপোর্ট</h2>
+        <p>মডারেশন শেষে প্রকাশিত রিপোর্ট</p>
       </div>
     </div>
 
-    <div id="feed">
-      <div class="loading">Loading posts...</div>
-    </div>
+    <div class="search-box">
 
-  </section>
-
-
-  <!-- CHAT -->
-  <section id="chatPage" class="page hidden">
-
-    <div class="card chatLayout">
-
-      <div class="searchBox">
-        <input
-          id="peopleSearch"
-          placeholder="Search people..."
-          oninput="searchPeople(this.value)"
-        >
-      </div>
-
-      <div id="peopleList" class="peopleList">
-        <div class="empty">Search people to start a chat.</div>
-      </div>
-
-      <div class="chatArea">
-
-        <div class="chatHeader">
-
-          <div class="chatUser">
-            <div class="avatar" id="chatAvatar">?</div>
-            <div>
-              <div id="chatName" class="userName">Select a person</div>
-              <div id="chatStatus" class="muted">Chat</div>
-            </div>
-          </div>
-
-          <div class="callBtns">
-            <button
-              id="voiceCallButton"
-              class="callBtn"
-              onclick="startCall('voice')"
-              disabled
-            >📞</button>
-
-            <button
-              id="videoCallButton"
-              class="callBtn"
-              onclick="startCall('video')"
-              disabled
-            >🎥</button>
-          </div>
-
-        </div>
-
-        <div id="messages" class="messages">
-          <div class="empty">Select a person to start chatting.</div>
-        </div>
-
-        <div class="messageComposer">
-          <input
-            id="messageInput"
-            placeholder="Write a message..."
-            onkeydown="if(event.key==='Enter')sendMessage()"
-            disabled
-          >
-          <button id="sendMessageButton" onclick="sendMessage()" disabled>➤</button>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- HELP -->
-  <section id="helpPage" class="page hidden">
-
-    <div class="card">
-
-      <div class="sectionTitle">Help</div>
-
-      <div class="helpItem">
-        <h3>How do I create a report?</h3>
-        <p>
-          Write what happened in the post box. You can attach a photo or video.
-          Use Anonymous if you do not want your profile name shown.
-        </p>
-      </div>
-
-      <div class="helpItem">
-        <h3>Can I report corruption?</h3>
-        <p>
-          Yes. Share experiences responsibly. Avoid false claims, personal
-          attacks or publishing unnecessary private information.
-        </p>
-      </div>
-
-      <div class="helpItem">
-        <h3>How does Anonymous work?</h3>
-        <p>
-          Your post can display as Anonymous instead of your profile name.
-        </p>
-      </div>
-
-      <div class="helpItem">
-        <h3>Chat and Internet Call</h3>
-        <p>
-          Select a user from Chat. You can send direct messages and start
-          voice/video Internet calls when both users are online.
-        </p>
-      </div>
-
-      <div class="helpItem">
-        <h3>Safety</h3>
-        <p>
-          Do not publish passwords, NID numbers, bank information, OTPs or
-          unnecessary personal information.
-        </p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- PROFILE -->
-  <section id="profilePage" class="page hidden">
-
-    <div class="card">
-
-      <div class="profileCover"></div>
-
-      <div class="profileInfo">
-
-        <div class="profileAvatar" id="profileAvatar">A</div>
-
-        <h2 id="profileName">User</h2>
-
-        <div id="profileUsername" class="muted">@username</div>
-
-        <p id="profileBio">Welcome to ঘুষ সাইট.</p>
-
-        <div class="profileActions">
-          <button class="secondaryBtn" onclick="editProfile()">Edit Profile</button>
-          <button
-            class="secondaryBtn"
-            style="color:#d92d20;background:#fff0ef"
-            onclick="logoutUser()"
-          >Logout</button>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="card cardPad">
-
-      <div class="sectionTitle" style="padding:0 0 10px">Account</div>
-
-      <div class="muted">
-        Phone: <span id="profilePhone">Not available</span>
-      </div>
-
-      <div class="muted" style="margin-top:7px">
-        Role: <span id="profileRole">user</span>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottomNav">
-    <div class="navInner">
-
-      <button id="navHome" class="active" onclick="showPage('home')">
-        <span>⌂</span>
-        Home
-      </button>
-
-      <button id="navChat" onclick="showPage('chat')">
-        <span>💬</span>
-        Chat
-      </button>
-
-      <button id="navHelp" onclick="showPage('help')">
-        <span>❔</span>
-        Help
-      </button>
-
-      <button id="navProfile" onclick="showPage('profile')">
-        <span>👤</span>
-        Profile
-      </button>
-
-    </div>
-  </nav>
-
-</div>
-
-
-<!-- ================= STORY MODAL ================= -->
-<div id="storyModal" class="modal hidden">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-      <strong>Create Story</strong>
-      <button class="closeBtn" onclick="closeStoryModal()">✕</button>
-    </div>
-
-    <div class="inputGroup">
-      <label>Story text</label>
-      <textarea
-        id="storyCaption"
-        style="width:100%;min-height:90px;border:1px solid #ddd;border-radius:10px;padding:10px"
-        placeholder="Write something..."
-      ></textarea>
-    </div>
-
-    <div class="inputGroup">
-      <label>Photo / Video</label>
       <input
-        id="storyUpload"
-        type="file"
-        accept="image/*,video/*"
-        onchange="previewStoryFile(this)"
+        id="searchInput"
+        type="text"
+        placeholder="বিভাগ, সেবা বা এলাকা দিয়ে খুঁজুন..."
+        oninput="filterReports()"
       >
-    </div>
 
-    <div id="storyPreview" class="preview hidden"></div>
-
-    <button class="primaryBtn" onclick="createStory()">Publish Story</button>
-
-  </div>
-
-</div>
-
-
-<!-- ================= EDIT PROFILE MODAL ================= -->
-<div id="profileModal" class="modal hidden">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-      <strong>Edit Profile</strong>
-      <button class="closeBtn" onclick="closeProfileModal()">✕</button>
-    </div>
-
-    <div class="inputGroup">
-      <label>Display Name</label>
-      <input id="editDisplayName">
-    </div>
-
-    <div class="inputGroup">
-      <label>Username</label>
-      <input id="editUsername">
-    </div>
-
-    <div class="inputGroup">
-      <label>Bio</label>
-      <textarea
-        id="editBio"
-        style="width:100%;min-height:80px;border:1px solid #ddd;border-radius:10px;padding:10px"
-      ></textarea>
-    </div>
-
-    <button class="primaryBtn" onclick="saveProfile()">Save Changes</button>
-
-  </div>
-
-</div>
-
-
-<!-- ================= INCOMING CALL ================= -->
-<div id="incomingCallModal" class="modal callModal hidden">
-
-  <div class="callBox">
-
-    <div style="font-size:15px">Incoming Call</div>
-
-    <div class="callAvatar" id="incomingAvatar">?</div>
-
-    <h2 id="incomingName">Someone</h2>
-
-    <div id="incomingType">Voice call</div>
-
-    <div class="callControls">
-
-      <button class="callControl rejectCall" onclick="rejectIncomingCall()">
-        ✕
-      </button>
-
-      <button class="callControl acceptCall" onclick="acceptIncomingCall()">
-        ✓
+      <button class="secondary" onclick="loadReports()">
+        রিফ্রেশ
       </button>
 
     </div>
 
-  </div>
-
-</div>
-
-
-<!-- ================= ACTIVE CALL ================= -->
-<div id="activeCallModal" class="modal callModal hidden">
-
-  <div class="callBox">
-
-    <div id="voiceCallUI">
-
-      <div class="callAvatar" id="activeCallAvatar">?</div>
-
-      <h2 id="activeCallName">Calling...</h2>
-
-      <div id="callTimer">Connecting...</div>
-
+    <div id="reportsContainer">
+      <div class="loading">
+        রিপোর্ট লোড হচ্ছে...
+      </div>
     </div>
 
-    <div id="videoCallUI" class="hidden">
+  </section>
 
-      <div class="videoArea">
 
-        <video
-          id="remoteVideo"
-          class="remoteVideo"
-          autoplay
-          playsinline
-        ></video>
+  <section class="section">
 
-        <video
-          id="localVideo"
-          class="localVideo"
-          autoplay
-          muted
-          playsinline
-        ></video>
+    <div class="section-title">
+      <h2>কীভাবে কাজ করে?</h2>
+    </div>
 
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-number">১</div>
+        <h3>রিপোর্ট করুন</h3>
+        <p>
+          প্রয়োজনীয় তথ্য লিখে সহজে অভিযোগ জমা দিন।
+          লগইন করার প্রয়োজন নেই।
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">২</div>
+        <h3>মডারেশন</h3>
+        <p>
+          রিপোর্ট প্রকাশের আগে Admin সেটি যাচাই
+          ও প্রয়োজনীয় তথ্য পর্যালোচনা করবে।
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">৩</div>
+        <h3>পাবলিক লেজার</h3>
+        <p>
+          অনুমোদিত রিপোর্ট প্রকাশিত হলে সবাই
+          দেখতে ও খুঁজে দেখতে পারবেন।
+        </p>
       </div>
 
     </div>
 
-    <div class="callControls">
+  </section>
 
-      <button
-        id="muteButton"
-        class="callControl"
-        onclick="toggleMute()"
-      >🎤</button>
 
-      <button
-        id="cameraButton"
-        class="callControl"
-        onclick="toggleCamera()"
-      >📷</button>
+  <section class="section">
 
-      <button
-        class="callControl endCall"
-        onclick="endCall()"
-      >📵</button>
+    <div class="notice">
+
+      <strong>⚠️ গুরুত্বপূর্ণ:</strong>
+
+      প্রকাশিত রিপোর্টগুলো ব্যবহারকারীর দেওয়া তথ্যের
+      ভিত্তিতে প্রকাশ করা হয় এবং স্বাধীনভাবে সত্যতা যাচাই করা
+      হয়েছে এমন দাবি করা হচ্ছে না।
+
+      কারও নাম, মোবাইল নম্বর, NID নম্বর, ঠিকানা বা ব্যক্তিগত
+      তথ্য রিপোর্টে লিখবেন না।
 
     </div>
+
+  </section>
+
+
+  <!-- ADMIN PANEL -->
+
+  <section id="adminPanel" class="section admin-panel">
+
+    <div class="section-title">
+      <div>
+        <h2>Admin Moderation</h2>
+        <p>Pending রিপোর্ট যাচাই করুন</p>
+      </div>
+
+      <button class="secondary" onclick="loadPendingReports()">
+        Refresh
+      </button>
+    </div>
+
+    <div id="pendingContainer">
+      <div class="loading">
+        Pending রিপোর্ট লোড হচ্ছে...
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer class="footer">
+
+  <strong>ঘুষ সাইট</strong>
+
+  <br><br>
+
+  দায়িত্বশীলভাবে দুর্নীতি ও ঘুষের অভিজ্ঞতা জানান।
+
+  <br><br>
+
+  © 2026 ঘুষ সাইট
+
+</footer>
+
+
+<!-- REPORT MODAL -->
+
+<div id="reportModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>অভিযোগ / রিপোর্ট করুন</h2>
+
+      <button class="close" onclick="closeReport()">
+        ×
+      </button>
+
+    </div>
+
+
+    <form class="form" onsubmit="submitReport(event)">
+
+      <div id="formMessage" class="message"></div>
+
+
+      <div class="field">
+
+        <label>
+          কোন বিভাগ / প্রতিষ্ঠান?
+        </label>
+
+        <input
+          id="department"
+          required
+          placeholder="যেমন: ভূমি অফিস"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          কোন সেবা?
+        </label>
+
+        <input
+          id="service"
+          required
+          placeholder="যেমন: নামজারি"
+        >
+
+      </div>
+
+
+      <div class="row">
+
+        <div class="field">
+
+          <label>
+            এলাকা
+          </label>
+
+          <input
+            id="location"
+            required
+            placeholder="জেলা / উপজেলা"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            কত টাকা দাবি করা হয়েছিল?
+          </label>
+
+          <input
+            id="amount"
+            type="number"
+            min="0"
+            placeholder="যেমন: 5000"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          কী হয়েছিল?
+        </label>
+
+        <select id="outcome" required>
+
+          <option value="">
+            নির্বাচন করুন
+          </option>
+
+          <option value="ঘুষ দেওয়া হয়েছে">
+            ঘুষ দেওয়া হয়েছে
+          </option>
+
+          <option value="ঘুষ দিতে অস্বীকার করেছি">
+            ঘুষ দিতে অস্বীকার করেছি
+          </option>
+
+          <option value="সেবা আটকে আছে">
+            সেবা আটকে আছে
+          </option>
+
+          <option value="ঘুষ দাবি করা হয়েছিল">
+            ঘুষ দাবি করা হয়েছিল
+          </option>
+
+          <option value="অন্যান্য">
+            অন্যান্য
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          কী ঘটেছিল? *
+        </label>
+
+        <textarea
+          id="details"
+          required
+          maxlength="3000"
+          placeholder="ঘটনাটি সংক্ষেপে লিখুন..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ছবি / ভিডিও (ঐচ্ছিক)
+        </label>
+
+        <input
+          id="media"
+          type="file"
+          accept="image/*,video/*"
+        >
+
+        <div class="file-info">
+          ব্যক্তিগত বা সংবেদনশীল তথ্যযুক্ত ছবি/ভিডিও আপলোড করবেন না।
+        </div>
+
+      </div>
+
+
+      <label class="check">
+
+        <input
+          id="privacyCheck"
+          type="checkbox"
+          required
+        >
+
+        <span>
+          আমি নিশ্চিত করছি যে রিপোর্টে কোনো ব্যক্তির
+          নাম, মোবাইল নম্বর, NID নম্বর, ব্যক্তিগত ঠিকানা
+          বা অন্য কোনো সংবেদনশীল ব্যক্তিগত তথ্য দিইনি।
+        </span>
+
+      </label>
+
+
+      <button
+        id="submitBtn"
+        class="submit"
+        type="submit"
+      >
+        রিপোর্ট জমা দিন
+      </button>
+
+    </form>
 
   </div>
 
 </div>
 
 
-<div id="toast"></div>
+<!-- ADMIN LOGIN MODAL -->
+
+<div id="adminModal" class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>Admin Login</h2>
+
+      <button class="close" onclick="closeAdmin()">
+        ×
+      </button>
+
+    </div>
+
+    <form class="form" onsubmit="adminLogin(event)">
+
+      <div id="adminMessage" class="message"></div>
+
+      <div class="field">
+
+        <label>
+          Email
+        </label>
+
+        <input
+          id="adminEmail"
+          type="email"
+          required
+          placeholder="Admin email"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="adminPassword"
+          type="password"
+          required
+          placeholder="Password"
+        >
+
+      </div>
+
+
+      <button class="submit">
+        Login
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
 
 
 <script>
-/* ============================================================
+
+/* ==========================================
    SUPABASE
-============================================================ */
+========================================== */
 
 const SUPABASE_URL =
-  "https://klreqkbqyyiwmohlmgkh.supabase.co";
+"https://klreqkbqyyiwmohlmgkh.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_xlqcHTsDaMpBq4n54iMs4A_S7gKpiZc";
+"sb_publishable_xlqcHTsDaMpBq4n54iMs4A_S7gKpiZc";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
+let allReports = [];
+
+const mediaBucket = "media";
+
+
+/* ==========================================
+   REPORT MODAL
+========================================== */
+
+function openReport(){
+
+  document
+    .getElementById("reportModal")
+    .classList.add("show");
+
+}
+
+function closeReport(){
+
+  document
+    .getElementById("reportModal")
+    .classList.remove("show");
+
+}
+
+
+/* ==========================================
+   ADMIN MODAL
+========================================== */
+
+function openAdmin(){
+
+  document
+    .getElementById("adminModal")
+    .classList.add("show");
+
+}
+
+function closeAdmin(){
+
+  document
+    .getElementById("adminModal")
+    .classList.remove("show");
+
+}
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(id,text,type){
+
+  const box =
+    document.getElementById(id);
+
+  box.className =
+    "message " + type;
+
+  box.innerText = text;
+
+  box.style.display = "block";
+
+}
+
+
+/* ==========================================
+   MEDIA UPLOAD
+========================================== */
+
+async function uploadMedia(file){
+
+  if(!file){
+    return {
+      url:null,
+      type:null
+    };
+  }
+
+  if(file.size > 25 * 1024 * 1024){
+
+    throw new Error(
+      "ছবি/ভিডিও 25MB-এর বেশি হতে পারবে না।"
+    );
+
+  }
+
+  const extension =
+    file.name.split(".").pop();
+
+  const filename =
+    crypto.randomUUID() +
+    "." +
+    extension;
+
+  const path =
+    "reports/" +
+    filename;
+
+
+  const { error } =
+    await supabaseClient
+      .storage
+      .from(mediaBucket)
+      .upload(
+        path,
+        file,
+        {
+          cacheControl:"3600",
+          upsert:false
+        }
+      );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  const { data } =
+    supabaseClient
+      .storage
+      .from(mediaBucket)
+      .getPublicUrl(path);
+
+
+  return {
+    url:data.publicUrl,
+    type:file.type.startsWith("video/")
+      ? "video"
+      : "image"
+  };
+
+}
+
+
+/* ==========================================
+   SUBMIT REPORT
+========================================== */
+
+async function submitReport(event){
+
+  event.preventDefault();
+
+
+  const button =
+    document.getElementById("submitBtn");
+
+  button.disabled = true;
+
+  button.innerText =
+    "জমা হচ্ছে...";
+
+
+  try{
+
+    const department =
+      document
+        .getElementById("department")
+        .value
+        .trim();
+
+    const service =
+      document
+        .getElementById("service")
+        .value
+        .trim();
+
+    const location =
+      document
+        .getElementById("location")
+        .value
+        .trim();
+
+    const amount =
+      Number(
+        document
+          .getElementById("amount")
+          .value || 0
+      );
+
+    const outcome =
+      document
+        .getElementById("outcome")
+        .value;
+
+    const details =
+      document
+        .getElementById("details")
+        .value
+        .trim();
+
+    const file =
+      document
+        .getElementById("media")
+        .files[0];
+
+
+    if(
+      !department ||
+      !service ||
+      !location ||
+      !outcome ||
+      !details
+    ){
+
+      throw new Error(
+        "প্রয়োজনীয় তথ্য পূরণ করুন।"
+      );
+
+    }
+
+
+    let mediaData = {
+      url:null,
+      type:null
+    };
+
+
+    if(file){
+
+      mediaData =
+        await uploadMedia(file);
+
+    }
+
+
+    const { error } =
+      await supabaseClient
+        .from("reports")
+        .insert({
+
+          department,
+          service,
+          location,
+          amount,
+          outcome,
+          details,
+          media_url:mediaData.url,
+          media_type:mediaData.type,
+          status:"pending"
+
+        });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showMessage(
+      "formMessage",
+      "রিপোর্ট সফলভাবে জমা হয়েছে। প্রকাশের আগে এটি মডারেশন করা হবে।",
+      "success"
+    );
+
+
+    document
+      .querySelector("#reportModal form")
+      .reset();
+
+
+    setTimeout(
+      closeReport,
+      2500
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "formMessage",
+      "রিপোর্ট জমা দেওয়া যায়নি: " +
+      error.message,
+      "error"
+    );
+
+  }
+
+
+  button.disabled = false;
+
+  button.innerText =
+    "রিপোর্ট জমা দিন";
+
+}
+
+
+/* ==========================================
+   LOAD PUBLIC REPORTS
+========================================== */
+
+async function loadReports(){
+
+  const container =
+    document.getElementById(
+      "reportsContainer"
+    );
+
+  container.innerHTML =
+    '<div class="loading">রিপোর্ট লোড হচ্ছে...</div>';
+
+
+  const { data,error } =
+    await supabaseClient
+      .from("reports")
+      .select("*")
+      .eq("status","published")
+      .order(
+        "published_at",
+        {
+          ascending:false,
+          nullsFirst:false
+        }
+      )
+      .limit(100);
+
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML =
+      '<div class="empty">রিপোর্ট লোড করা যায়নি।</div>';
+
+    return;
+  }
+
+
+  allReports =
+    data || [];
+
+
+  renderReports(allReports);
+
+  updateStats(allReports);
+
+}
+
+
+/* ==========================================
+   RENDER REPORTS
+========================================== */
+
+function renderReports(reports){
+
+  const container =
+    document.getElementById(
+      "reportsContainer"
+    );
+
+
+  if(!reports.length){
+
+    container.innerHTML =
+      '<div class="empty">এখনো কোনো প্রকাশিত রিপোর্ট নেই।</div>';
+
+    return;
+  }
+
+
+  container.innerHTML =
+
+    '<div class="report-grid">' +
+
+    reports.map(report => {
+
+      let media = "";
+
+
+      if(
+        report.media_url &&
+        report.media_type === "image"
+      ){
+
+        media =
+          `<img
+            class="report-media"
+            src="${escapeHtml(report.media_url)}"
+            alt="রিপোর্টের ছবি"
+          >`;
+
+      }
+
+
+      if(
+        report.media_url &&
+        report.media_type === "video"
+      ){
+
+        media =
+          `<video
+            class="report-media"
+            controls
+            src="${escapeHtml(report.media_url)}"
+          ></video>`;
+
+      }
+
+
+      return `
+
+        <article class="report">
+
+          <div class="report-top">
+
+            <span class="badge">
+              ${escapeHtml(report.department)}
+            </span>
+
+            <span class="badge unverified">
+              Unverified
+            </span>
+
+          </div>
+
+          <h3>
+            ${escapeHtml(report.service)}
+          </h3>
+
+          <div class="report-info">
+
+            <div>
+              📍 এলাকা:
+              ${escapeHtml(report.location)}
+            </div>
+
+            <div>
+              💰 দাবিকৃত অর্থ:
+              ৳${Number(report.amount || 0).toLocaleString("bn-BD")}
+            </div>
+
+            <div>
+              📌 ফলাফল:
+              ${escapeHtml(report.outcome)}
+            </div>
+
+            <div>
+              🕒 ${formatDate(report.published_at || report.created_at)}
+            </div>
+
+          </div>
+
+          <div class="report-details">
+            ${escapeHtml(report.details)}
+          </div>
+
+          ${media}
+
+        </article>
+
+      `;
+
+    }).join("") +
+
+    "</div>";
+
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+function filterReports(){
+
+  const q =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  if(!q){
+
+    renderReports(allReports);
+
+    return;
+
+  }
+
+
+  const filtered =
+    allReports.filter(report => {
+
+      const text =
+        (
+          report.department +
+          " " +
+          report.service +
+          " " +
+          report.location +
+          " " +
+          report.outcome +
+          " " +
+          report.details
+        ).toLowerCase();
+
+      return text.includes(q);
+
+    });
+
+
+  renderReports(filtered);
+
+}
+
+
+/* ==========================================
+   STATS
+========================================== */
+
+function updateStats(reports){
+
+  document
+    .getElementById("totalReports")
+    .innerText =
+      reports.length.toLocaleString("bn-BD");
+
+
+  const amount =
+    reports.reduce(
+      (sum,r) =>
+        sum + Number(r.amount || 0),
+      0
+    );
+
+
+  document
+    .getElementById("totalAmount")
+    .innerText =
+      "৳" +
+      amount.toLocaleString("bn-BD");
+
+
+  const today =
+    new Date()
+      .toISOString()
+      .slice(0,10);
+
+
+  const todayCount =
+    reports.filter(r => {
+
+      return String(
+        r.created_at
+      ).slice(0,10) === today;
+
+    }).length;
+
+
+  document
+    .getElementById("todayReports")
+    .innerText =
+      todayCount.toLocaleString("bn-BD");
+
+}
+
+
+/* ==========================================
+   ADMIN LOGIN
+========================================== */
+
+async function adminLogin(event){
+
+  event.preventDefault();
+
+
+  const email =
+    document
+      .getElementById("adminEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("adminPassword")
+      .value;
+
+
+  const { data,error } =
+    await supabaseClient.auth
+      .signInWithPassword({
+        email,
+        password
+      });
+
+
+  if(error){
+
+    showMessage(
+      "adminMessage",
+      "Login ব্যর্থ: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+
+  const user =
+    data.user;
+
+
+  const { data:profile,error:profileError } =
+    await supabaseClient
+      .from("profiles")
+      .select("role")
+      .eq("id",user.id)
+      .single();
+
+
+  if(
+    profileError ||
+    !profile ||
+    profile.role !== "admin"
+  ){
+
+    await supabaseClient.auth.signOut();
+
+    showMessage(
+      "adminMessage",
+      "এই account-এর Admin permission নেই।",
+      "error"
+    );
+
+    return;
+  }
+
+
+  closeAdmin();
+
+
+  document
+    .getElementById("adminPanel")
+    .style.display = "block";
+
+
+  document
+    .getElementById("adminPanel")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+
+  loadPendingReports();
+
+}
+
+
+/* ==========================================
+   LOAD PENDING REPORTS
+========================================== */
+
+async function loadPendingReports(){
+
+  const container =
+    document.getElementById(
+      "pendingContainer"
+    );
+
+
+  container.innerHTML =
+    '<div class="loading">লোড হচ্ছে...</div>';
+
+
+  const { data,error } =
+    await supabaseClient
+      .from("reports")
+      .select("*")
+      .eq("status","pending")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    container.innerHTML =
+      '<div class="empty">Pending রিপোর্ট দেখা যাচ্ছে না।</div>';
+
+    console.error(error);
+
+    return;
+  }
+
+
+  if(!data.length){
+
+    container.innerHTML =
+      '<div class="empty">কোনো Pending রিপোর্ট নেই। 🎉</div>';
+
+    return;
+  }
+
+
+  container.innerHTML =
+    data.map(report => `
+
+      <div class="admin-report">
+
+        <div class="report-top">
+
+          <span class="badge">
+            Pending
+          </span>
+
+          <span>
+            ${formatDate(report.created_at)}
+          </span>
+
+        </div>
+
+        <h3>
+          ${escapeHtml(report.department)}
+        </h3>
+
+        <p>
+          <strong>সেবা:</strong>
+          ${escapeHtml(report.service)}
+        </p>
+
+        <p>
+          <strong>এলাকা:</strong>
+          ${escapeHtml(report.location)}
+        </p>
+
+        <p>
+          <strong>টাকা:</strong>
+          ৳${Number(report.amount || 0).toLocaleString("bn-BD")}
+        </p>
+
+        <p>
+          <strong>ফলাফল:</strong>
+          ${escapeHtml(report.outcome)}
+        </p>
+
+        <div class="report-details">
+          ${escapeHtml(report.details)}
+        </div>
+
+        <div class="admin-actions">
+
+          <button
+            class="publish-btn"
+            onclick="publishReport(${report.id})"
+          >
+            ✓ Publish
+          </button>
+
+          <button
+            class="reject-btn"
+            onclick="rejectReport(${report.id})"
+          >
+            ✕ Reject
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* ==========================================
+   PUBLISH
+========================================== */
+
+async function publishReport(id){
+
+  if(
+    !confirm(
+      "এই রিপোর্টটি Public-এ Publish করবেন?"
+    )
+  ){
+    return;
+  }
+
+
+  const { error } =
+    await supabaseClient
+      .from("reports")
+      .update({
+
+        status:"published",
+
+        published_at:
+          new Date().toISOString()
+
+      })
+      .eq("id",id)
+      .eq("status","pending");
+
+
+  if(error){
+
+    alert(
+      "Publish করা যায়নি: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "রিপোর্ট সফলভাবে Published হয়েছে।"
   );
 
 
-/* ============================================================
-   GLOBAL STATE
-============================================================ */
+  loadPendingReports();
 
-let currentUser = null;
-let currentProfile = null;
+  loadReports();
 
-let selectedUser = null;
-
-let messagesChannel = null;
-let callsChannel = null;
-let postsChannel = null;
-let storiesChannel = null;
-
-let selectedPostFile = null;
-let selectedPostMediaType = null;
-
-let selectedStoryFile = null;
-let selectedStoryMediaType = null;
-
-let incomingCall = null;
-
-let activeCall = null;
-let peerConnection = null;
-let localStream = null;
-let remoteStream = null;
-let callChannel = null;
-
-let callStartedAt = null;
-let callTimerInterval = null;
-
-let isMuted = false;
-let isCameraOff = false;
-
-
-/* ============================================================
-   HELPERS
-============================================================ */
-
-function $(id){
-  return document.getElementById(id);
 }
 
+
+/* ==========================================
+   REJECT
+========================================== */
+
+async function rejectReport(id){
+
+  if(
+    !confirm(
+      "এই রিপোর্টটি Reject করবেন?"
+    )
+  ){
+    return;
+  }
+
+
+  const { error } =
+    await supabaseClient
+      .from("reports")
+      .update({
+        status:"rejected"
+      })
+      .eq("id",id)
+      .eq("status","pending");
+
+
+  if(error){
+
+    alert(
+      "Reject করা যায়নি: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  loadPendingReports();
+
+}
+
+
+/* ==========================================
+   DATE
+========================================== */
+
+function formatDate(date){
+
+  if(!date){
+    return "";
+  }
+
+  try{
+
+    return new Date(date)
+      .toLocaleString(
+        "bn-BD",
+        {
+          dateStyle:"medium",
+          timeStyle:"short"
+        }
+      );
+
+  }catch(e){
+
+    return "";
+
+  }
+
+}
+
+
+/* ==========================================
+   HTML ESCAPE
+========================================== */
+
 function escapeHtml(value){
-  if(value === null || value === undefined) return "";
+
+  if(value === null ||
+     value === undefined){
+    return "";
+  }
+
+
   return String(value)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
-}
 
-function showToast(message){
-  const toast = $("toast");
-
-  toast.textContent = message;
-  toast.style.display = "block";
-
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer = setTimeout(()=>{
-    toast.style.display = "none";
-  },3000);
-}
-
-function initials(name){
-  if(!name) return "U";
-
-  const parts =
-    String(name)
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean);
-
-  if(!parts.length) return "U";
-
-  return parts
-    .slice(0,2)
-    .map(x=>x.charAt(0).toUpperCase())
-    .join("");
-}
-
-function formatDate(date){
-  if(!date) return "";
-
-  const d = new Date(date);
-
-  return d.toLocaleString("en-BD",{
-    day:"2-digit",
-    month:"short",
-    hour:"2-digit",
-    minute:"2-digit"
-  });
-}
-
-function usernameEmail(username){
-  return String(username || "")
-    .trim()
-    .toLowerCase() + "@ghussite.local";
-}
-
-function getMediaUrl(url){
-  return url || "";
 }
 
 
-/* ============================================================
-   AUTH UI
-============================================================ */
+/* ==========================================
+   SESSION CHECK
+========================================== */
 
-function showAuth(type){
+async function checkAdminSession(){
 
-  if(type === "login"){
-
-    $("loginTab").classList.add("active");
-    $("signupTab").classList.remove("active");
-
-    $("loginForm").classList.remove("hidden");
-    $("signupForm").classList.add("hidden");
-
-  }else{
-
-    $("signupTab").classList.add("active");
-    $("loginTab").classList.remove("active");
-
-    $("signupForm").classList.remove("hidden");
-    $("loginForm").classList.add("hidden");
-
-  }
-}
+  const { data } =
+    await supabaseClient
+      .auth
+      .getSession();
 
 
-/* ============================================================
-   AUTH CHECK
-============================================================ */
-
-async function init(){
-
-  const {
-    data:{
-      session
-    }
-  } = await supabaseClient.auth.getSession();
-
-  if(session && session.user){
-
-    currentUser = session.user;
-
-    await loadCurrentProfile();
-
-    showApp();
-
-  }else{
-
-    $("authScreen").classList.remove("hidden");
-    $("appScreen").classList.add("hidden");
-
-  }
-
-  supabaseClient.auth.onAuthStateChange(
-    async(event,session)=>{
-
-      if(session && session.user){
-
-        currentUser = session.user;
-
-        await loadCurrentProfile();
-
-        showApp();
-
-      }else{
-
-        currentUser = null;
-        currentProfile = null;
-
-        $("authScreen").classList.remove("hidden");
-        $("appScreen").classList.add("hidden");
-
-      }
-
-    }
-  );
-}
-
-
-/* ============================================================
-   SIGNUP
-============================================================ */
-
-async function signupUser(){
-
-  const displayName =
-    $("signupName").value.trim();
-
-  const username =
-    $("signupUsername").value.trim().toLowerCase();
-
-  const phone =
-    $("signupPhone").value.trim();
-
-  const password =
-    $("signupPassword").value;
-
-  if(!displayName){
-    showToast("Enter your display name.");
+  if(!data.session){
     return;
   }
 
-  if(!username){
-    showToast("Enter a username.");
-    return;
-  }
 
-  if(!/^[a-z0-9._-]+$/.test(username)){
-    showToast(
-      "Username can contain English letters, numbers, dot, underscore or hyphen."
-    );
-    return;
-  }
+  const user =
+    data.session.user;
 
-  if(password.length < 6){
-    showToast("Password must be at least 6 characters.");
-    return;
-  }
 
-  const email = usernameEmail(username);
-
-  const {
-    data,
-    error
-  } = await supabaseClient.auth.signUp({
-    email,
-    password,
-    options:{
-      data:{
-        display_name:displayName,
-        username,
-        phone
-      }
-    }
-  });
-
-  if(error){
-
-    showToast(error.message);
-    return;
-
-  }
-
-  if(data.user){
-
-    const {
-      error:profileError
-    } = await supabaseClient
+  const { data:profile } =
+    await supabaseClient
       .from("profiles")
-      .upsert({
-        id:data.user.id,
-        display_name:displayName,
-        username,
-        phone:phone || null,
-        role:"user"
-      });
-
-    if(profileError){
-
-      console.log(profileError);
-
-    }
-  }
-
-  showToast(
-    "Account created. You can now login."
-  );
-
-  $("loginUsername").value = username;
-
-  showAuth("login");
-}
-
-
-/* ============================================================
-   LOGIN
-============================================================ */
-
-async function loginUser(){
-
-  const username =
-    $("loginUsername").value.trim().toLowerCase();
-
-  const password =
-    $("loginPassword").value;
-
-  if(!username || !password){
-
-    showToast("Enter username and password.");
-    return;
-
-  }
-
-  const email = usernameEmail(username);
-
-  const {
-    data,
-    error
-  } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  if(error){
-
-    showToast(error.message);
-    return;
-
-  }
-
-  if(data.user){
-
-    currentUser = data.user;
-
-    await loadCurrentProfile();
-
-    showApp();
-
-  }
-}
-
-
-/* ============================================================
-   LOGOUT
-============================================================ */
-
-async function logoutUser(){
-
-  try{
-    await cleanupCall(false);
-  }catch(e){}
-
-  try{
-    if(messagesChannel)
-      await supabaseClient.removeChannel(messagesChannel);
-
-    if(callsChannel)
-      await supabaseClient.removeChannel(callsChannel);
-
-    if(postsChannel)
-      await supabaseClient.removeChannel(postsChannel);
-
-    if(storiesChannel)
-      await supabaseClient.removeChannel(storiesChannel);
-
-  }catch(e){}
-
-  await supabaseClient.auth.signOut();
-
-  currentUser = null;
-  currentProfile = null;
-  selectedUser = null;
-
-  $("appScreen").classList.add("hidden");
-  $("authScreen").classList.remove("hidden");
-
-}
-
-
-/* ============================================================
-   PROFILE
-============================================================ */
-
-async function loadCurrentProfile(){
-
-  if(!currentUser) return;
-
-  let {
-    data,
-    error
-  } = await supabaseClient
-    .from("profiles")
-    .select("*")
-    .eq("id",currentUser.id)
-    .maybeSingle();
-
-  if(error){
-
-    console.log("Profile load error:",error);
-
-  }
-
-  if(!data){
-
-    const metadata =
-      currentUser.user_metadata || {};
-
-    const newProfile = {
-      id:currentUser.id,
-      display_name:
-        metadata.display_name ||
-        currentUser.email?.split("@")[0] ||
-        "User",
-      username:
-        metadata.username ||
-        currentUser.email?.split("@")[0] ||
-        "user",
-      phone:
-        metadata.phone || null,
-      role:"user"
-    };
-
-    const result =
-      await supabaseClient
-        .from("profiles")
-        .upsert(newProfile)
-        .select()
-        .single();
-
-    data = result.data;
-
-  }
-
-  currentProfile = data;
-
-  updateProfileUI();
-}
-
-
-function updateProfileUI(){
-
-  if(!currentProfile) return;
-
-  const name =
-    currentProfile.display_name ||
-    currentProfile.username ||
-    "User";
-
-  const username =
-    currentProfile.username ||
-    "user";
-
-  const avatar =
-    currentProfile.avatar_url;
-
-  $("composerName").textContent = name;
-
-  $("composerAvatar").innerHTML =
-    avatar
-      ? `<img src="${escapeHtml(avatar)}">`
-      : escapeHtml(initials(name));
-
-  $("profileName").textContent = name;
-
-  $("profileUsername").textContent =
-    "@" + username;
-
-  $("profileBio").textContent =
-    currentProfile.bio ||
-    "Welcome to ঘুষ সাইট.";
-
-  $("profilePhone").textContent =
-    currentProfile.phone ||
-    "Not available";
-
-  $("profileRole").textContent =
-    currentProfile.role ||
-    "user";
-
-  $("profileAvatar").innerHTML =
-    avatar
-      ? `<img src="${escapeHtml(avatar)}">`
-      : escapeHtml(initials(name));
-
-}
-
-
-/* ============================================================
-   PROFILE EDIT
-============================================================ */
-
-function editProfile(){
-
-  if(!currentProfile) return;
-
-  $("editDisplayName").value =
-    currentProfile.display_name || "";
-
-  $("editUsername").value =
-    currentProfile.username || "";
-
-  $("editBio").value =
-    currentProfile.bio || "";
-
-  $("profileModal").classList.remove("hidden");
-}
-
-function closeProfileModal(){
-  $("profileModal").classList.add("hidden");
-}
-
-async function saveProfile(){
-
-  const displayName =
-    $("editDisplayName").value.trim();
-
-  const username =
-    $("editUsername").value.trim().toLowerCase();
-
-  const bio =
-    $("editBio").value.trim();
-
-  if(!displayName || !username){
-
-    showToast("Display name and username are required.");
-    return;
-
-  }
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("profiles")
-    .update({
-      display_name:displayName,
-      username,
-      bio:bio || null
-    })
-    .eq("id",currentUser.id)
-    .select()
-    .single();
-
-  if(error){
-
-    showToast(error.message);
-    return;
-
-  }
-
-  currentProfile = data;
-
-  updateProfileUI();
-
-  closeProfileModal();
-
-  showToast("Profile updated.");
-}
-
-
-/* ============================================================
-   PAGE NAVIGATION
-============================================================ */
-
-function showPage(page){
-
-  $("homePage").classList.add("hidden");
-  $("chatPage").classList.add("hidden");
-  $("helpPage").classList.add("hidden");
-  $("profilePage").classList.add("hidden");
-
-  $("navHome").classList.remove("active");
-  $("navChat").classList.remove("active");
-  $("navHelp").classList.remove("active");
-  $("navProfile").classList.remove("active");
-
-  if(page === "home"){
-
-    $("homePage").classList.remove("hidden");
-    $("navHome").classList.add("active");
-
-    loadPosts();
-    loadStories();
-
-  }
-
-  if(page === "chat"){
-
-    $("chatPage").classList.remove("hidden");
-    $("navChat").classList.add("active");
-
-  }
-
-  if(page === "help"){
-
-    $("helpPage").classList.remove("hidden");
-    $("navHelp").classList.add("active");
-
-  }
-
-  if(page === "profile"){
-
-    $("profilePage").classList.remove("hidden");
-    $("navProfile").classList.add("active");
-
-    updateProfileUI();
-
-  }
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-
-/* ============================================================
-   SHOW APP
-============================================================ */
-
-async function showApp(){
-
-  $("authScreen").classList.add("hidden");
-  $("appScreen").classList.remove("hidden");
-
-  showPage("home");
-
-  setupRealtime();
-
-  await loadPosts();
-  await loadStories();
-
-}
-
-
-/* ============================================================
-   STORAGE UPLOAD
-============================================================ */
-
-async function uploadMedia(file,folder){
-
-  if(!file) return null;
-
-  const extension =
-    file.name.includes(".")
-      ? file.name.split(".").pop().toLowerCase()
-      : "bin";
-
-  const fileName =
-    `${folder}/${currentUser.id}_${Date.now()}_${Math.random().toString(36).slice(2)}.${extension}`;
-
-  const {
-    error
-  } = await supabaseClient.storage
-    .from("media")
-    .upload(fileName,file,{
-      cacheControl:"3600",
-      upsert:false,
-      contentType:file.type
-    });
-
-  if(error){
-
-    console.log("Storage error:",error);
-
-    throw new Error(
-      "Media upload failed. Please make sure the Supabase Storage bucket named 'media' exists."
-    );
-
-  }
-
-  const {
-    data
-  } = supabaseClient.storage
-    .from("media")
-    .getPublicUrl(fileName);
-
-  return data.publicUrl;
-}
-
-
-/* ============================================================
-   POST MEDIA PREVIEW
-============================================================ */
-
-function previewPostMedia(input,type){
-
-  const file =
-    input.files && input.files[0];
-
-  if(!file) return;
-
-  selectedPostFile = file;
-  selectedPostMediaType = type;
-
-  $("postPreview").classList.remove("hidden");
-
-  const url =
-    URL.createObjectURL(file);
-
-  if(type === "image"){
-
-    $("postPreview").innerHTML =
-      `<img src="${url}">`;
-
-  }else{
-
-    $("postPreview").innerHTML =
-      `<video src="${url}" controls></video>`;
-
-  }
-}
-
-
-/* ============================================================
-   CREATE POST
-============================================================ */
-
-async function createPost(){
-
-  if(!currentUser){
-
-    showToast("Please login first.");
-    return;
-
-  }
-
-  const content =
-    $("postContent").value.trim();
-
-  const anonymous =
-    $("anonymousPost").checked;
-
-  if(!content && !selectedPostFile){
-
-    showToast("Write something or add a photo/video.");
-    return;
-
-  }
-
-  const postBtn =
-    document.querySelector(".postBtn");
-
-  postBtn.disabled = true;
-  postBtn.textContent = "Posting...";
-
-  try{
-
-    let mediaUrl = null;
-    let mediaType = null;
-
-    if(selectedPostFile){
-
-      mediaUrl =
-        await uploadMedia(
-          selectedPostFile,
-          "posts"
-        );
-
-      mediaType =
-        selectedPostMediaType;
-
-    }
-
-    const {
-      data,
-      error
-    } = await supabaseClient
-      .from("posts")
-      .insert({
-        user_id:currentUser.id,
-        content:content || null,
-        media_url:mediaUrl,
-        media_type:mediaType,
-        status:"published",
-        is_anonymous:anonymous,
-        category:"general"
-      })
-      .select()
+      .select("role")
+      .eq("id",user.id)
       .single();
 
-    if(error){
-
-      throw error;
-
-    }
-
-    $("postContent").value = "";
-
-    $("anonymousPost").checked = false;
-
-    $("postPreview").innerHTML = "";
-    $("postPreview").classList.add("hidden");
-
-    $("postImage").value = "";
-    $("postVideo").value = "";
-
-    selectedPostFile = null;
-    selectedPostMediaType = null;
-
-    showToast("Post published.");
-
-    await loadPosts();
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      error.message ||
-      "Could not create post."
-    );
-
-  }finally{
-
-    postBtn.disabled = false;
-    postBtn.textContent = "Post";
-
-  }
-}
-
-
-/* ============================================================
-   LOAD POSTS
-============================================================ */
-
-async function loadPosts(){
-
-  const feed = $("feed");
-
-  feed.innerHTML =
-    `<div class="loading">Loading posts...</div>`;
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("posts")
-    .select("*")
-    .order("created_at",{ascending:false})
-    .limit(50);
-
-  if(error){
-
-    console.error(error);
-
-    feed.innerHTML =
-      `<div class="card empty">
-        Could not load posts.<br>
-        ${escapeHtml(error.message)}
-      </div>`;
-
-    return;
-
-  }
-
-  if(!data || !data.length){
-
-    feed.innerHTML =
-      `<div class="card empty">
-        No posts yet. Be the first to share.
-      </div>`;
-
-    return;
-
-  }
-
-  feed.innerHTML = "";
-
-  for(const post of data){
-
-    const card =
-      await buildPostCard(post);
-
-    feed.appendChild(card);
-
-  }
-}
-
-
-/* ============================================================
-   BUILD POST CARD
-============================================================ */
-
-async function buildPostCard(post){
-
-  const card =
-    document.createElement("div");
-
-  card.className = "card";
-
-  let profile = null;
-
-  if(post.user_id){
-
-    const {
-      data
-    } = await supabaseClient
-      .from("profiles")
-      .select("id,display_name,username,avatar_url")
-      .eq("id",post.user_id)
-      .maybeSingle();
-
-    profile = data;
-
-  }
-
-  const anonymous =
-    post.is_anonymous === true;
-
-  const authorName =
-    anonymous
-      ? "Anonymous"
-      : (
-          profile?.display_name ||
-          profile?.username ||
-          "User"
-        );
-
-  const avatar =
-    anonymous
-      ? null
-      : profile?.avatar_url;
-
-  const media =
-    post.media_url
-      ? (
-        post.media_type === "video"
-          ? `<video class="postMedia" src="${escapeHtml(post.media_url)}" controls playsinline></video>`
-          : `<img class="postMedia" src="${escapeHtml(post.media_url)}" alt="Post media">`
-      )
-      : "";
-
-  const reactionResult =
-    await supabaseClient
-      .from("reactions")
-      .select("id,user_id,reaction_type,type")
-      .eq("post_id",post.id);
-
-  const reactions =
-    reactionResult.data || [];
-
-  const myReaction =
-    reactions.find(
-      x=>x.user_id === currentUser?.id
-    );
-
-  const commentResult =
-    await supabaseClient
-      .from("comments")
-      .select("*")
-      .eq("post_id",post.id)
-      .order("created_at",{ascending:true})
-      .limit(10);
-
-  const comments =
-    commentResult.data || [];
-
-  const commentUsers = {};
-
-  for(const c of comments){
-
-    if(!c.user_id) continue;
-
-    const {
-      data:u
-    } = await supabaseClient
-      .from("profiles")
-      .select("display_name,username")
-      .eq("id",c.user_id)
-      .maybeSingle();
-
-    commentUsers[c.user_id] = u;
-
-  }
-
-  const commentHtml =
-    comments.map(c=>{
-
-      const u =
-        commentUsers[c.user_id];
-
-      const name =
-        u?.display_name ||
-        u?.username ||
-        "User";
-
-      return `
-        <div class="comment">
-          <span class="commentName">
-            ${escapeHtml(name)}
-          </span>
-          ${escapeHtml(c.content)}
-        </div>
-      `;
-
-    }).join("");
-
-  const safePostId =
-    String(post.id);
-
-  card.innerHTML = `
-
-    <div class="postHead">
-
-      <div class="postAuthor">
-
-        <div class="avatar">
-          ${
-            avatar
-              ? `<img src="${escapeHtml(avatar)}">`
-              : escapeHtml(initials(authorName))
-          }
-        </div>
-
-        <div>
-          <div class="userName">
-            ${escapeHtml(authorName)}
-          </div>
-
-          <div class="muted">
-            ${formatDate(post.created_at)}
-          </div>
-        </div>
-
-      </div>
-
-      <button
-        class="iconBtn"
-        style="width:32px;height:32px"
-        onclick="sharePost(${safePostId})"
-      >⋯</button>
-
-    </div>
-
-    ${
-      post.content
-        ? `<div class="postContent">${escapeHtml(post.content)}</div>`
-        : ""
-    }
-
-    ${media}
-
-    <div class="postStats">
-
-      <span>
-        ❤️ ${reactions.length}
-      </span>
-
-      <span>
-        💬 ${comments.length}
-      </span>
-
-    </div>
-
-    <div class="postActions">
-
-      <button
-        class="${myReaction ? "liked" : ""}"
-        onclick="toggleReaction(${safePostId})"
-      >
-        ${myReaction ? "❤️ Liked" : "♡ Like"}
-      </button>
-
-      <button
-        onclick="focusComment(${safePostId})"
-      >
-        💬 Comment
-      </button>
-
-      <button
-        onclick="sharePost(${safePostId})"
-      >
-        ↗ Share
-      </button>
-
-    </div>
-
-    <div class="comments">
-
-      <div id="comments-${safePostId}">
-        ${commentHtml}
-      </div>
-
-      <div class="commentBox">
-
-        <input
-          id="commentInput-${safePostId}"
-          placeholder="Write a comment..."
-          onkeydown="if(event.key==='Enter')addComment(${safePostId})"
-        >
-
-        <button onclick="addComment(${safePostId})">
-          ➤
-        </button>
-
-      </div>
-
-    </div>
-  `;
-
-  return card;
-}
-
-
-/* ============================================================
-   REACTION
-============================================================ */
-
-async function toggleReaction(postId){
-
-  if(!currentUser) return;
-
-  const {
-    data:existing
-  } = await supabaseClient
-    .from("reactions")
-    .select("id")
-    .eq("post_id",postId)
-    .eq("user_id",currentUser.id)
-    .maybeSingle();
-
-  if(existing){
-
-    const {
-      error
-    } = await supabaseClient
-      .from("reactions")
-      .delete()
-      .eq("id",existing.id);
-
-    if(error){
-
-      showToast(error.message);
-      return;
-
-    }
-
-  }else{
-
-    const {
-      error
-    } = await supabaseClient
-      .from("reactions")
-      .insert({
-        post_id:postId,
-        user_id:currentUser.id,
-        reaction_type:"like",
-        type:"like"
-      });
-
-    if(error){
-
-      showToast(error.message);
-      return;
-
-    }
-
-  }
-
-  await loadPosts();
-}
-
-
-/* ============================================================
-   COMMENT
-============================================================ */
-
-async function addComment(postId){
-
-  if(!currentUser){
-
-    showToast("Login required.");
-    return;
-
-  }
-
-  const input =
-    $(`commentInput-${postId}`);
-
-  const content =
-    input.value.trim();
-
-  if(!content) return;
-
-  const {
-    error
-  } = await supabaseClient
-    .from("comments")
-    .insert({
-      post_id:postId,
-      user_id:currentUser.id,
-      content
-    });
-
-  if(error){
-
-    showToast(error.message);
-    return;
-
-  }
-
-  input.value = "";
-
-  await loadPosts();
-}
-
-
-function focusComment(postId){
-
-  const input =
-    $(`commentInput-${postId}`);
-
-  if(input){
-
-    input.focus();
-
-  }
-}
-
-
-/* ============================================================
-   SHARE
-============================================================ */
-
-async function sharePost(postId){
-
-  const url =
-    window.location.href.split("#")[0] +
-    "#post-" +
-    postId;
-
-  if(navigator.share){
-
-    try{
-
-      await navigator.share({
-        title:"ঘুষ সাইট",
-        text:"ঘুষ সাইটের একটি পোস্ট",
-        url
-      });
-
-    }catch(e){}
-
-  }else{
-
-    try{
-
-      await navigator.clipboard.writeText(url);
-
-      showToast("Post link copied.");
-
-    }catch(e){
-
-      showToast(url);
-
-    }
-
-  }
-}
-
-
-/* ============================================================
-   CREATE POST QUICK ACTION
-============================================================ */
-
-function openCreatePost(){
-
-  showPage("home");
-
-  setTimeout(()=>{
-
-    $("postContent").focus();
-
-    $("composer").scrollIntoView({
-      behavior:"smooth"
-    });
-
-  },200);
-}
-
-
-/* ============================================================
-   STORIES
-============================================================ */
-
-function openStoryModal(){
-
-  selectedStoryFile = null;
-  selectedStoryMediaType = null;
-
-  $("storyCaption").value = "";
-  $("storyUpload").value = "";
-  $("storyPreview").innerHTML = "";
-  $("storyPreview").classList.add("hidden");
-
-  $("storyModal").classList.remove("hidden");
-}
-
-function closeStoryModal(){
-  $("storyModal").classList.add("hidden");
-}
-
-function openStoryWithFile(input){
-
-  const file =
-    input.files && input.files[0];
-
-  if(!file) return;
-
-  selectedStoryFile = file;
-
-  selectedStoryMediaType =
-    file.type.startsWith("video/")
-      ? "video"
-      : "image";
-
-  $("storyUpload").files = input.files;
-
-  $("storyModal").classList.remove("hidden");
-
-  previewStoryFile(input);
-}
-
-function previewStoryFile(input){
-
-  const file =
-    input.files && input.files[0];
-
-  if(!file) return;
-
-  selectedStoryFile = file;
-
-  selectedStoryMediaType =
-    file.type.startsWith("video/")
-      ? "video"
-      : "image";
-
-  const url =
-    URL.createObjectURL(file);
-
-  $("storyPreview").classList.remove("hidden");
-
-  if(selectedStoryMediaType === "video"){
-
-    $("storyPreview").innerHTML =
-      `<video src="${url}" controls></video>`;
-
-  }else{
-
-    $("storyPreview").innerHTML =
-      `<img src="${url}">`;
-
-  }
-}
-
-
-async function createStory(){
-
-  if(!currentUser){
-
-    showToast("Login required.");
-    return;
-
-  }
-
-  const caption =
-    $("storyCaption").value.trim();
-
-  if(!caption && !selectedStoryFile){
-
-    showToast("Add text or media to your story.");
-    return;
-
-  }
-
-  try{
-
-    let mediaUrl = null;
-    let mediaType = "text";
-
-    if(selectedStoryFile){
-
-      mediaUrl =
-        await uploadMedia(
-          selectedStoryFile,
-          "stories"
-        );
-
-      mediaType =
-        selectedStoryMediaType;
-
-    }
-
-    const {
-      error
-    } = await supabaseClient
-      .from("stories")
-      .insert({
-        user_id:currentUser.id,
-        media_url:mediaUrl,
-        media_type:mediaType,
-        caption:caption || null
-      });
-
-    if(error){
-
-      throw error;
-
-    }
-
-    closeStoryModal();
-
-    showToast("Story published.");
-
-    await loadStories();
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      error.message ||
-      "Could not publish story."
-    );
-
-  }
-}
-
-
-/* ============================================================
-   LOAD STORIES
-============================================================ */
-
-async function loadStories(){
-
-  const list =
-    $("storiesList");
-
-  list.innerHTML =
-    `<div class="story addStory" onclick="openStoryModal()">+</div>`;
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("stories")
-    .select("*")
-    .order("created_at",{ascending:false})
-    .limit(30);
-
-  if(error){
-
-    console.log("Story load:",error);
-    return;
-
-  }
-
-  if(!data || !data.length) return;
-
-  for(const story of data){
-
-    let profile = null;
-
-    if(story.user_id){
-
-      const {
-        data:p
-      } = await supabaseClient
-        .from("profiles")
-        .select("display_name,username,avatar_url")
-        .eq("id",story.user_id)
-        .maybeSingle();
-
-      profile = p;
-
-    }
-
-    const name =
-      profile?.display_name ||
-      profile?.username ||
-      "User";
-
-    const div =
-      document.createElement("div");
-
-    div.className = "story";
-
-    let inside = "";
-
-    if(story.media_url){
-
-      if(story.media_type === "video"){
-
-        inside =
-          `<video
-             src="${escapeHtml(story.media_url)}"
-             muted
-             playsinline
-           ></video>`;
-
-      }else{
-
-        inside =
-          `<img src="${escapeHtml(story.media_url)}">`;
-
-      }
-
-    }
-
-    div.innerHTML = `
-      ${inside}
-
-      <div class="storyOverlay">
-        <strong>${escapeHtml(name)}</strong>
-        ${
-          story.caption
-            ? `<div>${escapeHtml(story.caption).slice(0,50)}</div>`
-            : ""
-        }
-      </div>
-    `;
-
-    list.appendChild(div);
-
-  }
-}
-
-
-/* ============================================================
-   CHAT SEARCH
-============================================================ */
-
-function openSearchPeople(){
-
-  showPage("chat");
-
-  setTimeout(()=>{
-
-    $("peopleSearch").focus();
-
-  },200);
-}
-
-
-async function searchPeople(value){
-
-  const list =
-    $("peopleList");
-
-  value =
-    String(value || "").trim();
-
-  if(!value){
-
-    list.innerHTML =
-      `<div class="empty">Search people to start a chat.</div>`;
-
-    return;
-
-  }
-
-  const search =
-    `%${value}%`;
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("profiles")
-    .select("id,display_name,username,avatar_url,bio")
-    .neq("id",currentUser.id)
-    .or(
-      `display_name.ilike.${search},username.ilike.${search}`
-    )
-    .limit(30);
-
-  if(error){
-
-    console.error(error);
-
-    list.innerHTML =
-      `<div class="empty">
-        ${escapeHtml(error.message)}
-      </div>`;
-
-    return;
-
-  }
-
-  if(!data || !data.length){
-
-    list.innerHTML =
-      `<div class="empty">No people found.</div>`;
-
-    return;
-
-  }
-
-  list.innerHTML = "";
-
-  data.forEach(user=>{
-
-    const div =
-      document.createElement("div");
-
-    div.className = "person";
-
-    div.onclick =
-      ()=>selectChatUser(user);
-
-    div.innerHTML = `
-
-      <div class="avatar">
-
-        ${
-          user.avatar_url
-            ? `<img src="${escapeHtml(user.avatar_url)}">`
-            : escapeHtml(
-                initials(
-                  user.display_name ||
-                  user.username
-                )
-              )
-        }
-
-      </div>
-
-      <div class="personInfo">
-
-        <div class="userName">
-          ${escapeHtml(
-            user.display_name ||
-            user.username ||
-            "User"
-          )}
-        </div>
-
-        <div class="muted">
-          @${escapeHtml(user.username || "")}
-        </div>
-
-      </div>
-
-    `;
-
-    list.appendChild(div);
-
-  });
-}
-
-
-/* ============================================================
-   SELECT CHAT USER
-============================================================ */
-
-async function selectChatUser(user){
-
-  selectedUser = user;
-
-  $("chatName").textContent =
-    user.display_name ||
-    user.username ||
-    "User";
-
-  $("chatStatus").textContent =
-    "Direct chat";
-
-  $("chatAvatar").innerHTML =
-    user.avatar_url
-      ? `<img src="${escapeHtml(user.avatar_url)}">`
-      : escapeHtml(
-          initials(
-            user.display_name ||
-            user.username
-          )
-        );
-
-  $("messageInput").disabled = false;
-  $("sendMessageButton").disabled = false;
-
-  $("voiceCallButton").disabled = false;
-  $("videoCallButton").disabled = false;
-
-  await loadMessages();
-
-}
-
-
-/* ============================================================
-   LOAD MESSAGES
-============================================================ */
-
-async function loadMessages(){
-
-  if(!currentUser || !selectedUser) return;
-
-  const box =
-    $("messages");
-
-  box.innerHTML =
-    `<div class="loading">Loading messages...</div>`;
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("messages")
-    .select("*")
-    .or(
-      `and(sender_id.eq.${currentUser.id},receiver_id.eq.${selectedUser.id}),and(sender_id.eq.${selectedUser.id},receiver_id.eq.${currentUser.id})`
-    )
-    .order("created_at",{ascending:true})
-    .limit(200);
-
-  if(error){
-
-    console.error(error);
-
-    box.innerHTML =
-      `<div class="empty">
-        ${escapeHtml(error.message)}
-      </div>`;
-
-    return;
-
-  }
-
-  renderMessages(data || []);
-
-  await markMessagesRead();
-
-}
-
-
-/* ============================================================
-   RENDER MESSAGES
-============================================================ */
-
-function renderMessages(data){
-
-  const box =
-    $("messages");
-
-  if(!data.length){
-
-    box.innerHTML =
-      `<div class="empty">
-        No messages yet. Say hello.
-      </div>`;
-
-    return;
-
-  }
-
-  box.innerHTML = "";
-
-  data.forEach(message=>{
-
-    appendMessage(message,false);
-
-  });
-
-  box.scrollTop =
-    box.scrollHeight;
-}
-
-
-/* ============================================================
-   APPEND MESSAGE
-============================================================ */
-
-function appendMessage(message,scroll=true){
-
-  if(!selectedUser || !currentUser)
-    return;
-
-  const belongs =
-    (
-      message.sender_id === currentUser.id &&
-      message.receiver_id === selectedUser.id
-    ) ||
-    (
-      message.sender_id === selectedUser.id &&
-      message.receiver_id === currentUser.id
-    );
-
-  if(!belongs) return;
-
-  const box =
-    $("messages");
-
-  const empty =
-    box.querySelector(".empty");
-
-  if(empty)
-    empty.remove();
-
-  const div =
-    document.createElement("div");
-
-  div.className =
-    "msg " +
-    (
-      message.sender_id === currentUser.id
-        ? "mine"
-        : "theirs"
-    );
-
-  let content =
-    escapeHtml(message.content || "");
-
-  if(message.media_url){
-
-    if(message.media_type === "image"){
-
-      content += `
-        <br>
-        <img
-          src="${escapeHtml(message.media_url)}"
-          style="max-width:100%;border-radius:8px;margin-top:5px"
-        >
-      `;
-
-    }else if(message.media_type === "video"){
-
-      content += `
-        <br>
-        <video
-          src="${escapeHtml(message.media_url)}"
-          controls
-          style="max-width:100%;border-radius:8px;margin-top:5px"
-        ></video>
-      `;
-
-    }
-
-  }
-
-  div.innerHTML = `
-    ${content}
-    <span class="msgTime">
-      ${formatDate(message.created_at)}
-    </span>
-  `;
-
-  box.appendChild(div);
-
-  if(scroll)
-    box.scrollTop = box.scrollHeight;
-}
-
-
-/* ============================================================
-   SEND MESSAGE
-============================================================ */
-
-async function sendMessage(){
-
-  if(!currentUser || !selectedUser)
-    return;
-
-  const input =
-    $("messageInput");
-
-  const content =
-    input.value.trim();
-
-  if(!content) return;
-
-  input.disabled = true;
-
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("messages")
-    .insert({
-      sender_id:currentUser.id,
-      receiver_id:selectedUser.id,
-      content,
-      media_url:null,
-      media_type:"text",
-      is_read:false
-    })
-    .select()
-    .single();
-
-  input.disabled = false;
-
-  if(error){
-
-    showToast(error.message);
-    return;
-
-  }
-
-  input.value = "";
-
-  appendMessage(data,true);
-
-}
-
-
-/* ============================================================
-   MARK READ
-============================================================ */
-
-async function markMessagesRead(){
-
-  if(!currentUser || !selectedUser)
-    return;
-
-  const {
-    error
-  } = await supabaseClient
-    .from("messages")
-    .update({
-      is_read:true
-    })
-    .eq("receiver_id",currentUser.id)
-    .eq("sender_id",selectedUser.id)
-    .eq("is_read",false);
-
-  if(error)
-    console.log("Read update:",error);
-
-}
-
-
-/* ============================================================
-   REALTIME
-============================================================ */
-
-function setupRealtime(){
-
-  if(!currentUser) return;
-
-  if(messagesChannel){
-
-    try{
-      supabaseClient.removeChannel(messagesChannel);
-    }catch(e){}
-
-  }
-
-  messagesChannel =
-    supabaseClient
-      .channel(
-        "ghus-messages-" +
-        currentUser.id
-      )
-      .on(
-        "postgres_changes",
-        {
-          event:"INSERT",
-          schema:"public",
-          table:"messages"
-        },
-        payload=>{
-
-          const message =
-            payload.new;
-
-          if(
-            message.receiver_id === currentUser.id ||
-            message.sender_id === currentUser.id
-          ){
-
-            if(
-              selectedUser &&
-              (
-                (
-                  message.sender_id === currentUser.id &&
-                  message.receiver_id === selectedUser.id
-                ) ||
-                (
-                  message.sender_id === selectedUser.id &&
-                  message.receiver_id === currentUser.id
-                )
-              )
-            ){
-
-              appendMessage(message,true);
-
-              if(
-                message.receiver_id === currentUser.id
-              ){
-
-                markMessagesRead();
-
-              }
-
-            }
-
-          }
-
-        }
-      )
-      .subscribe();
-
-
-  /* CALL REALTIME */
-
-  if(callsChannel){
-
-    try{
-      supabaseClient.removeChannel(callsChannel);
-    }catch(e){}
-
-  }
-
-  callsChannel =
-    supabaseClient
-      .channel(
-        "ghus-calls-" +
-        currentUser.id
-      )
-
-      .on(
-        "postgres_changes",
-        {
-          event:"INSERT",
-          schema:"public",
-          table:"calls",
-          filter:
-            `callee_id=eq.${currentUser.id}`
-        },
-        payload=>{
-
-          handleIncomingCall(payload.new);
-
-        }
-      )
-
-      .on(
-        "postgres_changes",
-        {
-          event:"UPDATE",
-          schema:"public",
-          table:"calls",
-          filter:
-            `caller_id=eq.${currentUser.id}`
-        },
-        payload=>{
-
-          handleCallUpdate(payload.new);
-
-        }
-      )
-
-      .on(
-        "postgres_changes",
-        {
-          event:"UPDATE",
-          schema:"public",
-          table:"calls",
-          filter:
-            `callee_id=eq.${currentUser.id}`
-        },
-        payload=>{
-
-          handleCallUpdate(payload.new);
-
-        }
-      )
-
-      .subscribe();
-
-}
-
-
-/* ============================================================
-   CALL CONFIG
-============================================================ */
-
-const RTC_CONFIG = {
-  iceServers:[
-    {
-      urls:"stun:stun.l.google.com:19302"
-    },
-    {
-      urls:"stun:stun1.l.google.com:19302"
-    }
-  ]
-};
-
-
-/* ============================================================
-   GET CALL USER PROFILE
-============================================================ */
-
-async function getUserProfile(userId){
-
-  const {
-    data
-  } = await supabaseClient
-    .from("profiles")
-    .select("id,display_name,username,avatar_url")
-    .eq("id",userId)
-    .maybeSingle();
-
-  return data;
-
-}
-
-
-/* ============================================================
-   START CALL
-============================================================ */
-
-async function startCall(type){
-
-  if(!currentUser || !selectedUser){
-
-    showToast("Select a person first.");
-    return;
-
-  }
-
-  if(activeCall){
-
-    showToast("You are already on a call.");
-    return;
-
-  }
-
-  try{
-
-    const {
-      data:call,
-      error
-    } = await supabaseClient
-      .from("calls")
-      .insert({
-        caller_id:currentUser.id,
-        callee_id:selectedUser.id,
-        call_type:type,
-        status:"ringing"
-      })
-      .select()
-      .single();
-
-    if(error){
-
-      throw error;
-
-    }
-
-    activeCall = {
-      ...call,
-      direction:"outgoing"
-    };
-
-    $("activeCallModal").classList.remove("hidden");
-
-    $("activeCallName").textContent =
-      selectedUser.display_name ||
-      selectedUser.username ||
-      "User";
-
-    $("activeCallAvatar").innerHTML =
-      selectedUser.avatar_url
-        ? `<img src="${escapeHtml(selectedUser.avatar_url)}">`
-        : escapeHtml(
-            initials(
-              selectedUser.display_name ||
-              selectedUser.username
-            )
-          );
-
-    if(type === "video"){
-
-      $("voiceCallUI").classList.add("hidden");
-      $("videoCallUI").classList.remove("hidden");
-
-    }else{
-
-      $("voiceCallUI").classList.remove("hidden");
-      $("videoCallUI").classList.add("hidden");
-
-    }
-
-    await createCallChannel(call.id);
-
-    await prepareLocalMedia(type);
-
-    startCallTimer();
-
-    showToast("Calling...");
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      error.message ||
-      "Could not start call."
-    );
-
-    await cleanupCall(false);
-
-  }
-}
-
-
-/* ============================================================
-   CREATE CALL CHANNEL
-============================================================ */
-
-async function createCallChannel(callId){
-
-  if(callChannel){
-
-    try{
-      await supabaseClient.removeChannel(callChannel);
-    }catch(e){}
-
-  }
-
-  callChannel =
-    supabaseClient
-      .channel(
-        "ghus-call-" + callId
-      )
-
-      .on(
-        "broadcast",
-        {
-          event:"signal"
-        },
-        async payload=>{
-
-          await handleSignal(
-            payload.payload
-          );
-
-        }
-      )
-
-      .subscribe(async status=>{
-
-        if(status === "SUBSCRIBED"){
-
-          /*
-            Caller waits for "ready" from callee.
-            Callee sends "ready" after joining.
-            This avoids missing the first SDP offer.
-          */
-
-          if(activeCall &&
-             activeCall.direction === "incoming"){
-
-            await sendSignal({
-              type:"ready"
-            });
-
-          }
-
-        }
-
-      });
-
-}
-
-
-/* ============================================================
-   SEND SIGNAL
-============================================================ */
-
-async function sendSignal(data){
-
-  if(!callChannel) return;
-
-  try{
-
-    await callChannel.send({
-      type:"broadcast",
-      event:"signal",
-      payload:data
-    });
-
-  }catch(error){
-
-    console.log("Signal error:",error);
-
-  }
-}
-
-
-/* ============================================================
-   PREPARE LOCAL MEDIA
-============================================================ */
-
-async function prepareLocalMedia(type){
-
-  const constraints =
-    type === "video"
-      ? {
-          audio:true,
-          video:{
-            facingMode:"user",
-            width:{ideal:720},
-            height:{ideal:1280}
-          }
-        }
-      : {
-          audio:true,
-          video:false
-        };
-
-  localStream =
-    await navigator.mediaDevices.getUserMedia(
-      constraints
-    );
-
-  if(type === "video"){
-
-    $("localVideo").srcObject =
-      localStream;
-
-  }
-
-  createPeerConnection();
-
-}
-
-
-/* ============================================================
-   PEER CONNECTION
-============================================================ */
-
-function createPeerConnection(){
-
-  if(peerConnection){
-
-    try{
-      peerConnection.close();
-    }catch(e){}
-
-  }
-
-  peerConnection =
-    new RTCPeerConnection(
-      RTC_CONFIG
-    );
-
-  remoteStream =
-    new MediaStream();
-
-  const remoteVideo =
-    $("remoteVideo");
-
-  remoteVideo.srcObject =
-    remoteStream;
-
-  if(localStream){
-
-    localStream
-      .getTracks()
-      .forEach(track=>{
-
-        peerConnection.addTrack(
-          track,
-          localStream
-        );
-
-      });
-
-  }
-
-  peerConnection.ontrack =
-    event=>{
-
-      event.streams[0]
-        .getTracks()
-        .forEach(track=>{
-
-          remoteStream.addTrack(track);
-
-        });
-
-    };
-
-  peerConnection.onicecandidate =
-    async event=>{
-
-      if(event.candidate){
-
-        await sendSignal({
-          type:"ice",
-          candidate:event.candidate
-        });
-
-      }
-
-    };
-
-  peerConnection.onconnectionstatechange =
-    ()=>{
-
-      const state =
-        peerConnection.connectionState;
-
-      if(state === "connected"){
-
-        $("chatStatus").textContent =
-          "Call connected";
-
-        $("callTimer").textContent =
-          "Connected";
-
-      }
-
-      if(
-        state === "failed" ||
-        state === "disconnected"
-      ){
-
-        showToast("Call connection lost.");
-
-      }
-
-    };
-
-}
-
-
-/* ============================================================
-   HANDLE SIGNAL
-============================================================ */
-
-async function handleSignal(signal){
-
-  if(!signal || !activeCall)
-    return;
-
-  try{
-
-    if(signal.type === "ready"){
-
-      /*
-        Only caller creates the offer.
-      */
-
-      if(
-        activeCall.direction === "outgoing"
-      ){
-
-        if(!peerConnection)
-          createPeerConnection();
-
-        const offer =
-          await peerConnection.createOffer();
-
-        await peerConnection.setLocalDescription(
-          offer
-        );
-
-        await sendSignal({
-          type:"offer",
-          offer
-        });
-
-      }
-
-      return;
-
-    }
-
-
-    if(signal.type === "offer"){
-
-      if(!peerConnection)
-        createPeerConnection();
-
-      await peerConnection.setRemoteDescription(
-        new RTCSessionDescription(
-          signal.offer
-        )
-      );
-
-      const answer =
-        await peerConnection.createAnswer();
-
-      await peerConnection.setLocalDescription(
-        answer
-      );
-
-      await sendSignal({
-        type:"answer",
-        answer
-      });
-
-      return;
-
-    }
-
-
-    if(signal.type === "answer"){
-
-      if(!peerConnection)
-        return;
-
-      await peerConnection.setRemoteDescription(
-        new RTCSessionDescription(
-          signal.answer
-        )
-      );
-
-      return;
-
-    }
-
-
-    if(signal.type === "ice"){
-
-      if(
-        peerConnection &&
-        signal.candidate
-      ){
-
-        try{
-
-          await peerConnection.addIceCandidate(
-            new RTCIceCandidate(
-              signal.candidate
-            )
-          );
-
-        }catch(error){
-
-          console.log(
-            "ICE error:",
-            error
-          );
-
-        }
-
-      }
-
-      return;
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Signal handling error:",
-      error
-    );
-
-  }
-}
-
-
-/* ============================================================
-   INCOMING CALL
-============================================================ */
-
-async function handleIncomingCall(call){
-
-  if(!currentUser) return;
-
-  if(call.status !== "ringing")
-    return;
-
-  if(activeCall){
-
-    await supabaseClient
-      .from("calls")
-      .update({
-        status:"rejected"
-      })
-      .eq("id",call.id);
-
-    return;
-
-  }
-
-  const caller =
-    await getUserProfile(
-      call.caller_id
-    );
-
-  incomingCall = {
-    ...call,
-    caller
-  };
-
-  $("incomingName").textContent =
-    caller?.display_name ||
-    caller?.username ||
-    "Someone";
-
-  $("incomingType").textContent =
-    call.call_type === "video"
-      ? "Incoming video call"
-      : "Incoming voice call";
-
-  $("incomingAvatar").innerHTML =
-    caller?.avatar_url
-      ? `<img src="${escapeHtml(caller.avatar_url)}">`
-      : escapeHtml(
-          initials(
-            caller?.display_name ||
-            caller?.username ||
-            "U"
-          )
-        );
-
-  $("incomingCallModal").classList.remove(
-    "hidden"
-  );
-
-}
-
-
-/* ============================================================
-   ACCEPT INCOMING CALL
-============================================================ */
-
-async function acceptIncomingCall(){
-
-  if(!incomingCall)
-    return;
-
-  const call =
-    incomingCall;
-
-  $("incomingCallModal").classList.add(
-    "hidden"
-  );
-
-  try{
-
-    const {
-      data:updated,
-      error
-    } = await supabaseClient
-      .from("calls")
-      .update({
-        status:"accepted",
-        answered_at:new Date().toISOString()
-      })
-      .eq("id",call.id)
-      .eq("callee_id",currentUser.id)
-      .select()
-      .single();
-
-    if(error)
-      throw error;
-
-    const caller =
-      call.caller ||
-      await getUserProfile(
-        call.caller_id
-      );
-
-    selectedUser =
-      caller;
-
-    activeCall = {
-      ...updated,
-      direction:"incoming"
-    };
-
-    $("activeCallName").textContent =
-      caller?.display_name ||
-      caller?.username ||
-      "User";
-
-    $("activeCallAvatar").innerHTML =
-      caller?.avatar_url
-        ? `<img src="${escapeHtml(caller.avatar_url)}">`
-        : escapeHtml(
-            initials(
-              caller?.display_name ||
-              caller?.username ||
-              "User"
-            )
-          );
-
-    $("activeCallModal").classList.remove(
-      "hidden"
-    );
-
-    if(call.call_type === "video"){
-
-      $("voiceCallUI").classList.add("hidden");
-      $("videoCallUI").classList.remove("hidden");
-
-    }else{
-
-      $("voiceCallUI").classList.remove("hidden");
-      $("videoCallUI").classList.add("hidden");
-
-    }
-
-    await createCallChannel(call.id);
-
-    await prepareLocalMedia(
-      call.call_type
-    );
-
-    startCallTimer();
-
-    incomingCall = null;
-
-  }catch(error){
-
-    console.error(error);
-
-    showToast(
-      error.message ||
-      "Could not accept call."
-    );
-
-    incomingCall = null;
-
-  }
-}
-
-
-/* ============================================================
-   REJECT INCOMING CALL
-============================================================ */
-
-async function rejectIncomingCall(){
-
-  if(!incomingCall)
-    return;
-
-  const id =
-    incomingCall.id;
-
-  $("incomingCallModal").classList.add(
-    "hidden"
-  );
-
-  await supabaseClient
-    .from("calls")
-    .update({
-      status:"rejected",
-      ended_at:new Date().toISOString()
-    })
-    .eq("id",id)
-    .eq("callee_id",currentUser.id);
-
-  incomingCall = null;
-
-  showToast("Call rejected.");
-
-}
-
-
-/* ============================================================
-   CALL UPDATE
-============================================================ */
-
-async function handleCallUpdate(call){
-
-  if(!currentUser)
-    return;
 
   if(
-    activeCall &&
-    call.id === activeCall.id
+    profile &&
+    profile.role === "admin"
   ){
 
-    activeCall = {
-      ...activeCall,
-      ...call
-    };
+    document
+      .getElementById("adminPanel")
+      .style.display = "block";
 
-    if(call.status === "accepted"){
+    loadPendingReports();
 
-      $("callTimer").textContent =
-        "Connected";
+  }
 
-      $("chatStatus").textContent =
-        "Call connected";
+}
 
+
+/* ==========================================
+   CLOSE MODAL ON BACKGROUND
+========================================== */
+
+window.addEventListener(
+  "click",
+  function(event){
+
+    if(
+      event.target ===
+      document.getElementById("reportModal")
+    ){
+      closeReport();
     }
 
-    if(call.status === "rejected"){
-
-      showToast("Call was rejected.");
-
-      await cleanupCall(false);
-
-    }
-
-    if(call.status === "ended"){
-
-      showToast("Call ended.");
-
-      await cleanupCall(false);
-
+    if(
+      event.target ===
+      document.getElementById("adminModal")
+    ){
+      closeAdmin();
     }
 
   }
+);
 
-}
 
+/* ==========================================
+   START
+========================================== */
 
-/* ============================================================
-   CALL TIMER
-============================================================ */
+loadReports();
 
-function startCallTimer(){
-
-  clearInterval(callTimerInterval);
-
-  callStartedAt =
-    Date.now();
-
-  callTimerInterval =
-    setInterval(()=>{
-
-      if(!callStartedAt)
-        return;
-
-      const seconds =
-        Math.floor(
-          (Date.now()-callStartedAt)/1000
-        );
-
-      const min =
-        String(
-          Math.floor(seconds/60)
-        ).padStart(2,"0");
-
-      const sec =
-        String(
-          seconds%60
-        ).padStart(2,"0");
-
-      $("callTimer").textContent =
-        `${min}:${sec}`;
-
-    },1000);
-
-}
-
-
-/* ============================================================
-   MUTE
-============================================================ */
-
-function toggleMute(){
-
-  if(!localStream)
-    return;
-
-  const audioTracks =
-    localStream.getAudioTracks();
-
-  if(!audioTracks.length)
-    return;
-
-  isMuted = !isMuted;
-
-  audioTracks.forEach(
-    track=>{
-      track.enabled = !isMuted;
-    }
-  );
-
-  $("muteButton").textContent =
-    isMuted
-      ? "🔇"
-      : "🎤";
-
-  $("muteButton").classList.toggle(
-    "active",
-    isMuted
-  );
-
-}
-
-
-/* ============================================================
-   CAMERA
-============================================================ */
-
-function toggleCamera(){
-
-  if(!localStream)
-    return;
-
-  const videoTracks =
-    localStream.getVideoTracks();
-
-  if(!videoTracks.length)
-    return;
-
-  isCameraOff =
-    !isCameraOff;
-
-  videoTracks.forEach(
-    track=>{
-      track.enabled =
-        !isCameraOff;
-    }
-  );
-
-  $("cameraButton").textContent =
-    isCameraOff
-      ? "🚫"
-      : "📷";
-
-  $("cameraButton").classList.toggle(
-    "active",
-    isCameraOff
-  );
-
-}
-
-
-/* ============================================================
-   END CALL
-============================================================ */
-
-async function endCall(){
-
-  if(
-    activeCall &&
-    activeCall.id
-  ){
-
-    await supabaseClient
-      .from("calls")
-      .update({
-        status:"ended",
-        ended_at:new Date().toISOString()
-      })
-      .eq("id",activeCall.id);
-
-  }
-
-  await cleanupCall(false);
-
-}
-
-
-/* ============================================================
-   CLEANUP CALL
-============================================================ */
-
-async function cleanupCall(updateDatabase=true){
-
-  clearInterval(
-    callTimerInterval
-  );
-
-  callTimerInterval = null;
-  callStartedAt = null;
-
-  if(
-    updateDatabase &&
-    activeCall &&
-    activeCall.id
-  ){
-
-    try{
-
-      await supabaseClient
-        .from("calls")
-        .update({
-          status:"ended",
-          ended_at:new Date().toISOString()
-        })
-        .eq("id",activeCall.id);
-
-    }catch(e){}
-
-  }
-
-  if(localStream){
-
-    localStream
-      .getTracks()
-      .forEach(
-        track=>track.stop()
-      );
-
-    localStream = null;
-
-  }
-
-  if(peerConnection){
-
-    try{
-      peerConnection.close();
-    }catch(e){}
-
-    peerConnection = null;
-
-  }
-
-  if(callChannel){
-
-    try{
-      await supabaseClient.removeChannel(
-        callChannel
-      );
-    }catch(e){}
-
-    callChannel = null;
-
-  }
-
-  remoteStream = null;
-
-  $("remoteVideo").srcObject = null;
-  $("localVideo").srcObject = null;
-
-  $("activeCallModal").classList.add(
-    "hidden"
-  );
-
-  $("incomingCallModal").classList.add(
-    "hidden"
-  );
-
-  $("voiceCallUI").classList.remove(
-    "hidden"
-  );
-
-  $("videoCallUI").classList.add(
-    "hidden"
-  );
-
-  $("muteButton").textContent = "🎤";
-  $("cameraButton").textContent = "📷";
-
-  $("muteButton").classList.remove("active");
-  $("cameraButton").classList.remove("active");
-
-  isMuted = false;
-  isCameraOff = false;
-
-  activeCall = null;
-  incomingCall = null;
-
-}
-
-
-/* ============================================================
-   START APP
-============================================================ */
-
-init();
+checkAdminSession();
 
 </script>
 
