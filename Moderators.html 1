@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ঘুষ সাইট — Moderator</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f4f7f5;
+  color:#18231d;
+}
+
+button,input{
+  font:inherit;
+}
+
+header{
+  background:#087f3e;
+  color:white;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 12px #0002;
+}
+
+.header{
+  max-width:850px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:white;
+  color:#087f3e;
+  display:grid;
+  place-items:center;
+  font-weight:bold;
+}
+
+.logo h1{
+  font-size:18px;
+  margin:0;
+}
+
+.logo small{
+  opacity:.85;
+}
+
+.container{
+  max-width:850px;
+  margin:18px auto;
+  padding:0 14px;
+}
+
+.card{
+  background:white;
+  padding:17px;
+  border-radius:16px;
+  margin-bottom:15px;
+  box-shadow:0 3px 14px #0000000d;
+}
+
+.login{
+  max-width:400px;
+  margin:60px auto;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #d7ded9;
+  border-radius:10px;
+  margin:7px 0;
+  outline:none;
+}
+
+input:focus{
+  border-color:#087f3e;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:11px 14px;
+  background:#087f3e;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+.logout{
+  background:#c62828;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.stat{
+  background:#f3f8f5;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.stat span{
+  color:#68736d;
+  font-size:13px;
+}
+
+.stat b{
+  display:block;
+  color:#087f3e;
+  font-size:27px;
+  margin-top:4px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.actions button{
+  flex:1;
+}
+
+.report{
+  border:1px solid #e0e6e2;
+  border-radius:14px;
+  padding:15px;
+  margin:12px 0;
+}
+
+.report h3{
+  margin:0 0 12px;
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+
+.meta div{
+  background:#f7f9f8;
+  padding:9px;
+  border-radius:9px;
+  font-size:14px;
+}
+
+.details{
+  margin-top:10px;
+  padding:12px;
+  background:#f7f7f7;
+  border-radius:10px;
+  line-height:1.6;
+  white-space:pre-wrap;
+}
+
+.media img,
+.media video{
+  width:100%;
+  max-height:420px;
+  object-fit:contain;
+  background:#111;
+  border-radius:10px;
+  margin-top:8px;
+}
+
+.report-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.report-actions button{
+  flex:1;
+}
+
+.reject{
+  background:#c62828;
+}
+
+.empty{
+  text-align:center;
+  padding:30px 10px;
+  color:#707a74;
+}
+
+.error{
+  color:#c62828;
+  font-weight:bold;
+}
+
+.success{
+  color:#087f3e;
+  font-weight:bold;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#fff4d8;
+  color:#986300;
+  font-size:12px;
+}
+
+.notice{
+  background:#edf7f0;
+  border-radius:10px;
+  padding:11px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:600px){
+
+  .meta{
+    grid-template-columns:1fr;
+  }
+
+  .report-actions{
+    flex-direction:column;
+  }
+
+  .header{
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="header">
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        ঘু
+      </div>
+
+      <div>
+        <h1>ঘুষ সাইট</h1>
+        <small>Moderator Panel</small>
+      </div>
+
+    </div>
+
+    <button
+      class="logout"
+      onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- LOGIN -->
+
+<div
+  id="loginBox"
+  class="card login">
+
+  <h2>🛡️ Moderator Login</h2>
+
+  <div class="notice">
+    এই প্যানেল শুধু অনুমোদিত Moderator-দের জন্য।
+  </div>
+
+  <input
+    id="email"
+    type="email"
+    placeholder="Moderator Email"
+    autocomplete="username"
+  >
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+    autocomplete="current-password"
+  >
+
+  <button
+    onclick="login()">
+    Login
+  </button>
+
+  <div
+    id="loginMessage"
+    class="message">
+  </div>
+
+</div>
+
+
+<!-- MODERATOR AREA -->
+
+<div
+  id="moderatorArea"
+  class="hidden">
+
+
+  <div class="card">
+
+    <h2>📊 Moderator Dashboard</h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        <span>Pending রিপোর্ট</span>
+        <b id="pendingCount">0</b>
+      </div>
+
+      <div class="stat">
+        <span>আজ দেখা হয়েছে</span>
+        <b id="shownCount">0</b>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="actions">
+
+      <button
+        onclick="loadReports()">
+        🔄 Refresh
+      </button>
+
+      <button
+        onclick="openPublicSite()">
+        🌐 Public
+      </button>
+
+    </div>
+
+    <input
+      id="search"
+      placeholder="🔎 রিপোর্ট খুঁজুন..."
+      oninput="renderReports()"
+    >
+
+    <div id="reports">
+
+      <div class="empty">
+        রিপোর্ট লোড হচ্ছে...
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+"https://klreqkbqyyiwmohlmgkh.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_xlqcHTsDaMpBq4n54iMs4A_S7gKpiZc";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+let reports = [];
+
+let shownCount = 0;
+
+
+/* =========================
+   LOGIN CHECK
+========================= */
+
+async function checkLogin(){
+
+  const {
+    data:{session}
+  } =
+  await supabaseClient.auth.getSession();
+
+
+  if(!session){
+    return;
+  }
+
+
+  const allowed =
+    await isModerator(
+      session.user.email
+    );
+
+
+  if(!allowed){
+
+    await supabaseClient.auth.signOut();
+
+    document
+      .getElementById("loginMessage")
+      .innerHTML =
+      `<span class="error">
+        এই account-এর Moderator access নেই।
+      </span>`;
+
+    return;
+  }
+
+
+  showModerator();
+}
+
+
+/* =========================
+   CHECK MODERATOR
+========================= */
+
+async function isModerator(email){
+
+  if(!email){
+    return false;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("moderators")
+    .select("id,email,active")
+    .eq("email",email.toLowerCase())
+    .eq("active",true)
+    .maybeSingle();
+
+
+  if(error){
+    console.error(error);
+    return false;
+  }
+
+
+  return !!data;
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+
+  const email =
+    document
+      .getElementById("email")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const password =
+    document
+      .getElementById("password")
+      .value;
+
+  const msg =
+    document
+      .getElementById("loginMessage");
+
+
+  if(!email || !password){
+
+    msg.innerHTML =
+      `<span class="error">
+        Email ও Password দিন।
+      </span>`;
+
+    return;
+  }
+
+
+  msg.innerHTML =
+    "Login হচ্ছে...";
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient.auth
+    .signInWithPassword({
+
+      email:email,
+      password:password
+
+    });
+
+
+  if(error){
+
+    msg.innerHTML =
+      `<span class="error">
+        Login হয়নি।
+      </span>`;
+
+    return;
+  }
+
+
+  const allowed =
+    await isModerator(
+      data.user.email
+    );
+
+
+  if(!allowed){
+
+    await supabaseClient.auth.signOut();
+
+    msg.innerHTML =
+      `<span class="error">
+        এই account-এর Moderator access নেই।
+      </span>`;
+
+    return;
+  }
+
+
+  showModerator();
+}
+
+
+/* =========================
+   SHOW MODERATOR
+========================= */
+
+function showModerator(){
+
+  document
+    .getElementById("loginBox")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("moderatorArea")
+    .classList.remove("hidden");
+
+
+  loadReports();
+}
+
+
+/* =========================
+   LOAD PENDING REPORTS
+========================= */
+
+async function loadReports(){
+
+  const box =
+    document.getElementById("reports");
+
+
+  box.innerHTML =
+    `<div class="empty">
+      রিপোর্ট লোড হচ্ছে...
+    </div>`;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("reports")
+    .select("*")
+    .eq("status","pending")
+    .order(
+      "created_at",
+      {ascending:false}
+    );
+
+
+  if(error){
+
+    box.innerHTML =
+      `<div class="empty error">
+        রিপোর্ট লোড হয়নি:<br>
+        ${escapeHTML(error.message)}
+      </div>`;
+
+    return;
+  }
+
+
+  reports =
+    data || [];
+
+
+  document
+    .getElementById("pendingCount")
+    .innerText =
+    reports.length;
+
+
+  renderReports();
+}
+
+
+/* =========================
+   RENDER REPORTS
+========================= */
+
+function renderReports(){
+
+  const box =
+    document.getElementById("reports");
+
+
+  const search =
+    document
+      .getElementById("search")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  const filtered =
+    reports.filter(r=>{
+
+      if(!search){
+        return true;
+      }
+
+
+      const text = [
+
+        r.department,
+        r.service,
+        r.location,
+        r.amount,
+        r.outcome,
+        r.details
+
+      ]
+      .join(" ")
+      .toLowerCase();
+
+
+      return text.includes(search);
+
+    });
+
+
+  if(filtered.length===0){
+
+    box.innerHTML =
+      `<div class="empty">
+        এখন কোনো Pending রিপোর্ট নেই। 🎉
+      </div>`;
+
+    return;
+  }
+
+
+  box.innerHTML="";
+
+
+  filtered.forEach(r=>{
+
+    shownCount++;
+
+
+    const div =
+      document.createElement("div");
+
+
+    div.className =
+      "report";
+
+
+    let media = "";
+
+
+    if(r.media_url){
+
+      if(r.media_type==="video"){
+
+        media =
+          `<div class="media">
+            <b>🎥 ভিডিও</b>
+            <video
+              controls
+              src="${escapeAttr(r.media_url)}">
+            </video>
+          </div>`;
+
+      }else{
+
+        media =
+          `<div class="media">
+            <b>🖼️ ছবি</b>
+            <img
+              src="${escapeAttr(r.media_url)}"
+              alt="Report media">
+          </div>`;
+
+      }
+
+    }
+
+
+    div.innerHTML = `
+
+      <h3>
+        🏢 ${escapeHTML(
+          r.department ||
+          "দপ্তর উল্লেখ নেই"
+        )}
+      </h3>
+
+      <p>
+        <span class="badge">
+          ⏳ Pending
+        </span>
+      </p>
+
+      <div class="meta">
+
+        <div>
+          <b>সেবা</b><br>
+          ${escapeHTML(
+            r.service ||
+            "উল্লেখ নেই"
+          )}
+        </div>
+
+        <div>
+          <b>এলাকা</b><br>
+          ${escapeHTML(
+            r.location ||
+            "উল্লেখ নেই"
+          )}
+        </div>
+
+        <div>
+          <b>দাবিকৃত অর্থ</b><br>
+          ${escapeHTML(
+            r.amount ||
+            "উল্লেখ নেই"
+          )}
+        </div>
+
+        <div>
+          <b>কী হয়েছিল</b><br>
+          ${escapeHTML(
+            r.outcome ||
+            "উল্লেখ নেই"
+          )}
+        </div>
+
+      </div>
+
+      <div class="details">
+
+        <b>📝 বিস্তারিত</b>
+
+        <br><br>
+
+        ${escapeHTML(
+          r.details ||
+          "কোনো বিস্তারিত নেই"
+        )}
+
+      </div>
+
+      ${media}
+
+
+      <div class="report-actions">
+
+        <button
+          onclick="approve('${r.id}')">
+
+          ✅ Approve
+
+        </button>
+
+
+        <button
+          class="reject"
+          onclick="reject('${r.id}')">
+
+          ❌ Reject
+
+        </button>
+
+      </div>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+
+
+  document
+    .getElementById("shownCount")
+    .innerText =
+    shownCount;
+}
+
+
+/* =========================
+   APPROVE
+========================= */
+
+async function approve(id){
+
+  if(
+    !confirm(
+      "এই রিপোর্টটি Publish করতে চান?"
+    )
+  ){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("reports")
+    .update({
+
+      status:"published",
+
+      published_at:
+        new Date().toISOString()
+
+    })
+    .eq("id",id)
+    .eq("status","pending");
+
+
+  if(error){
+
+    alert(
+      "Approve হয়নি:\n"+
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "✅ রিপোর্ট সফলভাবে Published হয়েছে।"
+  );
+
+
+  loadReports();
+}
+
+
+/* =========================
+   REJECT
+========================= */
+
+async function reject(id){
+
+  if(
+    !confirm(
+      "এই রিপোর্টটি Reject করতে চান?"
+    )
+  ){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("reports")
+    .update({
+
+      status:"rejected"
+
+    })
+    .eq("id",id)
+    .eq("status","pending");
+
+
+  if(error){
+
+    alert(
+      "Reject হয়নি:\n"+
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "❌ রিপোর্ট Reject হয়েছে।"
+  );
+
+
+  loadReports();
+}
+
+
+/* =========================
+   PUBLIC SITE
+========================= */
+
+function openPublicSite(){
+
+  window.open(
+    "index.html",
+    "_blank"
+  );
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+  await supabaseClient.auth.signOut();
+
+  location.reload();
+}
+
+
+/* =========================
+   SECURITY HELPERS
+========================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function escapeAttr(value){
+
+  return escapeHTML(value);
+}
+
+
+/* =========================
+   START
+========================= */
+
+checkLogin();
+
+</script>
+
+</body>
+</html>
