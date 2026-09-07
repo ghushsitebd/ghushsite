@@ -2,110 +2,370 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dalal.com - Admin Panel</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ঘুষ সাইট — Admin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#f1f8f4;
-  color:#222;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f4f7f5;
+  color:#18231d;
 }
+
+button,input,select{
+  font:inherit;
+}
+
 header{
   background:#087f3e;
-  color:white;
-  padding:18px;
-  text-align:center;
+  color:#fff;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 2px 12px #0002;
 }
+
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  background:#fff;
+  color:#087f3e;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-weight:bold;
+  font-size:20px;
+}
+
+.logo h1{
+  font-size:19px;
+  margin:0;
+}
+
+.logo small{
+  display:block;
+  opacity:.85;
+  margin-top:2px;
+}
+
 .container{
   max-width:1100px;
   margin:20px auto;
-  padding:0 15px;
+  padding:0 14px;
 }
+
 .card{
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:20px;
-  box-shadow:0 2px 10px #0001;
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 3px 14px #0000000c;
 }
-input,select,button{
+
+.hidden{
+  display:none!important;
+}
+
+input,select{
   width:100%;
-  padding:12px;
-  margin:7px 0;
-  border:1px solid #ccc;
-  border-radius:8px;
-  font-size:15px;
+  padding:12px 13px;
+  border:1px solid #d8dfdb;
+  border-radius:10px;
+  background:#fff;
+  outline:none;
+  margin:6px 0;
 }
+
+input:focus,select:focus{
+  border-color:#087f3e;
+}
+
 button{
+  border:0;
+  border-radius:10px;
+  padding:11px 14px;
   background:#087f3e;
   color:white;
-  border:0;
   cursor:pointer;
 }
-button:hover{background:#056b34}
-.logout{
+
+button:hover{
+  opacity:.92;
+}
+
+.btn-danger{
   background:#c62828;
 }
+
+.btn-dark{
+  background:#26332c;
+}
+
+.btn-light{
+  background:#e9f3ed;
+  color:#087f3e;
+}
+
+.btn-warning{
+  background:#d88900;
+}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.top-actions button{
+  flex:1;
+  min-width:120px;
+}
+
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:12px;
+  gap:10px;
 }
+
 .stat{
-  background:white;
-  padding:18px;
-  border-radius:10px;
+  background:#f6faf7;
+  border-radius:13px;
+  padding:15px;
   text-align:center;
-  box-shadow:0 2px 8px #0001;
 }
+
+.stat span{
+  font-size:13px;
+  color:#68736d;
+}
+
 .stat b{
   display:block;
-  font-size:28px;
   color:#087f3e;
+  font-size:27px;
+  margin-top:5px;
 }
+
+.nav{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  margin-bottom:15px;
+}
+
+.nav button{
+  white-space:nowrap;
+  background:#e8eee9;
+  color:#243229;
+}
+
+.nav button.active{
+  background:#087f3e;
+  color:white;
+}
+
 .complaint{
-  border:1px solid #ddd;
-  border-radius:10px;
+  border:1px solid #e0e6e2;
+  border-radius:14px;
   padding:15px;
   margin:12px 0;
 }
+
 .complaint h3{
-  margin-top:0;
+  margin:0 0 10px;
 }
+
+.meta{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+  font-size:14px;
+}
+
+.meta div{
+  background:#f7f9f8;
+  padding:9px;
+  border-radius:8px;
+}
+
+.details{
+  margin-top:10px;
+  padding:12px;
+  background:#f7f7f7;
+  border-radius:10px;
+  white-space:pre-wrap;
+  line-height:1.6;
+}
+
+.media img,
+.media video{
+  width:100%;
+  max-height:430px;
+  object-fit:contain;
+  border-radius:10px;
+  margin-top:8px;
+  background:#111;
+}
+
 .badge{
   display:inline-block;
-  padding:5px 10px;
-  border-radius:15px;
-  background:#eee;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#edf1ee;
+  font-size:12px;
 }
-.details{
-  white-space:pre-wrap;
-  background:#f7f7f7;
-  padding:10px;
-  border-radius:8px;
+
+.badge.pending{
+  background:#fff4d8;
+  color:#986300;
 }
-.media img,.media video{
-  max-width:100%;
-  max-height:400px;
-  margin-top:10px;
-  border-radius:8px;
-}
-.hidden{display:none}
-.error{
-  color:#c62828;
-  font-weight:bold;
-}
-.success{
+
+.badge.published{
+  background:#def6e7;
   color:#087f3e;
-  font-weight:bold;
 }
+
+.badge.rejected{
+  background:#ffe2e2;
+  color:#b71c1c;
+}
+
+.action-row{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.action-row button{
+  flex:1;
+}
+
+.moderator{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px;
+  border:1px solid #e0e6e2;
+  border-radius:12px;
+  margin:9px 0;
+}
+
+.moderator-info{
+  min-width:0;
+}
+
+.moderator-info b{
+  display:block;
+  word-break:break-word;
+}
+
+.moderator-info small{
+  color:#68736d;
+}
+
+.login{
+  max-width:420px;
+  margin:60px auto;
+}
+
+.message{
+  margin-top:10px;
+  font-size:14px;
+}
+
+.error{color:#c62828}
+.success{color:#087f3e}
+
+.empty{
+  text-align:center;
+  padding:30px 10px;
+  color:#707a74;
+}
+
+.search{
+  margin-bottom:12px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:50;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:480px;
+  border-radius:17px;
+  padding:18px;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close{
+  width:auto;
+  background:#eee;
+  color:#222;
+}
+
+.notice{
+  background:#fff8df;
+  border:1px solid #f1df9a;
+  border-radius:10px;
+  padding:11px;
+  font-size:13px;
+  line-height:1.5;
+}
+
 @media(max-width:700px){
-  .stats{grid-template-columns:repeat(2,1fr)}
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .meta{
+    grid-template-columns:1fr;
+  }
+
+  .action-row{
+    flex-direction:column;
+  }
+
+  .header-inner{
+    align-items:flex-start;
+  }
 }
 </style>
 </head>
@@ -113,69 +373,244 @@ button:hover{background:#056b34}
 <body>
 
 <header>
-  <h1>🛡️ Dalal.com</h1>
-  <p>Admin Panel</p>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">ঘু</div>
+      <div>
+        <h1>ঘুষ সাইট</h1>
+        <small>Super Admin Panel</small>
+      </div>
+    </div>
+
+    <button class="btn-danger" onclick="logout()">
+      Logout
+    </button>
+  </div>
 </header>
 
 <div class="container">
 
 <!-- LOGIN -->
-<div id="loginBox" class="card">
+
+<div id="loginBox" class="card login">
+
   <h2>🔐 Admin Login</h2>
 
-  <input id="email" type="email" placeholder="Admin Email">
+  <input
+    id="email"
+    type="email"
+    placeholder="Admin Email"
+    autocomplete="username"
+  >
 
-  <input id="password" type="password" placeholder="Password">
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+    autocomplete="current-password"
+  >
 
-  <button onclick="login()">Login</button>
+  <button onclick="login()">
+    Login
+  </button>
 
-  <p id="loginMessage"></p>
+  <div id="loginMessage" class="message"></div>
+
 </div>
 
 
-<!-- ADMIN AREA -->
+<!-- ADMIN -->
+
 <div id="adminArea" class="hidden">
 
-  <div class="card">
-    <h2>📊 Dashboard</h2>
+  <div class="nav">
 
-    <div class="stats">
-      <div class="stat">
-        মোট
-        <b id="total">0</b>
+    <button
+      id="navReports"
+      class="active"
+      onclick="showSection('reports')">
+      📋 রিপোর্ট
+    </button>
+
+    <button
+      id="navModerators"
+      onclick="showSection('moderators')">
+      🛡️ Moderator
+    </button>
+
+    <button onclick="openPublicSite()">
+      🌐 Public Site
+    </button>
+
+  </div>
+
+
+  <!-- REPORTS -->
+
+  <section id="reportsSection">
+
+    <div class="card">
+
+      <h2>📊 Dashboard</h2>
+
+      <div class="stats">
+
+        <div class="stat">
+          <span>মোট রিপোর্ট</span>
+          <b id="total">0</b>
+        </div>
+
+        <div class="stat">
+          <span>Pending</span>
+          <b id="pending">0</b>
+        </div>
+
+        <div class="stat">
+          <span>Published</span>
+          <b id="published">0</b>
+        </div>
+
+        <div class="stat">
+          <span>Rejected</span>
+          <b id="rejected">0</b>
+        </div>
+
       </div>
 
-      <div class="stat">
-        Pending
-        <b id="pending">0</b>
-      </div>
-
-      <div class="stat">
-        Published
-        <b id="published">0</b>
-      </div>
-
-      <div class="stat">
-        Rejected
-        <b id="rejected">0</b>
-      </div>
     </div>
-  </div>
 
 
-  <div class="card">
-    <h2>📋 অভিযোগসমূহ</h2>
+    <div class="card">
 
-    <button onclick="loadComplaints()">🔄 Refresh</button>
+      <div class="top-actions">
 
-    <div id="complaints"></div>
-  </div>
+        <button onclick="setFilter('all')" id="allBtn">
+          সব
+        </button>
 
-  <div class="card">
-    <button class="logout" onclick="logout()">🚪 Logout</button>
-  </div>
+        <button onclick="setFilter('pending')" id="pendingBtn">
+          Pending
+        </button>
+
+        <button onclick="setFilter('published')" id="publishedBtn">
+          Published
+        </button>
+
+        <button onclick="setFilter('rejected')" id="rejectedBtn">
+          Rejected
+        </button>
+
+        <button
+          class="btn-light"
+          onclick="loadReports()">
+          🔄 Refresh
+        </button>
+
+      </div>
+
+      <input
+        id="reportSearch"
+        class="search"
+        placeholder="🔎 প্রতিষ্ঠান, সেবা, এলাকা খুঁজুন..."
+        oninput="renderReports()"
+      >
+
+      <div id="reports">
+        <div class="empty">রিপোর্ট লোড হচ্ছে...</div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- MODERATORS -->
+
+  <section
+    id="moderatorsSection"
+    class="hidden">
+
+    <div class="card">
+
+      <div class="top-actions">
+
+        <div style="flex:1">
+          <h2 style="margin:0">
+            🛡️ Moderator Management
+          </h2>
+
+          <small>
+            Moderator শুধু রিপোর্ট Approve / Reject করতে পারবে।
+          </small>
+        </div>
+
+        <button onclick="openModeratorModal()">
+          ＋ Moderator
+        </button>
+
+      </div>
+
+      <div id="moderators">
+        <div class="empty">
+          Moderator তালিকা লোড হচ্ছে...
+        </div>
+      </div>
+
+    </div>
+
+  </section>
 
 </div>
+
+</div>
+
+
+<!-- MODERATOR MODAL -->
+
+<div
+  id="moderatorModal"
+  class="modal hidden"
+  onclick="closeModalOutside(event)">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2 id="modalTitle">
+        ＋ Moderator যোগ করুন
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeModeratorModal()">
+        ✕
+      </button>
+
+    </div>
+
+    <div class="notice">
+      Moderator-এর Supabase account আগে তৈরি থাকতে হবে।
+      এখানে সেই account-এর email যোগ করুন।
+    </div>
+
+    <input
+      id="moderatorEmail"
+      type="email"
+      placeholder="Moderator Email"
+    >
+
+    <input
+      id="moderatorName"
+      placeholder="নাম (ঐচ্ছিক)"
+    >
+
+    <button onclick="addModerator()">
+      ✅ Moderator যোগ করুন
+    </button>
+
+    <div id="moderatorMessage" class="message"></div>
+
+  </div>
 
 </div>
 
@@ -189,74 +624,45 @@ const SUPABASE_KEY =
 "sb_publishable_xlqcHTsDaMpBq4n54iMs4A_S7gKpiZc";
 
 const supabaseClient =
-supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 
-// ADMIN UID
+/*
+  তোমার বর্তমান Admin UID
+*/
+
 const ADMIN_UID =
 "bd8c8bc2-6a98-4b3f-8873-06df4493196a";
 
 
-// CHECK LOGIN
+let allReports = [];
+let currentFilter = "all";
+
+
+/* =========================
+   LOGIN CHECK
+========================= */
+
 async function checkLogin(){
 
   const {data:{session}} =
-  await supabaseClient.auth.getSession();
+    await supabaseClient.auth.getSession();
 
-  if(session){
-
-    if(session.user.id !== ADMIN_UID){
-
-      await supabaseClient.auth.signOut();
-
-      document.getElementById("loginMessage").innerHTML =
-      "<span class='error'>এই account-এর Admin access নেই।</span>";
-
-      return;
-    }
-
-    showAdmin();
-
-  }
-}
-
-
-// LOGIN
-async function login(){
-
-  const email =
-  document.getElementById("email").value.trim();
-
-  const password =
-  document.getElementById("password").value;
-
-  const message =
-  document.getElementById("loginMessage");
-
-  message.innerHTML="Login হচ্ছে...";
-
-  const {data,error} =
-  await supabaseClient.auth.signInWithPassword({
-    email:email,
-    password:password
-  });
-
-  if(error){
-
-    message.innerHTML =
-    "<span class='error'>Login হয়নি: "+
-    error.message+
-    "</span>";
-
+  if(!session){
     return;
   }
 
-  if(data.user.id !== ADMIN_UID){
+  if(session.user.id !== ADMIN_UID){
 
     await supabaseClient.auth.signOut();
 
-    message.innerHTML =
-    "<span class='error'>এই account Admin নয়।</span>";
+    document.getElementById("loginMessage").innerHTML =
+      `<span class="error">
+        এই account-এর Admin access নেই।
+      </span>`;
 
     return;
   }
@@ -265,232 +671,492 @@ async function login(){
 }
 
 
-// SHOW ADMIN
-function showAdmin(){
+/* =========================
+   LOGIN
+========================= */
 
-  document.getElementById("loginBox")
-  .classList.add("hidden");
+async function login(){
 
-  document.getElementById("adminArea")
-  .classList.remove("hidden");
+  const email =
+    document.getElementById("email").value.trim();
 
-  loadComplaints();
+  const password =
+    document.getElementById("password").value;
+
+  const msg =
+    document.getElementById("loginMessage");
+
+  if(!email || !password){
+
+    msg.innerHTML =
+      `<span class="error">
+        Email ও Password দিন।
+      </span>`;
+
+    return;
+  }
+
+  msg.innerHTML = "Login হচ্ছে...";
+
+  const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if(error){
+
+    msg.innerHTML =
+      `<span class="error">
+        Login হয়নি: ${escapeHTML(error.message)}
+      </span>`;
+
+    return;
+  }
+
+  if(data.user.id !== ADMIN_UID){
+
+    await supabaseClient.auth.signOut();
+
+    msg.innerHTML =
+      `<span class="error">
+        এই account Admin নয়।
+      </span>`;
+
+    return;
+  }
+
+  showAdmin();
 }
 
 
-// LOAD COMPLAINTS
-async function loadComplaints(){
+/* =========================
+   SHOW ADMIN
+========================= */
+
+function showAdmin(){
+
+  document
+    .getElementById("loginBox")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminArea")
+    .classList.remove("hidden");
+
+  loadReports();
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+function showSection(section){
+
+  const reports =
+    document.getElementById("reportsSection");
+
+  const moderators =
+    document.getElementById("moderatorsSection");
+
+  const navReports =
+    document.getElementById("navReports");
+
+  const navModerators =
+    document.getElementById("navModerators");
+
+  if(section==="reports"){
+
+    reports.classList.remove("hidden");
+    moderators.classList.add("hidden");
+
+    navReports.classList.add("active");
+    navModerators.classList.remove("active");
+
+    loadReports();
+
+  }else{
+
+    reports.classList.add("hidden");
+    moderators.classList.remove("hidden");
+
+    navReports.classList.remove("active");
+    navModerators.classList.add("active");
+
+    loadModerators();
+  }
+}
+
+
+/* =========================
+   LOAD REPORTS
+========================= */
+
+async function loadReports(){
 
   const box =
-  document.getElementById("complaints");
+    document.getElementById("reports");
 
   box.innerHTML =
-  "<p>অভিযোগ লোড হচ্ছে...</p>";
+    `<div class="empty">রিপোর্ট লোড হচ্ছে...</div>`;
 
   const {data,error} =
-  await supabaseClient
-  .from("complaints")
-  .select("*")
-  .order("created_at",{ascending:false});
+    await supabaseClient
+      .from("reports")
+      .select("*")
+      .order("created_at",{ascending:false});
 
   if(error){
 
     box.innerHTML =
-    "<p class='error'>অভিযোগ লোড হয়নি: "+
-    error.message+
-    "</p>";
+      `<div class="empty error">
+        রিপোর্ট লোড হয়নি:<br>
+        ${escapeHTML(error.message)}
+      </div>`;
 
     return;
   }
 
-  updateStats(data);
+  allReports = data || [];
 
-  if(!data || data.length===0){
+  updateStats();
+
+  renderReports();
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+function setFilter(filter){
+
+  currentFilter = filter;
+
+  renderReports();
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderReports(){
+
+  const box =
+    document.getElementById("reports");
+
+  const search =
+    document
+      .getElementById("reportSearch")
+      .value
+      .trim()
+      .toLowerCase();
+
+  let reports =
+    allReports.filter(r=>{
+
+      if(
+        currentFilter !== "all" &&
+        (r.status || "pending") !== currentFilter
+      ){
+        return false;
+      }
+
+      if(!search){
+        return true;
+      }
+
+      const text = [
+
+        r.department,
+        r.service,
+        r.location,
+        r.outcome,
+        r.details
+
+      ].join(" ").toLowerCase();
+
+      return text.includes(search);
+
+    });
+
+
+  if(reports.length===0){
 
     box.innerHTML =
-    "<p>কোনো অভিযোগ পাওয়া যায়নি।</p>";
+      `<div class="empty">
+        এই ফিল্টারে কোনো রিপোর্ট নেই।
+      </div>`;
 
     return;
   }
 
-  box.innerHTML="";
 
-  data.forEach(c=>{
+  box.innerHTML = "";
+
+
+  reports.forEach(r=>{
 
     const div =
-    document.createElement("div");
+      document.createElement("div");
 
-    div.className="complaint";
+    div.className = "complaint";
 
-    const title =
-    c.title || "শিরোনাম নেই";
-
-    const category =
-    c.category || "অন্যান্য";
-
-    const description =
-    c.description || "";
-
-    const location =
-    c.location || "উল্লেখ নেই";
 
     const status =
-    c.status || "pending";
+      r.status || "pending";
 
-    const name =
-    c.is_anonymous
-    ? "গোপন পরিচয়"
-    : (c.name || "নাম নেই");
 
-    const phone =
-    c.is_anonymous
-    ? "গোপন"
-    : (c.phone || c.mobile || "নেই");
+    const statusClass =
+      status==="published"
+      ? "published"
+      : status==="rejected"
+      ? "rejected"
+      : "pending";
 
-    div.innerHTML=`
 
-      <h3>${escapeHTML(title)}</h3>
+    const statusText =
+      status==="published"
+      ? "Published"
+      : status==="rejected"
+      ? "Rejected"
+      : "Pending";
+
+
+    const media = r.media_url
+      ?
+        (
+          r.media_type==="video"
+          ?
+          `<video controls src="${escapeAttr(r.media_url)}"></video>`
+          :
+          `<img src="${escapeAttr(r.media_url)}">`
+        )
+      :
+        "";
+
+
+    div.innerHTML = `
+
+      <h3>
+        ${escapeHTML(r.department || "দপ্তর উল্লেখ নেই")}
+      </h3>
+
+      <div class="meta">
+
+        <div>
+          <b>🏢 সেবা</b><br>
+          ${escapeHTML(r.service || "উল্লেখ নেই")}
+        </div>
+
+        <div>
+          <b>📍 এলাকা</b><br>
+          ${escapeHTML(r.location || "উল্লেখ নেই")}
+        </div>
+
+        <div>
+          <b>💰 অর্থ</b><br>
+          ${escapeHTML(r.amount || "উল্লেখ নেই")}
+        </div>
+
+        <div>
+          <b>⚠️ ঘটনা</b><br>
+          ${escapeHTML(r.outcome || "উল্লেখ নেই")}
+        </div>
+
+      </div>
 
       <p>
-        <b>ধরন:</b>
-        ${escapeHTML(category)}
-      </p>
-
-      <p>
-        <b>স্থান:</b>
-        ${escapeHTML(location)}
-      </p>
-
-      <p>
-        <b>পরিচয়:</b>
-        ${escapeHTML(name)}
-      </p>
-
-      <p>
-        <b>মোবাইল:</b>
-        ${escapeHTML(phone)}
-      </p>
-
-      <p>
-        <b>Status:</b>
-        <span class="badge">
-          ${escapeHTML(status)}
+        <span class="badge ${statusClass}">
+          ${statusText}
         </span>
       </p>
 
       <div class="details">
-        ${escapeHTML(description)}
+        ${escapeHTML(r.details || "বিস্তারিত নেই")}
       </div>
 
-      <div class="media">
+      ${
+        media
+        ?
+        `<div class="media">
+          ${media}
+        </div>`
+        :
+        ""
+      }
+
+      <div class="action-row">
 
         ${
-          c.image_url
+          status!=="published"
           ?
-          `<p>
-            <b>🖼️ ছবি:</b><br>
-            <img src="${escapeAttr(c.image_url)}">
-          </p>`
+          `<button
+            onclick="approveReport('${r.id}')">
+            ✅ Approve
+          </button>`
           :
-          ""
+          `<button
+            class="btn-light"
+            onclick="changeReportStatus('${r.id}','pending')">
+            ↩ Pending
+          </button>`
         }
 
         ${
-          c.video_url
+          status!=="rejected"
           ?
-          `<p>
-            <b>🎥 ভিডিও:</b><br>
-            <video controls src="${escapeAttr(c.video_url)}"></video>
-          </p>`
+          `<button
+            class="btn-warning"
+            onclick="rejectReport('${r.id}')">
+            ❌ Reject
+          </button>`
           :
-          ""
+          `<button
+            class="btn-light"
+            onclick="changeReportStatus('${r.id}','pending')">
+            ↩ Pending
+          </button>`
         }
 
       </div>
 
-      <select id="status-${c.id}">
-        <option value="pending"
-          ${status==="pending"?"selected":""}>
-          Pending
-        </option>
+      <div class="action-row">
 
-        <option value="reviewing"
-          ${status==="reviewing"?"selected":""}>
-          Reviewing
-        </option>
+        <button
+          class="btn-danger"
+          onclick="deleteReport('${r.id}')">
+          🗑️ Delete
+        </button>
 
-        <option value="published"
-          ${status==="published"?"selected":""}>
-          Published
-        </option>
+      </div>
 
-        <option value="rejected"
-          ${status==="rejected"?"selected":""}>
-          Rejected
-        </option>
-      </select>
-
-      <button onclick="updateStatus('${c.id}')">
-        💾 Status Save
-      </button>
-
-      <button
-        class="logout"
-        onclick="deleteComplaint('${c.id}')">
-        🗑️ Delete
-      </button>
     `;
 
     box.appendChild(div);
 
   });
-
 }
 
 
-// UPDATE STATUS
-async function updateStatus(id){
+/* =========================
+   APPROVE
+========================= */
 
-  const select =
-  document.getElementById("status-"+id);
+async function approveReport(id){
 
-  const status =
-  select.value;
+  await changeReportStatus(
+    id,
+    "published"
+  );
+}
+
+
+/* =========================
+   REJECT
+========================= */
+
+async function rejectReport(id){
+
+  await changeReportStatus(
+    id,
+    "rejected"
+  );
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+async function changeReportStatus(
+  id,
+  status
+){
+
+  const statusText =
+    status==="published"
+    ? "Approve"
+    : status==="rejected"
+    ? "Reject"
+    : "Pending";
+
+  if(
+    !confirm(
+      `রিপোর্টটি ${statusText} করতে চান?`
+    )
+  ){
+    return;
+  }
+
+
+  const updateData = {
+    status:status
+  };
+
+
+  if(status==="published"){
+
+    updateData.published_at =
+      new Date().toISOString();
+
+  }
+
 
   const {error} =
-  await supabaseClient
-  .from("complaints")
-  .update({status:status})
-  .eq("id",id);
+    await supabaseClient
+      .from("reports")
+      .update(updateData)
+      .eq("id",id);
+
 
   if(error){
 
-    alert("Status update হয়নি:\n"+
-    error.message);
+    alert(
+      "পরিবর্তন করা যায়নি:\n"+
+      error.message
+    );
 
     return;
   }
 
-  alert("Status সফলভাবে পরিবর্তন হয়েছে।");
 
-  loadComplaints();
+  alert(
+    status==="published"
+    ? "✅ রিপোর্ট Published হয়েছে।"
+    : status==="rejected"
+    ? "❌ রিপোর্ট Rejected হয়েছে।"
+    : "↩ রিপোর্ট Pending হয়েছে।"
+  );
+
+
+  loadReports();
 }
 
 
-// DELETE
-async function deleteComplaint(id){
+/* =========================
+   DELETE
+========================= */
 
-  if(!confirm(
-    "আপনি কি এই অভিযোগটি Delete করতে চান?"
-  )){
+async function deleteReport(id){
+
+  if(
+    !confirm(
+      "এই রিপোর্টটি স্থায়ীভাবে Delete করতে চান?"
+    )
+  ){
     return;
   }
 
+
   const {error} =
-  await supabaseClient
-  .from("complaints")
-  .delete()
-  .eq("id",id);
+    await supabaseClient
+      .from("reports")
+      .delete()
+      .eq("id",id);
+
 
   if(error){
 
@@ -502,30 +1168,392 @@ async function deleteComplaint(id){
     return;
   }
 
-  alert("অভিযোগ Delete হয়েছে।");
 
-  loadComplaints();
+  alert("🗑️ রিপোর্ট Delete হয়েছে।");
+
+  loadReports();
 }
 
 
-// STATS
-function updateStats(data){
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
 
   document.getElementById("total").innerText =
-  data.length;
+    allReports.length;
 
   document.getElementById("pending").innerText =
-  data.filter(x=>x.status==="pending").length;
+    allReports.filter(
+      x=>(x.status||"pending")==="pending"
+    ).length;
 
   document.getElementById("published").innerText =
-  data.filter(x=>x.status==="published").length;
+    allReports.filter(
+      x=>x.status==="published"
+    ).length;
 
   document.getElementById("rejected").innerText =
-  data.filter(x=>x.status==="rejected").length;
+    allReports.filter(
+      x=>x.status==="rejected"
+    ).length;
 }
 
 
-// LOGOUT
+/* =========================
+   MODERATORS
+========================= */
+
+async function loadModerators(){
+
+  const box =
+    document.getElementById("moderators");
+
+  box.innerHTML =
+    `<div class="empty">
+      Moderator লোড হচ্ছে...
+    </div>`;
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("moderators")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    box.innerHTML =
+      `<div class="empty error">
+        Moderator লোড হয়নি:<br>
+        ${escapeHTML(error.message)}
+      </div>`;
+
+    return;
+  }
+
+
+  if(!data || data.length===0){
+
+    box.innerHTML =
+      `<div class="empty">
+        এখনো কোনো Moderator যোগ করা হয়নি।
+      </div>`;
+
+    return;
+  }
+
+
+  box.innerHTML = "";
+
+
+  data.forEach(m=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className = "moderator";
+
+
+    div.innerHTML = `
+
+      <div class="moderator-info">
+
+        <b>
+          ${escapeHTML(
+            m.name || "Moderator"
+          )}
+        </b>
+
+        <small>
+          ${escapeHTML(m.email)}
+        </small>
+
+        <br>
+
+        <span class="badge">
+          ${m.active ? "🟢 Active" : "🔴 Disabled"}
+        </span>
+
+      </div>
+
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+
+        <button
+          class="btn-light"
+          onclick="toggleModerator(
+            '${m.id}',
+            ${m.active}
+          )">
+          ${m.active ? "🔒 Disable" : "🔓 Enable"}
+        </button>
+
+        <button
+          class="btn-danger"
+          onclick="removeModerator('${m.id}')">
+          ❌ Remove
+        </button>
+
+      </div>
+
+    `;
+
+    box.appendChild(div);
+
+  });
+}
+
+
+/* =========================
+   ADD MODERATOR
+========================= */
+
+async function addModerator(){
+
+  const email =
+    document
+      .getElementById("moderatorEmail")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const name =
+    document
+      .getElementById("moderatorName")
+      .value
+      .trim();
+
+  const msg =
+    document.getElementById(
+      "moderatorMessage"
+    );
+
+
+  if(!email){
+
+    msg.innerHTML =
+      `<span class="error">
+        Moderator email দিন।
+      </span>`;
+
+    return;
+  }
+
+
+  if(email.length < 5){
+
+    msg.innerHTML =
+      `<span class="error">
+        সঠিক email দিন।
+      </span>`;
+
+    return;
+  }
+
+
+  msg.innerHTML =
+    "Moderator যোগ হচ্ছে...";
+
+
+  const {error} =
+    await supabaseClient
+      .from("moderators")
+      .insert({
+        email:email,
+        name:name || null,
+        active:true
+      });
+
+
+  if(error){
+
+    msg.innerHTML =
+      `<span class="error">
+        যোগ করা যায়নি:<br>
+        ${escapeHTML(error.message)}
+      </span>`;
+
+    return;
+  }
+
+
+  msg.innerHTML =
+    `<span class="success">
+      ✅ Moderator যোগ হয়েছে।
+    </span>`;
+
+
+  document
+    .getElementById("moderatorEmail")
+    .value="";
+
+  document
+    .getElementById("moderatorName")
+    .value="";
+
+
+  setTimeout(()=>{
+
+    closeModeratorModal();
+
+    loadModerators();
+
+  },800);
+}
+
+
+/* =========================
+   ENABLE / DISABLE
+========================= */
+
+async function toggleModerator(
+  id,
+  currentlyActive
+){
+
+  const action =
+    currentlyActive
+    ? "Disable"
+    : "Enable";
+
+
+  if(
+    !confirm(
+      `Moderator-কে ${action} করতে চান?`
+    )
+  ){
+    return;
+  }
+
+
+  const {error} =
+    await supabaseClient
+      .from("moderators")
+      .update({
+        active:!currentlyActive
+      })
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "পরিবর্তন হয়নি:\n"+
+      error.message
+    );
+
+    return;
+  }
+
+
+  loadModerators();
+}
+
+
+/* =========================
+   REMOVE MODERATOR
+========================= */
+
+async function removeModerator(id){
+
+  if(
+    !confirm(
+      "এই Moderator-কে স্থায়ীভাবে Remove করতে চান?"
+    )
+  ){
+    return;
+  }
+
+
+  const {error} =
+    await supabaseClient
+      .from("moderators")
+      .delete()
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "Remove হয়নি:\n"+
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "❌ Moderator Remove হয়েছে।"
+  );
+
+
+  loadModerators();
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+function openModeratorModal(){
+
+  document
+    .getElementById("moderatorModal")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("moderatorEmail")
+    .focus();
+}
+
+
+function closeModeratorModal(){
+
+  document
+    .getElementById("moderatorModal")
+    .classList.add("hidden");
+
+  document
+    .getElementById("moderatorMessage")
+    .innerHTML="";
+}
+
+
+function closeModalOutside(event){
+
+  if(
+    event.target.id==="moderatorModal"
+  ){
+    closeModeratorModal();
+  }
+}
+
+
+/* =========================
+   PUBLIC SITE
+========================= */
+
+function openPublicSite(){
+
+  /*
+    তোমার Public HTML-এর filename
+    যদি index.html হয় তাহলে ঠিক আছে।
+  */
+
+  window.open(
+    "index.html",
+    "_blank"
+  );
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
 async function logout(){
 
   await supabaseClient.auth.signOut();
@@ -534,23 +1562,31 @@ async function logout(){
 }
 
 
-// SECURITY HELPERS
+/* =========================
+   SECURITY HELPERS
+========================= */
+
 function escapeHTML(value){
 
-  return String(value)
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
+
 function escapeAttr(value){
+
   return escapeHTML(value);
 }
 
 
-// START
+/* =========================
+   START
+========================= */
+
 checkLogin();
 
 </script>
