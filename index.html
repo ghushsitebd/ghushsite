@@ -15,15 +15,11 @@
   padding:0;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   font-family:Arial,"Noto Sans Bengali","Noto Sans",sans-serif;
   background:#f5f8f6;
   color:#17231c;
-  line-height:1.5;
+  line-height:1.55;
 }
 
 button,input,select,textarea{
@@ -42,13 +38,13 @@ button{
   z-index:100;
   background:#087f3e;
   color:#fff;
-  box-shadow:0 2px 14px rgba(0,0,0,.12);
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
 }
 
 .nav{
-  max-width:1150px;
+  max-width:900px;
   margin:auto;
-  padding:11px 16px;
+  padding:10px 14px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -57,220 +53,145 @@ button{
 .logo{
   display:flex;
   align-items:center;
-  gap:9px;
-  font-size:22px;
+  gap:8px;
+  font-size:20px;
   font-weight:900;
 }
 
 .logo-icon{
-  width:38px;
-  height:38px;
-  border-radius:11px;
-  background:#fff;
-  color:#087f3e;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:17px;
-  font-weight:900;
-}
-
-.report-nav-btn{
-  border:0;
-  background:#fff;
-  color:#087f3e;
-  padding:10px 15px;
+  width:35px;
+  height:35px;
   border-radius:10px;
-  font-weight:900;
-}
-
-/* HERO */
-
-.hero{
-  background:
-    radial-gradient(circle at top right,rgba(255,255,255,.13),transparent 35%),
-    linear-gradient(135deg,#087f3e,#0ba653);
-  color:#fff;
-  padding:52px 16px 82px;
-}
-
-.hero-inner{
-  max-width:850px;
-  margin:auto;
-  text-align:center;
-}
-
-.hero-icon{
-  width:62px;
-  height:62px;
-  margin:0 auto 16px;
-  border-radius:20px;
-  background:rgba(255,255,255,.14);
+  background:#fff;
+  color:#087f3e;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:30px;
+  font-weight:900;
 }
 
-.hero h1{
-  font-size:42px;
-  line-height:1.15;
-  margin-bottom:14px;
-}
-
-.hero p{
-  max-width:680px;
-  margin:0 auto 24px;
-  font-size:17px;
-  opacity:.96;
-  line-height:1.8;
-}
-
-.hero-buttons{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.primary{
+.report-btn{
   border:0;
   background:#fff;
   color:#087f3e;
-  padding:14px 23px;
-  border-radius:12px;
-  font-size:16px;
+  padding:9px 13px;
+  border-radius:9px;
   font-weight:900;
-  box-shadow:0 6px 20px rgba(0,0,0,.16);
 }
 
-.hero-note{
-  margin-top:15px;
-  font-size:12px;
-  opacity:.85;
-}
-
-/* CONTAINER */
+/* MAIN */
 
 .container{
-  max-width:1100px;
+  max-width:900px;
   margin:auto;
-  padding:0 16px 35px;
+  padding:18px 13px 35px;
 }
 
-/* STATS */
+/* TOP CARD */
 
-.stats{
-  margin-top:-35px;
-  position:relative;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:13px;
-}
-
-.stat{
-  background:#fff;
-  border-radius:17px;
-  padding:20px 12px;
+.top-card{
+  background:linear-gradient(135deg,#087f3e,#0ba653);
+  color:#fff;
+  border-radius:18px;
+  padding:25px 18px;
   text-align:center;
-  box-shadow:0 6px 22px rgba(0,0,0,.07);
+  box-shadow:0 7px 25px rgba(0,0,0,.08);
 }
 
-.stat-number{
-  color:#087f3e;
-  font-size:27px;
-  font-weight:900;
+.top-card .icon{
+  font-size:28px;
+  margin-bottom:5px;
 }
 
-.stat-label{
-  color:#66726b;
-  font-size:13px;
-  margin-top:5px;
+.top-card h1{
+  font-size:28px;
+  margin-bottom:7px;
 }
 
-/* SECTION */
-
-.section{
-  margin-top:36px;
-}
-
-.section-title{
-  margin-bottom:15px;
-}
-
-.section-title h2{
-  font-size:23px;
-}
-
-.section-title p{
-  color:#707a74;
+.top-card p{
   font-size:14px;
-  margin-top:3px;
+  opacity:.94;
+  max-width:600px;
+  margin:auto;
+}
+
+.big-report{
+  margin-top:17px;
+  border:0;
+  background:#fff;
+  color:#087f3e;
+  padding:12px 21px;
+  border-radius:11px;
+  font-size:15px;
+  font-weight:900;
 }
 
 /* SEARCH */
 
-.search-box{
+.search-area{
+  margin-top:18px;
   background:#fff;
-  border-radius:15px;
-  padding:12px;
-  display:flex;
-  gap:9px;
+  padding:11px;
+  border-radius:14px;
   box-shadow:0 3px 13px rgba(0,0,0,.05);
-  margin-bottom:15px;
 }
 
-.search-box input{
-  flex:1;
-  min-width:0;
-  border:1px solid #d7e1db;
-  padding:12px 13px;
+.search{
+  width:100%;
+  border:1px solid #d6e0da;
   border-radius:10px;
+  padding:12px 13px;
   outline:none;
   font-size:15px;
 }
 
-.search-box input:focus{
+.search:focus{
   border-color:#087f3e;
 }
 
-.secondary{
-  border:1px solid #d4e1d9;
-  background:#fff;
+/* TITLE */
+
+.list-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:23px 2px 11px;
+}
+
+.list-head h2{
+  font-size:20px;
+}
+
+.refresh{
+  border:0;
+  background:#e8f7ee;
   color:#087f3e;
-  padding:10px 15px;
-  border-radius:10px;
+  padding:7px 10px;
+  border-radius:8px;
   font-weight:800;
 }
 
-/* REPORTS */
-
-.report-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-}
+/* REPORT */
 
 .report{
   background:#fff;
-  border-radius:16px;
-  padding:18px;
-  box-shadow:0 3px 15px rgba(0,0,0,.06);
-  overflow:hidden;
+  border-radius:15px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 3px 14px rgba(0,0,0,.055);
 }
 
-.report-top{
+.report-header{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:8px;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
-.badge{
-  display:inline-block;
-  background:#e8f7ee;
+.department{
   color:#087f3e;
+  background:#e8f7ee;
   padding:5px 9px;
   border-radius:20px;
   font-size:12px;
@@ -278,8 +199,12 @@ button{
 }
 
 .unverified{
-  background:#fff4d9;
   color:#806000;
+  background:#fff5d9;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:800;
 }
 
 .report h3{
@@ -287,112 +212,75 @@ button{
   margin-bottom:9px;
 }
 
-.report-info{
-  display:grid;
-  gap:6px;
-  color:#56635b;
-  font-size:14px;
+.info{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  color:#5d6962;
+  font-size:13px;
 }
 
-.report-details{
-  margin-top:13px;
-  padding-top:12px;
+.info span{
+  background:#f5f7f6;
+  padding:5px 8px;
+  border-radius:7px;
+}
+
+.details{
   border-top:1px solid #edf1ee;
-  color:#303b34;
-  line-height:1.65;
+  margin-top:12px;
+  padding-top:11px;
+  font-size:14px;
+  line-height:1.7;
   white-space:pre-wrap;
 }
 
-.report-media{
+.media{
   width:100%;
-  max-height:320px;
+  max-height:350px;
   object-fit:cover;
-  border-radius:11px;
-  margin-top:14px;
+  border-radius:10px;
+  margin-top:12px;
   display:block;
 }
 
-/* HOW IT WORKS */
+/* EMPTY / LOADING */
 
-.steps{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.step{
+.loading,
+.empty{
   background:#fff;
-  border-radius:16px;
-  padding:21px;
-  box-shadow:0 3px 14px rgba(0,0,0,.05);
-}
-
-.step-number{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:#e8f7ee;
-  color:#087f3e;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:17px;
-  font-weight:900;
-  margin-bottom:12px;
-}
-
-.step h3{
-  margin-bottom:7px;
-  font-size:17px;
-}
-
-.step p{
+  padding:30px 15px;
+  text-align:center;
+  border-radius:14px;
   color:#69746e;
-  font-size:14px;
-  line-height:1.65;
 }
 
 /* NOTICE */
 
 .notice{
+  margin-top:18px;
   background:#fff8e6;
   border:1px solid #f0dfa8;
-  color:#675313;
-  padding:17px;
-  border-radius:14px;
-  font-size:14px;
-  line-height:1.7;
+  color:#665313;
+  padding:13px;
+  border-radius:12px;
+  font-size:12px;
+  line-height:1.65;
 }
 
-/* REPORT CTA */
+/* FOOTER */
 
-.cta{
-  margin-top:36px;
-  background:linear-gradient(135deg,#087f3e,#0a9850);
-  color:#fff;
-  border-radius:18px;
-  padding:27px 20px;
+.footer{
+  background:#102018;
+  color:#bfcfc5;
   text-align:center;
+  padding:22px 14px;
+  font-size:12px;
 }
 
-.cta h2{
-  font-size:23px;
-  margin-bottom:8px;
-}
-
-.cta p{
-  font-size:14px;
-  opacity:.93;
-  margin-bottom:17px;
-}
-
-.cta button{
-  border:0;
-  background:#fff;
-  color:#087f3e;
-  padding:12px 20px;
-  border-radius:10px;
-  font-weight:900;
+.footer strong{
+  color:#fff;
+  font-size:16px;
 }
 
 /* MODAL */
@@ -402,9 +290,9 @@ button{
   position:fixed;
   inset:0;
   z-index:999;
-  background:rgba(0,0,0,.58);
+  background:rgba(0,0,0,.6);
+  padding:10px;
   overflow-y:auto;
-  padding:15px;
 }
 
 .modal.show{
@@ -412,98 +300,97 @@ button{
 }
 
 .modal-box{
-  max-width:650px;
-  margin:20px auto;
+  max-width:600px;
+  margin:12px auto;
   background:#fff;
-  border-radius:18px;
+  border-radius:16px;
   overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
 .modal-head{
   background:#087f3e;
   color:#fff;
-  padding:17px 19px;
+  padding:15px 17px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
 .modal-head h2{
-  font-size:20px;
+  font-size:19px;
 }
 
 .close{
   border:0;
   background:transparent;
   color:#fff;
-  font-size:29px;
-  line-height:1;
+  font-size:28px;
 }
 
 .form{
-  padding:20px;
+  padding:17px;
 }
 
 .field{
-  margin-bottom:15px;
+  margin-bottom:13px;
 }
 
-.field label{
+label{
   display:block;
-  font-size:14px;
+  font-size:13px;
   font-weight:900;
-  margin-bottom:7px;
+  margin-bottom:6px;
 }
 
-.field input,
-.field select,
-.field textarea{
+input,
+select,
+textarea{
   width:100%;
   border:1px solid #d5dfd9;
-  border-radius:10px;
-  padding:12px;
+  border-radius:9px;
+  padding:11px;
   outline:none;
+  font-size:14px;
   background:#fff;
-  font-size:15px;
 }
 
-.field textarea{
-  min-height:130px;
+textarea{
+  min-height:120px;
   resize:vertical;
 }
 
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
+input:focus,
+select:focus,
+textarea:focus{
   border-color:#087f3e;
 }
 
 .row{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:10px;
 }
 
 .file-info{
-  font-size:12px;
-  color:#6c756f;
-  margin-top:6px;
+  margin-top:5px;
+  color:#707a74;
+  font-size:11px;
 }
 
 .check{
   display:flex;
-  gap:9px;
+  gap:8px;
   align-items:flex-start;
   background:#f4f8f5;
-  padding:12px;
-  border-radius:10px;
-  font-size:13px;
+  padding:10px;
+  border-radius:9px;
+  font-size:12px;
   line-height:1.55;
-  margin-bottom:15px;
+  margin-bottom:13px;
 }
 
 .check input{
+  width:auto;
   margin-top:3px;
 }
 
@@ -512,10 +399,10 @@ button{
   border:0;
   background:#087f3e;
   color:#fff;
-  padding:14px;
-  border-radius:11px;
-  font-size:16px;
+  padding:13px;
+  border-radius:10px;
   font-weight:900;
+  font-size:15px;
 }
 
 .submit:disabled{
@@ -524,10 +411,10 @@ button{
 
 .message{
   display:none;
-  margin-bottom:15px;
-  padding:12px;
-  border-radius:10px;
-  font-size:14px;
+  padding:10px;
+  border-radius:9px;
+  margin-bottom:12px;
+  font-size:13px;
 }
 
 .success{
@@ -540,114 +427,33 @@ button{
   color:#b00020;
 }
 
-/* LOADING / EMPTY */
-
-.loading{
-  background:#fff;
-  border-radius:15px;
-  padding:35px;
-  text-align:center;
-  color:#68746d;
-}
-
-.empty{
-  background:#fff;
-  border-radius:15px;
-  padding:35px 20px;
-  text-align:center;
-  color:#69746e;
-}
-
-/* FOOTER */
-
-.footer{
-  margin-top:20px;
-  background:#102018;
-  color:#cfdcd4;
-  padding:32px 18px;
-  text-align:center;
-  font-size:13px;
-  line-height:1.8;
-}
-
-.footer strong{
-  color:#fff;
-  font-size:18px;
-}
-
 /* MOBILE */
 
-@media(max-width:700px){
+@media(max-width:600px){
 
-  .nav{
-    padding:9px 11px;
+  .container{
+    padding:12px 10px 25px;
   }
 
-  .logo{
-    font-size:18px;
+  .top-card{
+    padding:21px 14px;
+    border-radius:15px;
   }
 
-  .logo-icon{
-    width:32px;
-    height:32px;
-    border-radius:9px;
-    font-size:14px;
-  }
-
-  .report-nav-btn{
-    padding:8px 10px;
-    font-size:12px;
-  }
-
-  .hero{
-    padding:39px 15px 65px;
-  }
-
-  .hero-icon{
-    width:54px;
-    height:54px;
-    font-size:26px;
-  }
-
-  .hero h1{
-    font-size:30px;
-  }
-
-  .hero p{
-    font-size:15px;
-    line-height:1.7;
-  }
-
-  .primary{
-    width:100%;
-    max-width:300px;
-  }
-
-  .stats{
-    grid-template-columns:1fr;
-    margin-top:-28px;
-    gap:9px;
-  }
-
-  .stat{
-    padding:14px;
-  }
-
-  .stat-number{
+  .top-card h1{
     font-size:24px;
   }
 
-  .report-grid,
-  .steps{
-    grid-template-columns:1fr;
+  .top-card p{
+    font-size:13px;
   }
 
-  .search-box{
-    flex-direction:column;
-  }
-
-  .search-box .secondary{
+  .big-report{
     width:100%;
+  }
+
+  .list-head h2{
+    font-size:18px;
   }
 
   .row{
@@ -655,50 +461,49 @@ button{
     gap:0;
   }
 
+  .report{
+    padding:14px;
+  }
+
+  .report h3{
+    font-size:17px;
+  }
+
+  .info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
   .modal{
-    padding:8px;
+    padding:6px;
   }
 
   .modal-box{
-    margin:8px auto;
-    border-radius:15px;
+    margin:5px auto;
   }
 
   .form{
-    padding:16px;
+    padding:14px;
   }
 
-  .section{
-    margin-top:30px;
-  }
-
-  .section-title h2{
-    font-size:21px;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-
 <header class="header">
 
   <div class="nav">
 
     <div class="logo">
-
       <div class="logo-icon">ঘু</div>
-
       <span>ঘুষ সাইট</span>
-
     </div>
 
     <button
-      class="report-nav-btn"
-      onclick="openReport()"
-    >
+      class="report-btn"
+      onclick="openReport()">
       অভিযোগ করুন
     </button>
 
@@ -707,275 +512,81 @@ button{
 </header>
 
 
-<!-- HERO -->
+<main class="container">
 
-<section class="hero">
+  <section class="top-card">
 
-  <div class="hero-inner">
-
-    <div class="hero-icon">⚖️</div>
+    <div class="icon">⚖️</div>
 
     <h1>ঘুষের বিরুদ্ধে আপনার কণ্ঠ</h1>
 
     <p>
-      কোথাও ঘুষ চাওয়া হলে দায়িত্বশীলভাবে জানান।
-      আপনার পরিচয় প্রকাশ না করেই রিপোর্ট করতে পারবেন।
+      ঘুষ চাওয়া হলে দায়িত্বশীলভাবে জানান।
+      পরিচয় প্রকাশ না করেই রিপোর্ট করতে পারবেন।
     </p>
 
-    <div class="hero-buttons">
-
-      <button
-        class="primary"
-        onclick="openReport()"
-      >
-        + অভিযোগ / রিপোর্ট করুন
-      </button>
-
-    </div>
-
-    <div class="hero-note">
-      লগইন প্রয়োজন নেই • সহজে রিপোর্ট করুন
-    </div>
-
-  </div>
-
-</section>
-
-
-<main class="container">
-
-  <!-- STATS -->
-
-  <div class="stats">
-
-    <div class="stat">
-
-      <div
-        class="stat-number"
-        id="totalReports"
-      >
-        0
-      </div>
-
-      <div class="stat-label">
-        প্রকাশিত রিপোর্ট
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div
-        class="stat-number"
-        id="totalAmount"
-      >
-        ৳0
-      </div>
-
-      <div class="stat-label">
-        দাবিকৃত মোট অর্থ
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div
-        class="stat-number"
-        id="todayReports"
-      >
-        0
-      </div>
-
-      <div class="stat-label">
-        আজকের রিপোর্ট
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- PUBLIC REPORTS -->
-
-  <section class="section">
-
-    <div class="section-title">
-
-      <h2>প্রকাশিত রিপোর্ট</h2>
-
-      <p>
-        মডারেশন শেষে প্রকাশিত রিপোর্টগুলো এখানে দেখা যাবে।
-      </p>
-
-    </div>
-
-
-    <div class="search-box">
-
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="বিভাগ, সেবা বা এলাকা দিয়ে খুঁজুন..."
-        oninput="filterReports()"
-      >
-
-      <button
-        class="secondary"
-        onclick="loadReports()"
-      >
-        ↻ রিফ্রেশ
-      </button>
-
-    </div>
-
-
-    <div id="reportsContainer">
-
-      <div class="loading">
-        রিপোর্ট লোড হচ্ছে...
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- HOW IT WORKS -->
-
-  <section class="section">
-
-    <div class="section-title">
-
-      <h2>কীভাবে কাজ করে?</h2>
-
-      <p>
-        মাত্র তিনটি সহজ ধাপ।
-      </p>
-
-    </div>
-
-
-    <div class="steps">
-
-      <div class="step">
-
-        <div class="step-number">
-          ১
-        </div>
-
-        <h3>
-          রিপোর্ট করুন
-        </h3>
-
-        <p>
-          আপনার অভিজ্ঞতার প্রয়োজনীয় তথ্য লিখে
-          রিপোর্ট জমা দিন।
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="step-number">
-          ২
-        </div>
-
-        <h3>
-          যাচাই ও মডারেশন
-        </h3>
-
-        <p>
-          রিপোর্ট প্রকাশের আগে দায়িত্বশীলভাবে
-          মডারেশন করা হবে।
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="step-number">
-          ৩
-        </div>
-
-        <h3>
-          জনসমক্ষে প্রকাশ
-        </h3>
-
-        <p>
-          অনুমোদিত রিপোর্ট প্রকাশিত হলে সবাই
-          তা দেখতে ও খুঁজে দেখতে পারবেন।
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- NOTICE -->
-
-  <section class="section">
-
-    <div class="notice">
-
-      <strong>⚠️ গুরুত্বপূর্ণ সতর্কতা</strong>
-
-      <br>
-
-      প্রকাশিত রিপোর্ট ব্যবহারকারীর দেওয়া তথ্যের ভিত্তিতে
-      প্রকাশ করা হয়। রিপোর্টের প্রতিটি তথ্য স্বাধীনভাবে
-      সত্যতা যাচাই করা হয়েছে—এমন দাবি করা হচ্ছে না।
-
-      <br><br>
-
-      রিপোর্টে কোনো ব্যক্তির নাম, মোবাইল নম্বর,
-      NID নম্বর, ব্যক্তিগত ঠিকানা বা অন্য কোনো
-      সংবেদনশীল ব্যক্তিগত তথ্য লিখবেন না।
-
-    </div>
-
-  </section>
-
-
-  <!-- CTA -->
-
-  <section class="cta">
-
-    <h2>
-      ঘুষের অভিজ্ঞতা হয়েছে?
-    </h2>
-
-    <p>
-      দায়িত্বশীলভাবে জানান। আপনার রিপোর্ট
-      দুর্নীতির বিরুদ্ধে সচেতনতা তৈরিতে সাহায্য করতে পারে।
-    </p>
-
-    <button onclick="openReport()">
-      + রিপোর্ট করুন
+    <button
+      class="big-report"
+      onclick="openReport()">
+      ＋ রিপোর্ট করুন
     </button>
 
   </section>
 
+
+  <div class="search-area">
+
+    <input
+      id="searchInput"
+      class="search"
+      type="search"
+      placeholder="রিপোর্ট খুঁজুন — প্রতিষ্ঠান, সেবা বা এলাকা..."
+      oninput="filterReports()">
+
+  </div>
+
+
+  <div class="list-head">
+
+    <h2>প্রকাশিত রিপোর্ট</h2>
+
+    <button
+      class="refresh"
+      onclick="loadReports()">
+      ↻
+    </button>
+
+  </div>
+
+
+  <div id="reportsContainer">
+
+    <div class="loading">
+      রিপোর্ট লোড হচ্ছে...
+    </div>
+
+  </div>
+
+
+  <div class="notice">
+
+    <strong>⚠️ গুরুত্বপূর্ণ</strong><br>
+
+    প্রকাশিত রিপোর্ট ব্যবহারকারীর দেওয়া তথ্যের ভিত্তিতে।
+    রিপোর্টের তথ্য স্বাধীনভাবে সত্যতা যাচাই করা হয়েছে—এমন
+    দাবি করা হচ্ছে না। কারও নাম, মোবাইল নম্বর, NID,
+    ব্যক্তিগত ঠিকানা বা সংবেদনশীল তথ্য লিখবেন না।
+
+  </div>
+
 </main>
 
 
-<!-- FOOTER -->
-
 <footer class="footer">
 
-  <strong>ঘুষ সাইট</strong>
+  <strong>ঘুষ সাইট</strong><br>
 
-  <br>
-
-  দুর্নীতি ও ঘুষের বিরুদ্ধে জনসচেতনতার একটি উদ্যোগ।
-
-  <br><br>
+  দুর্নীতি ও ঘুষের বিরুদ্ধে জনসচেতনতার একটি উদ্যোগ।<br><br>
 
   © 2026 ঘুষ সাইট
 
@@ -986,21 +597,17 @@ button{
 
 <div
   id="reportModal"
-  class="modal"
->
+  class="modal">
 
   <div class="modal-box">
 
     <div class="modal-head">
 
-      <h2>
-        অভিযোগ / রিপোর্ট করুন
-      </h2>
+      <h2>অভিযোগ / রিপোর্ট করুন</h2>
 
       <button
         class="close"
-        onclick="closeReport()"
-      >
+        onclick="closeReport()">
         ×
       </button>
 
@@ -1009,43 +616,36 @@ button{
 
     <form
       class="form"
-      onsubmit="submitReport(event)"
-    >
+      onsubmit="submitReport(event)">
 
       <div
         id="formMessage"
-        class="message"
-      ></div>
+        class="message">
+      </div>
 
 
       <div class="field">
 
-        <label>
-          কোন বিভাগ / প্রতিষ্ঠান? *
-        </label>
+        <label>বিভাগ / প্রতিষ্ঠান *</label>
 
         <input
           id="department"
           required
           maxlength="150"
-          placeholder="যেমন: ভূমি অফিস"
-        >
+          placeholder="যেমন: ভূমি অফিস">
 
       </div>
 
 
       <div class="field">
 
-        <label>
-          কোন সেবা? *
-        </label>
+        <label>কোন সেবা? *</label>
 
         <input
           id="service"
           required
           maxlength="150"
-          placeholder="যেমন: নামজারি"
-        >
+          placeholder="যেমন: নামজারি">
 
       </div>
 
@@ -1054,33 +654,27 @@ button{
 
         <div class="field">
 
-          <label>
-            এলাকা *
-          </label>
+          <label>এলাকা *</label>
 
           <input
             id="location"
             required
             maxlength="150"
-            placeholder="জেলা / উপজেলা"
-          >
+            placeholder="জেলা / উপজেলা">
 
         </div>
 
 
         <div class="field">
 
-          <label>
-            দাবিকৃত অর্থ
-          </label>
+          <label>দাবিকৃত অর্থ</label>
 
           <input
             id="amount"
             type="number"
             min="0"
             max="100000000"
-            placeholder="যেমন: 5000"
-          >
+            placeholder="যেমন: 5000">
 
         </div>
 
@@ -1089,17 +683,16 @@ button{
 
       <div class="field">
 
-        <label>
-          কী হয়েছিল? *
-        </label>
+        <label>কী হয়েছিল? *</label>
 
-        <select
-          id="outcome"
-          required
-        >
+        <select id="outcome" required>
 
           <option value="">
             নির্বাচন করুন
+          </option>
+
+          <option value="ঘুষ দাবি করা হয়েছিল">
+            ঘুষ দাবি করা হয়েছিল
           </option>
 
           <option value="ঘুষ দেওয়া হয়েছে">
@@ -1114,10 +707,6 @@ button{
             সেবা আটকে আছে
           </option>
 
-          <option value="ঘুষ দাবি করা হয়েছিল">
-            ঘুষ দাবি করা হয়েছিল
-          </option>
-
           <option value="অন্যান্য">
             অন্যান্য
           </option>
@@ -1129,35 +718,30 @@ button{
 
       <div class="field">
 
-        <label>
-          কী ঘটেছিল? *
-        </label>
+        <label>ঘটনার সংক্ষিপ্ত বিবরণ *</label>
 
         <textarea
           id="details"
           required
           maxlength="3000"
-          placeholder="ঘটনাটি সংক্ষেপে ও দায়িত্বশীলভাবে লিখুন..."
-        ></textarea>
+          placeholder="কী ঘটেছিল সংক্ষেপে লিখুন...">
+        </textarea>
 
       </div>
 
 
       <div class="field">
 
-        <label>
-          ছবি / ভিডিও — ঐচ্ছিক
-        </label>
+        <label>ছবি / ভিডিও — ঐচ্ছিক</label>
 
         <input
           id="media"
           type="file"
-          accept="image/*,video/*"
-        >
+          accept="image/*,video/*">
 
         <div class="file-info">
-          সর্বোচ্চ 25MB। ব্যক্তিগত বা সংবেদনশীল
-          তথ্যযুক্ত ছবি/ভিডিও আপলোড করবেন না।
+          সর্বোচ্চ 25MB। ব্যক্তিগত বা সংবেদনশীল তথ্যযুক্ত
+          ছবি/ভিডিও আপলোড করবেন না।
         </div>
 
       </div>
@@ -1168,13 +752,12 @@ button{
         <input
           id="privacyCheck"
           type="checkbox"
-          required
-        >
+          required>
 
         <span>
           আমি নিশ্চিত করছি যে রিপোর্টে কোনো ব্যক্তির
-          নাম, মোবাইল নম্বর, NID নম্বর, ব্যক্তিগত ঠিকানা
-          বা অন্য কোনো সংবেদনশীল ব্যক্তিগত তথ্য দিইনি।
+          নাম, মোবাইল নম্বর, NID, ব্যক্তিগত ঠিকানা বা
+          সংবেদনশীল তথ্য দিইনি।
         </span>
 
       </label>
@@ -1183,9 +766,10 @@ button{
       <button
         id="submitBtn"
         class="submit"
-        type="submit"
-      >
+        type="submit">
+
         রিপোর্ট জমা দিন
+
       </button>
 
     </form>
@@ -1197,9 +781,9 @@ button{
 
 <script>
 
-/* ==========================================
+/* ================================
    SUPABASE
-========================================== */
+================================ */
 
 const SUPABASE_URL =
 "https://klreqkbqyyiwmohlmgkh.supabase.co";
@@ -1213,19 +797,14 @@ supabase.createClient(
   SUPABASE_KEY
 );
 
-
-/* ==========================================
-   GLOBAL
-========================================== */
+const mediaBucket = "media";
 
 let allReports = [];
 
-const mediaBucket = "media";
 
-
-/* ==========================================
-   REPORT MODAL
-========================================== */
+/* ================================
+   MODAL
+================================ */
 
 function openReport(){
 
@@ -1235,12 +814,9 @@ function openReport(){
 
   setTimeout(() => {
 
-    const input =
-      document.getElementById("department");
-
-    if(input){
-      input.focus();
-    }
+    document
+      .getElementById("department")
+      .focus();
 
   },100);
 
@@ -1256,14 +832,14 @@ function closeReport(){
 }
 
 
-/* ==========================================
+/* ================================
    MESSAGE
-========================================== */
+================================ */
 
-function showMessage(id,text,type){
+function showMessage(text,type){
 
   const box =
-    document.getElementById(id);
+    document.getElementById("formMessage");
 
   box.className =
     "message " + type;
@@ -1277,9 +853,9 @@ function showMessage(id,text,type){
 }
 
 
-/* ==========================================
-   MEDIA UPLOAD
-========================================== */
+/* ================================
+   UPLOAD
+================================ */
 
 async function uploadMedia(file){
 
@@ -1296,7 +872,7 @@ async function uploadMedia(file){
   if(file.size > 25 * 1024 * 1024){
 
     throw new Error(
-      "ছবি/ভিডিও 25MB-এর বেশি হতে পারবে না।"
+      "ফাইলের আকার 25MB-এর বেশি হতে পারবে না।"
     );
 
   }
@@ -1316,11 +892,10 @@ async function uploadMedia(file){
 
 
   const path =
-    "reports/" +
-    filename;
+    "reports/" + filename;
 
 
-  const { error } =
+  const {error} =
     await supabaseClient
       .storage
       .from(mediaBucket)
@@ -1339,7 +914,7 @@ async function uploadMedia(file){
   }
 
 
-  const { data } =
+  const {data} =
     supabaseClient
       .storage
       .from(mediaBucket)
@@ -1359,9 +934,9 @@ async function uploadMedia(file){
 }
 
 
-/* ==========================================
-   SUBMIT REPORT
-========================================== */
+/* ================================
+   SUBMIT
+================================ */
 
 async function submitReport(event){
 
@@ -1372,12 +947,10 @@ async function submitReport(event){
     document.getElementById("submitBtn");
 
 
-  button.disabled =
-    true;
-
+  button.disabled = true;
 
   button.innerText =
-    "রিপোর্ট জমা হচ্ছে...";
+    "জমা হচ্ছে...";
 
 
   try{
@@ -1385,22 +958,19 @@ async function submitReport(event){
     const department =
       document
         .getElementById("department")
-        .value
-        .trim();
+        .value.trim();
 
 
     const service =
       document
         .getElementById("service")
-        .value
-        .trim();
+        .value.trim();
 
 
     const location =
       document
         .getElementById("location")
-        .value
-        .trim();
+        .value.trim();
 
 
     const amount =
@@ -1420,8 +990,7 @@ async function submitReport(event){
     const details =
       document
         .getElementById("details")
-        .value
-        .trim();
+        .value.trim();
 
 
     const file =
@@ -1459,28 +1028,26 @@ async function submitReport(event){
     }
 
 
-    const { error } =
+    const {error} =
       await supabaseClient
         .from("reports")
         .insert({
 
-          department:department,
+          department,
+          service,
+          location,
+          amount,
+          outcome,
+          details,
 
-          service:service,
+          media_url:
+            mediaData.url,
 
-          location:location,
+          media_type:
+            mediaData.type,
 
-          amount:amount,
-
-          outcome:outcome,
-
-          details:details,
-
-          media_url:mediaData.url,
-
-          media_type:mediaData.type,
-
-          status:"pending"
+          status:
+            "pending"
 
         });
 
@@ -1491,8 +1058,7 @@ async function submitReport(event){
 
 
     showMessage(
-      "formMessage",
-      "✅ রিপোর্ট সফলভাবে জমা হয়েছে। প্রকাশের আগে এটি মডারেশন করা হবে।",
+      "✅ রিপোর্ট সফলভাবে জমা হয়েছে। মডারেশনের পর প্রকাশ করা হবে।",
       "success"
     );
 
@@ -1502,19 +1068,18 @@ async function submitReport(event){
       .reset();
 
 
-    setTimeout(
-      closeReport,
-      2800
-    );
+    setTimeout(() => {
+
+      closeReport();
+
+    },2500);
 
 
   }catch(error){
 
     console.error(error);
 
-
     showMessage(
-      "formMessage",
       "রিপোর্ট জমা দেওয়া যায়নি: " +
       error.message,
       "error"
@@ -1523,9 +1088,7 @@ async function submitReport(event){
   }
 
 
-  button.disabled =
-    false;
-
+  button.disabled = false;
 
   button.innerText =
     "রিপোর্ট জমা দিন";
@@ -1533,9 +1096,9 @@ async function submitReport(event){
 }
 
 
-/* ==========================================
-   LOAD PUBLIC REPORTS
-========================================== */
+/* ================================
+   LOAD REPORTS
+================================ */
 
 async function loadReports(){
 
@@ -1549,7 +1112,7 @@ async function loadReports(){
     '<div class="loading">রিপোর্ট লোড হচ্ছে...</div>';
 
 
-  const { data,error } =
+  const {data,error} =
     await supabaseClient
       .from("reports")
       .select("*")
@@ -1568,9 +1131,8 @@ async function loadReports(){
 
     console.error(error);
 
-
     container.innerHTML =
-      '<div class="empty">রিপোর্ট লোড করা যায়নি। একটু পরে আবার চেষ্টা করুন।</div>';
+      '<div class="empty">রিপোর্ট লোড করা যায়নি। আবার চেষ্টা করুন।</div>';
 
     return;
 
@@ -1581,21 +1143,14 @@ async function loadReports(){
     data || [];
 
 
-  renderReports(
-    allReports
-  );
-
-
-  updateStats(
-    allReports
-  );
+  renderReports(allReports);
 
 }
 
 
-/* ==========================================
-   RENDER REPORTS
-========================================== */
+/* ================================
+   RENDER
+================================ */
 
 function renderReports(reports){
 
@@ -1616,9 +1171,6 @@ function renderReports(reports){
 
 
   container.innerHTML =
-
-    '<div class="report-grid">' +
-
     reports.map(report => {
 
       let media = "";
@@ -1631,11 +1183,10 @@ function renderReports(reports){
 
         media =
           `<img
-            class="report-media"
+            class="media"
             src="${escapeHtml(report.media_url)}"
             alt="রিপোর্টের ছবি"
-            loading="lazy"
-          >`;
+            loading="lazy">`;
 
       }
 
@@ -1647,27 +1198,31 @@ function renderReports(reports){
 
         media =
           `<video
-            class="report-media"
+            class="media"
             controls
             preload="metadata"
-            src="${escapeHtml(report.media_url)}"
-          ></video>`;
+            src="${escapeHtml(report.media_url)}">
+          </video>`;
 
       }
+
+
+      const amount =
+        Number(report.amount || 0);
 
 
       return `
 
         <article class="report">
 
-          <div class="report-top">
+          <div class="report-header">
 
-            <span class="badge">
+            <span class="department">
               ${escapeHtml(report.department)}
             </span>
 
-            <span class="badge unverified">
-              Unverified
+            <span class="unverified">
+              যাচাইাধীন তথ্য
             </span>
 
           </div>
@@ -1678,57 +1233,43 @@ function renderReports(reports){
           </h3>
 
 
-          <div class="report-info">
+          <div class="info">
 
-            <div>
-              📍 এলাকা:
-              ${escapeHtml(report.location)}
-            </div>
+            <span>
+              📍 ${escapeHtml(report.location)}
+            </span>
 
-            <div>
-              💰 দাবিকৃত অর্থ:
-              ৳${Number(
-                report.amount || 0
-              ).toLocaleString("bn-BD")}
-            </div>
+            <span>
+              💰 ৳${amount.toLocaleString("bn-BD")}
+            </span>
 
-            <div>
-              📌 ফলাফল:
-              ${escapeHtml(report.outcome)}
-            </div>
-
-            <div>
-              🕒
-              ${formatDate(
-                report.published_at ||
-                report.created_at
-              )}
-            </div>
+            <span>
+              📌 ${escapeHtml(report.outcome)}
+            </span>
 
           </div>
 
 
-          <div class="report-details">
+          <div class="details">
             ${escapeHtml(report.details)}
           </div>
 
 
           ${media}
 
+
         </article>
 
       `;
 
-    }).join("") +
-
-    "</div>";
+    }).join("");
 
 }
 
 
-/* ==========================================
+/* ================================
    SEARCH
-========================================== */
+================================ */
 
 function filterReports(){
 
@@ -1742,9 +1283,7 @@ function filterReports(){
 
   if(!q){
 
-    renderReports(
-      allReports
-    );
+    renderReports(allReports);
 
     return;
 
@@ -1754,19 +1293,18 @@ function filterReports(){
   const filtered =
     allReports.filter(report => {
 
-      const text = (
+      const text = [
 
-        (report.department || "") +
-        " " +
-        (report.service || "") +
-        " " +
-        (report.location || "") +
-        " " +
-        (report.outcome || "") +
-        " " +
-        (report.details || "")
+        report.department,
+        report.service,
+        report.location,
+        report.outcome,
+        report.details
 
-      ).toLowerCase();
+      ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
 
 
       return text.includes(q);
@@ -1774,117 +1312,14 @@ function filterReports(){
     });
 
 
-  renderReports(
-    filtered
-  );
+  renderReports(filtered);
 
 }
 
 
-/* ==========================================
-   STATS
-========================================== */
-
-function updateStats(reports){
-
-  document
-    .getElementById("totalReports")
-    .innerText =
-      reports.length
-        .toLocaleString("bn-BD");
-
-
-  const amount =
-    reports.reduce(
-      (sum,r) =>
-        sum +
-        Number(r.amount || 0),
-      0
-    );
-
-
-  document
-    .getElementById("totalAmount")
-    .innerText =
-      "৳" +
-      amount.toLocaleString("bn-BD");
-
-
-  const today =
-    new Date()
-      .toLocaleDateString(
-        "en-CA",
-        {
-          timeZone:"Asia/Dhaka"
-        }
-      );
-
-
-  const todayCount =
-    reports.filter(r => {
-
-      if(!r.created_at){
-        return false;
-      }
-
-      const date =
-        new Date(r.created_at)
-          .toLocaleDateString(
-            "en-CA",
-            {
-              timeZone:"Asia/Dhaka"
-            }
-          );
-
-      return date === today;
-
-    }).length;
-
-
-  document
-    .getElementById("todayReports")
-    .innerText =
-      todayCount
-        .toLocaleString("bn-BD");
-
-}
-
-
-/* ==========================================
-   DATE
-========================================== */
-
-function formatDate(date){
-
-  if(!date){
-    return "";
-  }
-
-
-  try{
-
-    return new Date(date)
-      .toLocaleString(
-        "bn-BD",
-        {
-          dateStyle:"medium",
-          timeStyle:"short",
-          timeZone:"Asia/Dhaka"
-        }
-      );
-
-  }catch(e){
-
-    return "";
-
-  }
-
-}
-
-
-/* ==========================================
-   HTML ESCAPE
-========================================== */
+/* ================================
+   ESCAPE HTML
+================================ */
 
 function escapeHtml(value){
 
@@ -1900,41 +1335,26 @@ function escapeHtml(value){
 
   return String(value)
 
-    .replace(
-      /&/g,
-      "&amp;"
-    )
+    .replace(/&/g,"&amp;")
 
-    .replace(
-      /</g,
-      "&lt;"
-    )
+    .replace(/</g,"&lt;")
 
-    .replace(
-      />/g,
-      "&gt;"
-    )
+    .replace(/>/g,"&gt;")
 
-    .replace(
-      /"/g,
-      "&quot;"
-    )
+    .replace(/"/g,"&quot;")
 
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+    .replace(/'/g,"&#039;");
 
 }
 
 
-/* ==========================================
+/* ================================
    CLOSE MODAL
-========================================== */
+================================ */
 
 window.addEventListener(
   "click",
-  function(event){
+  event => {
 
     const modal =
       document.getElementById(
@@ -1952,13 +1372,9 @@ window.addEventListener(
 );
 
 
-/* ==========================================
-   ESC KEY
-========================================== */
-
 window.addEventListener(
   "keydown",
-  function(event){
+  event => {
 
     if(event.key === "Escape"){
 
@@ -1970,9 +1386,9 @@ window.addEventListener(
 );
 
 
-/* ==========================================
+/* ================================
    START
-========================================== */
+================================ */
 
 loadReports();
 
