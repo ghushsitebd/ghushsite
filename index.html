@@ -30,8 +30,6 @@ button{
   cursor:pointer;
 }
 
-/* HEADER */
-
 .header{
   position:sticky;
   top:0;
@@ -79,15 +77,11 @@ button{
   font-weight:900;
 }
 
-/* MAIN */
-
 .container{
   max-width:900px;
   margin:auto;
   padding:18px 13px 35px;
 }
-
-/* TOP CARD */
 
 .top-card{
   background:linear-gradient(135deg,#087f3e,#0ba653);
@@ -126,8 +120,6 @@ button{
   font-weight:900;
 }
 
-/* SEARCH */
-
 .search-area{
   margin-top:18px;
   background:#fff;
@@ -149,8 +141,6 @@ button{
   border-color:#087f3e;
 }
 
-/* TITLE */
-
 .list-head{
   display:flex;
   align-items:center;
@@ -170,8 +160,6 @@ button{
   border-radius:8px;
   font-weight:800;
 }
-
-/* REPORT */
 
 .report{
   background:#fff;
@@ -244,8 +232,6 @@ button{
   display:block;
 }
 
-/* EMPTY / LOADING */
-
 .loading,
 .empty{
   background:#fff;
@@ -254,8 +240,6 @@ button{
   border-radius:14px;
   color:#69746e;
 }
-
-/* NOTICE */
 
 .notice{
   margin-top:18px;
@@ -267,8 +251,6 @@ button{
   font-size:12px;
   line-height:1.65;
 }
-
-/* FOOTER */
 
 .footer{
   background:#102018;
@@ -283,15 +265,13 @@ button{
   font-size:16px;
 }
 
-/* MODAL */
-
 .modal{
   display:none;
   position:fixed;
   inset:0;
   z-index:999;
-  background:rgba(0,0,0,.6);
-  padding:10px;
+  background:rgba(0,0,0,.62);
+  padding:8px;
   overflow-y:auto;
 }
 
@@ -300,11 +280,12 @@ button{
 }
 
 .modal-box{
-  max-width:600px;
-  margin:12px auto;
+  max-width:620px;
+  margin:8px auto;
   background:#fff;
-  border-radius:16px;
+  border-radius:17px;
   overflow:hidden;
+  box-shadow:0 15px 45px rgba(0,0,0,.22);
 }
 
 .modal-head{
@@ -314,6 +295,9 @@ button{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  position:sticky;
+  top:0;
+  z-index:2;
 }
 
 .modal-head h2{
@@ -354,21 +338,38 @@ textarea{
   background:#fff;
 }
 
-textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
 input:focus,
 select:focus,
 textarea:focus{
   border-color:#087f3e;
+  box-shadow:0 0 0 2px rgba(8,127,62,.08);
+}
+
+textarea{
+  min-height:115px;
+  resize:vertical;
 }
 
 .row{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
+}
+
+.location-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.location-grid .full{
+  grid-column:1/-1;
+}
+
+.select-title{
+  font-size:12px;
+  color:#64716a;
+  margin-bottom:7px;
 }
 
 .file-info{
@@ -411,7 +412,7 @@ textarea:focus{
 
 .message{
   display:none;
-  padding:10px;
+  padding:11px;
   border-radius:9px;
   margin-bottom:12px;
   font-size:13px;
@@ -425,6 +426,49 @@ textarea:focus{
 .error{
   background:#ffecec;
   color:#b00020;
+}
+
+/* SUCCESS SCREEN */
+
+.success-screen{
+  display:none;
+  padding:35px 20px;
+  text-align:center;
+}
+
+.success-icon{
+  width:68px;
+  height:68px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  background:#e9f8ef;
+  color:#087f3e;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:35px;
+}
+
+.success-screen h2{
+  font-size:22px;
+  margin-bottom:8px;
+  color:#087f3e;
+}
+
+.success-screen p{
+  font-size:14px;
+  color:#5e6963;
+  line-height:1.7;
+}
+
+.ok-btn{
+  margin-top:20px;
+  border:0;
+  background:#087f3e;
+  color:#fff;
+  padding:11px 28px;
+  border-radius:9px;
+  font-weight:900;
 }
 
 /* MOBILE */
@@ -456,9 +500,14 @@ textarea:focus{
     font-size:18px;
   }
 
-  .row{
+  .row,
+  .location-grid{
     grid-template-columns:1fr;
     gap:0;
+  }
+
+  .location-grid .full{
+    grid-column:auto;
   }
 
   .report{
@@ -475,11 +524,12 @@ textarea:focus{
   }
 
   .modal{
-    padding:6px;
+    padding:5px;
   }
 
   .modal-box{
-    margin:5px auto;
+    margin:3px auto;
+    border-radius:14px;
   }
 
   .form{
@@ -493,7 +543,6 @@ textarea:focus{
 <body>
 
 <header class="header">
-
   <div class="nav">
 
     <div class="logo">
@@ -501,14 +550,11 @@ textarea:focus{
       <span>ঘুষ সাইট</span>
     </div>
 
-    <button
-      class="report-btn"
-      onclick="openReport()">
+    <button class="report-btn" onclick="openReport()">
       অভিযোগ করুন
     </button>
 
   </div>
-
 </header>
 
 
@@ -525,9 +571,7 @@ textarea:focus{
       পরিচয় প্রকাশ না করেই রিপোর্ট করতে পারবেন।
     </p>
 
-    <button
-      class="big-report"
-      onclick="openReport()">
+    <button class="big-report" onclick="openReport()">
       ＋ রিপোর্ট করুন
     </button>
 
@@ -550,9 +594,7 @@ textarea:focus{
 
     <h2>প্রকাশিত রিপোর্ট</h2>
 
-    <button
-      class="refresh"
-      onclick="loadReports()">
+    <button class="refresh" onclick="loadReports()">
       ↻
     </button>
 
@@ -560,11 +602,9 @@ textarea:focus{
 
 
   <div id="reportsContainer">
-
     <div class="loading">
       রিপোর্ট লোড হচ্ছে...
     </div>
-
   </div>
 
 
@@ -573,9 +613,9 @@ textarea:focus{
     <strong>⚠️ গুরুত্বপূর্ণ</strong><br>
 
     প্রকাশিত রিপোর্ট ব্যবহারকারীর দেওয়া তথ্যের ভিত্তিতে।
-    রিপোর্টের তথ্য স্বাধীনভাবে সত্যতা যাচাই করা হয়েছে—এমন
-    দাবি করা হচ্ছে না। কারও নাম, মোবাইল নম্বর, NID,
-    ব্যক্তিগত ঠিকানা বা সংবেদনশীল তথ্য লিখবেন না।
+    রিপোর্টের তথ্য স্বাধীনভাবে সত্যতা যাচাই করা হয়েছে—
+    এমন দাবি করা হচ্ছে না। কারও নাম, মোবাইল নম্বর,
+    NID, ব্যক্তিগত ঠিকানা বা সংবেদনশীল তথ্য লিখবেন না।
 
   </div>
 
@@ -595,9 +635,7 @@ textarea:focus{
 
 <!-- REPORT MODAL -->
 
-<div
-  id="reportModal"
-  class="modal">
+<div id="reportModal" class="modal">
 
   <div class="modal-box">
 
@@ -605,81 +643,263 @@ textarea:focus{
 
       <h2>অভিযোগ / রিপোর্ট করুন</h2>
 
-      <button
-        class="close"
-        onclick="closeReport()">
+      <button class="close" onclick="closeReport()">
         ×
       </button>
 
     </div>
 
 
+    <!-- FORM -->
+
     <form
+      id="reportForm"
       class="form"
       onsubmit="submitReport(event)">
 
-      <div
-        id="formMessage"
-        class="message">
-      </div>
+      <div id="formMessage" class="message"></div>
 
+
+      <!-- OFFICE CATEGORY -->
 
       <div class="field">
 
-        <label>বিভাগ / প্রতিষ্ঠান *</label>
+        <label>কোন ধরনের সরকারি প্রতিষ্ঠান? *</label>
 
-        <input
-          id="department"
-          required
-          maxlength="150"
-          placeholder="যেমন: ভূমি অফিস">
+        <select id="officeCategory" required onchange="updateDepartments()">
+
+          <option value="">
+            নির্বাচন করুন
+          </option>
+
+          <option value="মন্ত্রণালয় ও সরকারি দপ্তর">
+            🏛️ মন্ত্রণালয় ও সরকারি দপ্তর
+          </option>
+
+          <option value="অধিদপ্তর ও অধীনস্থ দপ্তর">
+            🏢 অধিদপ্তর ও অধীনস্থ দপ্তর
+          </option>
+
+          <option value="ভূমি সেবা">
+            🌾 ভূমি সেবা
+          </option>
+
+          <option value="আদালত ও বিচার বিভাগ">
+            ⚖️ আদালত ও বিচার বিভাগ
+          </option>
+
+          <option value="পুলিশ ও আইনশৃঙ্খলা">
+            👮 পুলিশ ও আইনশৃঙ্খলা
+          </option>
+
+          <option value="স্বাস্থ্যসেবা">
+            🏥 স্বাস্থ্যসেবা
+          </option>
+
+          <option value="শিক্ষা">
+            🎓 শিক্ষা
+          </option>
+
+          <option value="পাসপোর্ট ও ইমিগ্রেশন">
+            🛂 পাসপোর্ট ও ইমিগ্রেশন
+          </option>
+
+          <option value="BRTA ও পরিবহন">
+            🚗 BRTA ও পরিবহন
+          </option>
+
+          <option value="কর ও রাজস্ব">
+            🧾 কর ও রাজস্ব
+          </option>
+
+          <option value="স্থানীয় সরকার">
+            🏘️ স্থানীয় সরকার
+          </option>
+
+          <option value="বিদ্যুৎ পানি গ্যাস">
+            ⚡ বিদ্যুৎ / পানি / গ্যাস
+          </option>
+
+          <option value="সরকারি ব্যাংক ও আর্থিক প্রতিষ্ঠান">
+            🏦 সরকারি ব্যাংক / আর্থিক প্রতিষ্ঠান
+          </option>
+
+          <option value="অন্যান্য সরকারি সেবা">
+            📋 অন্যান্য সরকারি সেবা
+          </option>
+
+        </select>
 
       </div>
 
+
+      <!-- DEPARTMENT -->
+
+      <div class="field">
+
+        <label>দপ্তর / অফিস *</label>
+
+        <select id="department" required disabled>
+
+          <option value="">
+            আগে প্রতিষ্ঠানের ধরন নির্বাচন করুন
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- SERVICE -->
 
       <div class="field">
 
         <label>কোন সেবা? *</label>
 
+        <select id="service" required>
+
+          <option value="">
+            সেবা নির্বাচন করুন
+          </option>
+
+          <option>নামজারি</option>
+          <option>খতিয়ান / পর্চা</option>
+          <option>জমির রেকর্ড</option>
+          <option>ভূমি উন্নয়ন কর</option>
+          <option>জমি সংক্রান্ত অন্যান্য সেবা</option>
+
+          <option>পাসপোর্ট আবেদন</option>
+          <option>পাসপোর্ট সংশোধন</option>
+          <option>ইমিগ্রেশন সেবা</option>
+
+          <option>মামলা সংক্রান্ত সেবা</option>
+          <option>জামিন সংক্রান্ত সেবা</option>
+          <option>নথি / কাগজপত্র</option>
+
+          <option>পুলিশ ক্লিয়ারেন্স</option>
+          <option>জিডি</option>
+          <option>মামলা সংক্রান্ত সেবা</option>
+
+          <option>চিকিৎসা / হাসপাতাল সেবা</option>
+          <option>টেস্ট / পরীক্ষা</option>
+          <option>ওষুধ / চিকিৎসা সংক্রান্ত সেবা</option>
+
+          <option>শিক্ষা সংক্রান্ত সেবা</option>
+          <option>সনদ / সার্টিফিকেট</option>
+          <option>ভর্তি / প্রশাসনিক সেবা</option>
+
+          <option>ড্রাইভিং লাইসেন্স</option>
+          <option>গাড়ির রেজিস্ট্রেশন</option>
+          <option>ফিটনেস</option>
+
+          <option>কর / আয়কর</option>
+          <option>ভ্যাট</option>
+          <option>কাস্টমস</option>
+
+          <option>জন্ম নিবন্ধন</option>
+          <option>মৃত্যু নিবন্ধন</option>
+          <option>নাগরিক সেবা</option>
+
+          <option>বিদ্যুৎ সংযোগ</option>
+          <option>পানি সংযোগ</option>
+          <option>গ্যাস সংযোগ</option>
+
+          <option>অন্যান্য</option>
+
+        </select>
+
+      </div>
+
+
+      <!-- LOCATION -->
+
+      <div class="field">
+
+        <label>ঘটনার এলাকা *</label>
+
+        <div class="location-grid">
+
+          <div class="field">
+
+            <div class="select-title">বিভাগ</div>
+
+            <select id="division" onchange="loadDistricts()" required>
+
+              <option value="">
+                বিভাগ নির্বাচন
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <div class="select-title">জেলা</div>
+
+            <select id="district" onchange="loadUpazilas()" required disabled>
+
+              <option value="">
+                আগে বিভাগ নির্বাচন করুন
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <div class="select-title">উপজেলা / থানা</div>
+
+            <select id="upazila" onchange="loadUnions()" required disabled>
+
+              <option value="">
+                আগে জেলা নির্বাচন করুন
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <div class="select-title">ইউনিয়ন / ওয়ার্ড</div>
+
+            <select id="union" required disabled>
+
+              <option value="">
+                আগে উপজেলা নির্বাচন করুন
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- AMOUNT -->
+
+      <div class="field">
+
+        <label>দাবিকৃত অর্থ — ঐচ্ছিক</label>
+
         <input
-          id="service"
-          required
-          maxlength="150"
-          placeholder="যেমন: নামজারি">
+          id="amount"
+          type="number"
+          min="0"
+          max="100000000"
+          placeholder="যেমন: 5000">
 
       </div>
 
 
-      <div class="row">
-
-        <div class="field">
-
-          <label>এলাকা *</label>
-
-          <input
-            id="location"
-            required
-            maxlength="150"
-            placeholder="জেলা / উপজেলা">
-
-        </div>
-
-
-        <div class="field">
-
-          <label>দাবিকৃত অর্থ</label>
-
-          <input
-            id="amount"
-            type="number"
-            min="0"
-            max="100000000"
-            placeholder="যেমন: 5000">
-
-        </div>
-
-      </div>
-
+      <!-- OUTCOME -->
 
       <div class="field">
 
@@ -716,6 +936,8 @@ textarea:focus{
       </div>
 
 
+      <!-- DETAILS -->
+
       <div class="field">
 
         <label>ঘটনার সংক্ষিপ্ত বিবরণ *</label>
@@ -724,11 +946,12 @@ textarea:focus{
           id="details"
           required
           maxlength="3000"
-          placeholder="কী ঘটেছিল সংক্ষেপে লিখুন...">
-        </textarea>
+          placeholder="কী ঘটেছিল সংক্ষেপে লিখুন..."></textarea>
 
       </div>
 
+
+      <!-- MEDIA -->
 
       <div class="field">
 
@@ -746,6 +969,8 @@ textarea:focus{
 
       </div>
 
+
+      <!-- PRIVACY -->
 
       <label class="check">
 
@@ -774,6 +999,35 @@ textarea:focus{
 
     </form>
 
+
+    <!-- SUCCESS -->
+
+    <div id="successScreen" class="success-screen">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2>
+        অভিযোগ গ্রহণ করা হয়েছে
+      </h2>
+
+      <p>
+        আপনার রিপোর্টটি সফলভাবে জমা হয়েছে।<br>
+        মডারেশনের পর উপযুক্ত হলে এটি প্রকাশ করা হবে।<br>
+        আপনার পরিচয় প্রকাশ করা হবে না।
+      </p>
+
+      <button
+        class="ok-btn"
+        onclick="finishSuccess()">
+
+        ঠিক আছে
+
+      </button>
+
+    </div>
+
   </div>
 
 </div>
@@ -781,9 +1035,9 @@ textarea:focus{
 
 <script>
 
-/* ================================
+/* =================================
    SUPABASE
-================================ */
+================================= */
 
 const SUPABASE_URL =
 "https://klreqkbqyyiwmohlmgkh.supabase.co";
@@ -802,9 +1056,260 @@ const mediaBucket = "media";
 let allReports = [];
 
 
-/* ================================
+/* =================================
+   BANGLADESH LOCATION DATA
+================================= */
+
+/*
+  প্রয়োজন অনুযায়ী ধাপে ধাপে অপশন দেখানো হবে।
+  এখানে ৮ বিভাগ + ৬৪ জেলা রাখা হয়েছে।
+*/
+
+const locations = {
+
+"ঢাকা":{
+"ঢাকা":["ধামরাই","দোহার","কেরানীগঞ্জ","নবাবগঞ্জ","সাভার"],
+"ফরিদপুর":["ফরিদপুর সদর","বোয়ালমারী","আলফাডাঙ্গা","মধুখালী","নগরকান্দা","ভাঙ্গা","সদরপুর","চরভদ্রাসন","সালথা"],
+"গাজীপুর":["গাজীপুর সদর","কালিয়াকৈর","কালীগঞ্জ","কাপাসিয়া","শ্রীপুর"],
+"গোপালগঞ্জ":["গোপালগঞ্জ সদর","কাশিয়ানী","কোটালীপাড়া","মুকসুদপুর","টুঙ্গিপাড়া"],
+"কিশোরগঞ্জ":["কিশোরগঞ্জ সদর","করিমগঞ্জ","তাড়াইল","ইটনা","মিঠামইন","নিকলী","অষ্টগ্রাম","পাকুন্দিয়া","কটিয়াদী","কুলিয়ারচর","ভৈরব","বাজিতপুর","হোসেনপুর"],
+"মাদারীপুর":["মাদারীপুর সদর","কালকিনি","রাজৈর","শিবচর","ডাসার"],
+"মানিকগঞ্জ":["মানিকগঞ্জ সদর","সাটুরিয়া","শিবালয়","ঘিওর","দৌলতপুর","হরিরামপুর","সিংগাইর"],
+"মুন্সিগঞ্জ":["মুন্সিগঞ্জ সদর","শ্রীনগর","সিরাজদিখান","লৌহজং","গজারিয়া","টঙ্গীবাড়ী"],
+"নারায়ণগঞ্জ":["নারায়ণগঞ্জ সদর","বন্দর","আড়াইহাজার","রূপগঞ্জ","সোনারগাঁ"],
+"নরসিংদী":["নরসিংদী সদর","বেলাব","মনোহরদী","পলাশ","রায়পুরা","শিবপুর"],
+"রাজবাড়ী":["রাজবাড়ী সদর","গোয়ালন্দ","পাংশা","বালিয়াকান্দি","কালুখালী"],
+"শরীয়তপুর":["শরীয়তপুর সদর","নড়িয়া","জাজিরা","ভেদরগঞ্জ","ডামুড্যা","গোসাইরহাট"],
+"টাঙ্গাইল":["টাঙ্গাইল সদর","বাসাইল","ভুয়াপুর","দেলদুয়ার","ঘাটাইল","কালিহাতী","মধুপুর","মির্জাপুর","নাগরপুর","সখীপুর","ধনবাড়ী","গোপালপুর"]
+},
+
+"চট্টগ্রাম":{
+"চট্টগ্রাম":["রাঙ্গুনিয়া","সীতাকুণ্ড","মীরসরাই","পটিয়া","সন্দ্বীপ","বাঁশখালী","আনোয়ারা","চন্দনাইশ","সাতকানিয়া","লোহাগাড়া","হাটহাজারী","ফটিকছড়ি","রাউজান","রাঙ্গুনিয়া","কর্ণফুলী"],
+"কক্সবাজার":["কক্সবাজার সদর","চকরিয়া","কুতুবদিয়া","উখিয়া","মহেশখালী","পেকুয়া","রামু","টেকনাফ"],
+"ব্রাহ্মণবাড়িয়া":["ব্রাহ্মণবাড়িয়া সদর","আশুগঞ্জ","নাসিরনগর","সরাইল","শরাইল","কসবা","আখাউড়া","নবীনগর","বাঞ্ছারামপুর","বিজয়নগর"],
+"চাঁদপুর":["চাঁদপুর সদর","হাইমচর","কচুয়া","ফরিদগঞ্জ","মতলব উত্তর","মতলব দক্ষিণ","শাহরাস্তি","হাজীগঞ্জ"],
+"কুমিল্লা":["কুমিল্লা সদর","দাউদকান্দি","চান্দিনা","মুরাদনগর","বুড়িচং","ব্রাহ্মণপাড়া","বরুড়া","লাকসাম","মনোহরগঞ্জ","নাঙ্গলকোট","চৌদ্দগ্রাম","সদর দক্ষিণ","মেঘনা","তিতাস","হোমনা","দেবিদ্বার","লালমাই"],
+"ফেনী":["ফেনী সদর","ছাগলনাইয়া","সোনাগাজী","ফুলগাজী","পরশুরাম","দাগনভূঞা"],
+"খাগড়াছড়ি":["খাগড়াছড়ি সদর","দীঘিনালা","পানছড়ি","মাটিরাঙ্গা","মানিকছড়ি","মহালছড়ি","রামগড়","লক্ষ্মীছড়ি","গুইমারা"],
+"লক্ষ্মীপুর":["লক্ষ্মীপুর সদর","কমলনগর","রামগতি","রায়পুর","রামগঞ্জ"],
+"নোয়াখালী":["নোয়াখালী সদর","বেগমগঞ্জ","চাটখিল","সেনবাগ","কোম্পানীগঞ্জ","কবিরহাট","সুবর্ণচর","হাতিয়া"],
+"রাঙ্গামাটি":["রাঙ্গামাটি সদর","কাপ্তাই","কাউখালী","বাঘাইছড়ি","বরকল","লংগদু","নানিয়ারচর","বিলাইছড়ি","জুরাছড়ি","রাজস্থলী"]
+},
+
+"রাজশাহী":{
+"রাজশাহী":["বাগমারা","বাঘা","চারঘাট","দুর্গাপুর","গোদাগাড়ী","মোহনপুর","পবা","পুঠিয়া","তানোর"],
+"বগুড়া":["বগুড়া সদর","শেরপুর","শাজাহানপুর","শিবগঞ্জ","দুপচাঁচিয়া","আদমদীঘি","ধুনট","সারিয়াকান্দি","গাবতলী","কাহালু","নন্দীগ্রাম","সোনাতলা"],
+"জয়পুরহাট":["জয়পুরহাট সদর","আক্কেলপুর","কালাই","ক্ষেতলাল","পাঁচবিবি"],
+"নওগাঁ":["নওগাঁ সদর","মহাদেবপুর","মান্দা","নিয়ামতপুর","আত্রাই","রাণীনগর","পত্নীতলা","ধামইরহাট","সাপাহার","পোরশা","বদলগাছী"],
+"নাটোর":["নাটোর সদর","সিংড়া","বড়াইগ্রাম","বাগাতিপাড়া","লালপুর","গুরুদাসপুর","নলডাঙ্গা"],
+"চাঁপাইনবাবগঞ্জ":["চাঁপাইনবাবগঞ্জ সদর","শিবগঞ্জ","গোমস্তাপুর","নাচোল","ভোলাহাট"],
+"পাবনা":["পাবনা সদর","ঈশ্বরদী","আটঘরিয়া","চাটমোহর","ভাঙ্গুড়া","ফরিদপুর","সাঁথিয়া","সুজানগর","বেড়া"],
+"সিরাজগঞ্জ":["সিরাজগঞ্জ সদর","কাজীপুর","রায়গঞ্জ","তাড়াশ","উল্লাপাড়া","কামারখন্দ","শাহজাদপুর","চৌহালী","বেলকুচি"]
+},
+
+"খুলনা":{
+"খুলনা":["বটিয়াঘাটা","দাকোপ","ডুমুরিয়া","দিঘলিয়া","কয়রা","পাইকগাছা","রূপসা","তেরখাদা","ফুলতলা"],
+"বাগেরহাট":["বাগেরহাট সদর","চিতলমারী","ফকিরহাট","কচুয়া","মোল্লাহাট","মোংলা","মোড়েলগঞ্জ","রামপাল","শরণখোলা"],
+"চুয়াডাঙ্গা":["চুয়াডাঙ্গা সদর","আলমডাঙ্গা","দামুড়হুদা","জীবননগর"],
+"যশোর":["যশোর সদর","অভয়নগর","বাঘারপাড়া","চৌগাছা","ঝিকরগাছা","কেশবপুর","মণিরামপুর","শার্শা"],
+"ঝিনাইদহ":["ঝিনাইদহ সদর","কালীগঞ্জ","কোটচাঁদপুর","মহেশপুর","শৈলকুপা","হরিণাকুণ্ডু"],
+"কুষ্টিয়া":["কুষ্টিয়া সদর","কুমারখালী","খোকসা","মিরপুর","ভেড়ামারা","দৌলতপুর"],
+"মাগুরা":["মাগুরা সদর","শ্রীপুর","শালিখা","মোহাম্মদপুর"],
+"মেহেরপুর":["মেহেরপুর সদর","গাংনী","মুজিবনগর"],
+"নড়াইল":["নড়াইল সদর","লোহাগড়া","কালিয়া"],
+"সাতক্ষীরা":["সাতক্ষীরা সদর","আশাশুনি","কলারোয়া","কালিগঞ্জ","শ্যামনগর","তালা","দেবহাটা"]
+},
+
+"বরিশাল":{
+"বরিশাল":["বরিশাল সদর","আগৈলঝাড়া","বাবুগঞ্জ","বাকেরগঞ্জ","বানারীপাড়া","গৌরনদী","হিজলা","মেহেন্দিগঞ্জ","মুলাদী","উজিরপুর"],
+"ভোলা":["ভোলা সদর","বোরহানউদ্দিন","চরফ্যাশন","দৌলতখান","লালমোহন","মনপুরা","তজুমদ্দিন"],
+"ঝালকাঠি":["ঝালকাঠি সদর","কাঁঠালিয়া","নলছিটি","রাজাপুর"],
+"পটুয়াখালী":["পটুয়াখালী সদর","বাউফল","দশমিনা","দুমকি","কলাপাড়া","মির্জাগঞ্জ","গলাচিপা","রাঙ্গাবালী"],
+"পিরোজপুর":["পিরোজপুর সদর","ভান্ডারিয়া","কাউখালী","মঠবাড়িয়া","নাজিরপুর","নেছারাবাদ","ইন্দুরকানী"],
+"বরগুনা":["বরগুনা সদর","আমতলী","বামনা","বেতাগী","পাথরঘাটা","তালতলী"]
+},
+
+"সিলেট":{
+"সিলেট":["সিলেট সদর","বালাগঞ্জ","বিয়ানীবাজার","বিশ্বনাথ","কোম্পানীগঞ্জ","ফেঞ্চুগঞ্জ","গোলাপগঞ্জ","গোয়াইনঘাট","জৈন্তাপুর","কানাইঘাট","জকিগঞ্জ","দক্ষিণ সুরমা","ওসমানীনগর"],
+"মৌলভীবাজার":["মৌলভীবাজার সদর","বড়লেখা","জুড়ী","কমলগঞ্জ","কুলাউড়া","রাজনগর","শ্রীমঙ্গল"],
+"হবিগঞ্জ":["হবিগঞ্জ সদর","আজমিরীগঞ্জ","বাহুবল","বানিয়াচং","চুনারুঘাট","লাখাই","মাধবপুর","নবীগঞ্জ","শায়েস্তাগঞ্জ"],
+"সুনামগঞ্জ":["সুনামগঞ্জ সদর","ছাতক","দোয়ারাবাজার","দিরাই","ধর্মপাশা","জামালগঞ্জ","জগন্নাথপুর","তাহিরপুর","শাল্লা","শান্তিগঞ্জ","মধ্যনগর"]
+},
+
+"রংপুর":{
+"রংপুর":["রংপুর সদর","বদরগঞ্জ","গঙ্গাচড়া","কাউনিয়া","মিঠাপুকুর","পীরগাছা","পীরগঞ্জ","তারাগঞ্জ"],
+"দিনাজপুর":["দিনাজপুর সদর","বিরামপুর","বীরগঞ্জ","বোচাগঞ্জ","চিরিরবন্দর","ফুলবাড়ী","ঘোড়াঘাট","হাকিমপুর","কাহারোল","খানসামা","নবাবগঞ্জ","পার্বতীপুর"],
+"গাইবান্ধা":["গাইবান্ধা সদর","ফুলছড়ি","গোবিন্দগঞ্জ","পলাশবাড়ী","সাদুল্লাপুর","সাঘাটা","সুন্দরগঞ্জ"],
+"কুড়িগ্রাম":["কুড়িগ্রাম সদর","ভুরুঙ্গামারী","চর রাজিবপুর","চিলমারী","ফুলবাড়ী","নাগেশ্বরী","রাজারহাট","রৌমারী","উলিপুর"],
+"লালমনিরহাট":["লালমনিরহাট সদর","আদিতমারী","কালীগঞ্জ","হাতীবান্ধা","পাটগ্রাম"],
+"নীলফামারী":["নীলফামারী সদর","ডোমার","ডিমলা","জলঢাকা","কিশোরগঞ্জ","সৈয়দপুর"],
+"পঞ্চগড়":["পঞ্চগড় সদর","আটোয়ারী","বোদা","দেবীগঞ্জ","তেঁতুলিয়া"],
+"ঠাকুরগাঁও":["ঠাকুরগাঁও সদর","বালিয়াডাঙ্গী","হরিপুর","পীরগঞ্জ","রানীশংকৈল"]
+},
+
+"ময়মনসিংহ":{
+"ময়মনসিংহ":["ময়মনসিংহ সদর","ভালুকা","ধোবাউড়া","ফুলবাড়ীয়া","গফরগাঁও","গৌরীপুর","হালুয়াঘাট","ঈশ্বরগঞ্জ","মুক্তাগাছা","নান্দাইল","ফুলপুর","তারাকান্দা","ত্রিশাল"],
+"জামালপুর":["জামালপুর সদর","বকশীগঞ্জ","দেওয়ানগঞ্জ","ইসলামপুর","মাদারগঞ্জ","মেলান্দহ","সরিষাবাড়ী"],
+"নেত্রকোনা":["নেত্রকোনা সদর","আটপাড়া","বারহাট্টা","দুর্গাপুর","খালিয়াজুরী","কলমাকান্দা","কেন্দুয়া","মদন","মোহনগঞ্জ","পূর্বধলা"],
+"শেরপুর":["শেরপুর সদর","ঝিনাইগাতী","নকলা","নালিতাবাড়ী","শ্রীবরদী"]
+}
+
+};
+
+
+/* =================================
+   DEPARTMENT LIST
+================================= */
+
+const departments = {
+
+"মন্ত্রণালয় ও সরকারি দপ্তর":[
+"জনপ্রশাসন মন্ত্রণালয়",
+"স্বরাষ্ট্র মন্ত্রণালয়",
+"ভূমি মন্ত্রণালয়",
+"আইন, বিচার ও সংসদ বিষয়ক মন্ত্রণালয়",
+"স্বাস্থ্য ও পরিবার কল্যাণ মন্ত্রণালয়",
+"শিক্ষা মন্ত্রণালয়",
+"স্থানীয় সরকার বিভাগ",
+"সড়ক পরিবহন ও সেতু মন্ত্রণালয়",
+"গৃহায়ন ও গণপূর্ত মন্ত্রণালয়",
+"অর্থ মন্ত্রণালয়",
+"বাণিজ্য মন্ত্রণালয়",
+"কৃষি মন্ত্রণালয়",
+"মৎস্য ও প্রাণিসম্পদ মন্ত্রণালয়",
+"সমাজকল্যাণ মন্ত্রণালয়",
+"শ্রম ও কর্মসংস্থান মন্ত্রণালয়",
+"অন্যান্য সরকারি দপ্তর"
+],
+
+"অধিদপ্তর ও অধীনস্থ দপ্তর":[
+"দুর্নীতি দমন কমিশন",
+"সমাজসেবা অধিদপ্তর",
+"স্বাস্থ্য অধিদপ্তর",
+"শিক্ষা অধিদপ্তর",
+"প্রাথমিক শিক্ষা অধিদপ্তর",
+"কৃষি সম্প্রসারণ অধিদপ্তর",
+"মৎস্য অধিদপ্তর",
+"প্রাণিসম্পদ অধিদপ্তর",
+"সড়ক ও জনপথ অধিদপ্তর",
+"গণপূর্ত অধিদপ্তর",
+"স্থানীয় সরকার প্রকৌশল অধিদপ্তর",
+"পাসপোর্ট অধিদপ্তর",
+"ফায়ার সার্ভিস ও সিভিল ডিফেন্স",
+"অন্যান্য অধিদপ্তর"
+],
+
+"ভূমি সেবা":[
+"সহকারী কমিশনার (ভূমি) অফিস",
+"উপজেলা ভূমি অফিস",
+"ইউনিয়ন ভূমি অফিস",
+"ভূমি রেকর্ড ও জরিপ অফিস",
+"সেটেলমেন্ট অফিস",
+"অন্যান্য ভূমি অফিস"
+],
+
+"আদালত ও বিচার বিভাগ":[
+"জেলা ও দায়রা জজ আদালত",
+"চীফ জুডিশিয়াল ম্যাজিস্ট্রেট আদালত",
+"চীফ মেট্রোপলিটন ম্যাজিস্ট্রেট আদালত",
+"উপজেলা / ম্যাজিস্ট্রেট আদালত",
+"সাব-রেজিস্ট্রি অফিস",
+"অন্যান্য আদালত সংশ্লিষ্ট অফিস"
+],
+
+"পুলিশ ও আইনশৃঙ্খলা":[
+"থানা",
+"জেলা পুলিশ",
+"মেট্রোপলিটন পুলিশ",
+"পুলিশ সুপারের কার্যালয়",
+"পুলিশ ক্লিয়ারেন্স অফিস",
+"অন্যান্য আইনশৃঙ্খলা অফিস"
+],
+
+"স্বাস্থ্যসেবা":[
+"সরকারি মেডিকেল কলেজ হাসপাতাল",
+"জেলা সদর হাসপাতাল",
+"উপজেলা স্বাস্থ্য কমপ্লেক্স",
+"কমিউনিটি ক্লিনিক",
+"সিভিল সার্জনের কার্যালয়",
+"অন্যান্য সরকারি স্বাস্থ্য প্রতিষ্ঠান"
+],
+
+"শিক্ষা":[
+"মাধ্যমিক ও উচ্চ শিক্ষা অফিস",
+"জেলা শিক্ষা অফিস",
+"উপজেলা শিক্ষা অফিস",
+"প্রাথমিক শিক্ষা অফিস",
+"সরকারি স্কুল",
+"সরকারি কলেজ",
+"অন্যান্য সরকারি শিক্ষা প্রতিষ্ঠান"
+],
+
+"পাসপোর্ট ও ইমিগ্রেশন":[
+"আঞ্চলিক পাসপোর্ট অফিস",
+"পাসপোর্ট অফিস",
+"ইমিগ্রেশন অফিস",
+"অন্যান্য"
+],
+
+"BRTA ও পরিবহন":[
+"BRTA সার্কেল অফিস",
+"BRTA জেলা অফিস",
+"ড্রাইভিং লাইসেন্স শাখা",
+"মোটরযান রেজিস্ট্রেশন শাখা",
+"অন্যান্য পরিবহন অফিস"
+],
+
+"কর ও রাজস্ব":[
+"কর অঞ্চল / আয়কর অফিস",
+"ভ্যাট অফিস",
+"কাস্টমস অফিস",
+"রাজস্ব অফিস",
+"অন্যান্য রাজস্ব অফিস"
+],
+
+"স্থানীয় সরকার":[
+"জেলা প্রশাসকের কার্যালয়",
+"উপজেলা নির্বাহী অফিস",
+"ইউনিয়ন পরিষদ",
+"পৌরসভা",
+"সিটি কর্পোরেশন",
+"ওয়ার্ড অফিস",
+"অন্যান্য স্থানীয় সরকার অফিস"
+],
+
+"বিদ্যুৎ পানি গ্যাস":[
+"বিদ্যুৎ অফিস",
+"পল্লী বিদ্যুৎ অফিস",
+"ওয়াসা",
+"পানি সরবরাহ অফিস",
+"গ্যাস অফিস",
+"অন্যান্য সেবা অফিস"
+],
+
+"সরকারি ব্যাংক ও আর্থিক প্রতিষ্ঠান":[
+"সোনালী ব্যাংক",
+"জনতা ব্যাংক",
+"অগ্রণী ব্যাংক",
+"রূপালী ব্যাংক",
+"বাংলাদেশ কৃষি ব্যাংক",
+"রাজশাহী কৃষি উন্নয়ন ব্যাংক",
+"অন্যান্য সরকারি আর্থিক প্রতিষ্ঠান"
+],
+
+"অন্যান্য সরকারি সেবা":[
+"সরকারি অফিস",
+"সরকারি সেবা কেন্দ্র",
+"ডিজিটাল সেন্টার",
+"অন্যান্য"
+]
+
+};
+
+
+/* =================================
    MODAL
-================================ */
+================================= */
 
 function openReport(){
 
@@ -812,12 +1317,12 @@ function openReport(){
     .getElementById("reportModal")
     .classList.add("show");
 
-  setTimeout(() => {
+  document.body.style.overflow="hidden";
 
+  setTimeout(()=>{
     document
-      .getElementById("department")
+      .getElementById("officeCategory")
       .focus();
-
   },100);
 
 }
@@ -829,12 +1334,279 @@ function closeReport(){
     .getElementById("reportModal")
     .classList.remove("show");
 
+  document.body.style.overflow="";
+
 }
 
 
-/* ================================
+/* =================================
+   DEPARTMENT OPTIONS
+================================= */
+
+function updateDepartments(){
+
+  const category =
+    document.getElementById("officeCategory").value;
+
+  const select =
+    document.getElementById("department");
+
+  select.innerHTML =
+    '<option value="">দপ্তর / অফিস নির্বাচন করুন</option>';
+
+  if(!category){
+
+    select.disabled=true;
+
+    return;
+
+  }
+
+  const list =
+    departments[category] || [];
+
+  list.forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    select.appendChild(option);
+
+  });
+
+  select.disabled=false;
+
+}
+
+
+/* =================================
+   DIVISION
+================================= */
+
+function initDivisions(){
+
+  const select =
+    document.getElementById("division");
+
+  Object.keys(locations).forEach(div=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=div;
+    option.textContent=div;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+/* =================================
+   DISTRICT
+================================= */
+
+function loadDistricts(){
+
+  const division =
+    document.getElementById("division").value;
+
+  const district =
+    document.getElementById("district");
+
+  const upazila =
+    document.getElementById("upazila");
+
+  const union =
+    document.getElementById("union");
+
+  district.innerHTML =
+    '<option value="">জেলা নির্বাচন করুন</option>';
+
+  upazila.innerHTML =
+    '<option value="">আগে জেলা নির্বাচন করুন</option>';
+
+  union.innerHTML =
+    '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
+
+  upazila.disabled=true;
+  union.disabled=true;
+
+  if(!division){
+
+    district.disabled=true;
+    return;
+
+  }
+
+  Object.keys(locations[division]).forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    district.appendChild(option);
+
+  });
+
+  district.disabled=false;
+
+}
+
+
+/* =================================
+   UPAZILA
+================================= */
+
+function loadUpazilas(){
+
+  const division =
+    document.getElementById("division").value;
+
+  const district =
+    document.getElementById("district").value;
+
+  const upazila =
+    document.getElementById("upazila");
+
+  const union =
+    document.getElementById("union");
+
+  upazila.innerHTML =
+    '<option value="">উপজেলা নির্বাচন করুন</option>';
+
+  union.innerHTML =
+    '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
+
+  union.disabled=true;
+
+  if(!division || !district){
+
+    upazila.disabled=true;
+    return;
+
+  }
+
+  const list =
+    locations[division][district] || [];
+
+  list.forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    upazila.appendChild(option);
+
+  });
+
+  upazila.disabled=false;
+
+}
+
+
+/* =================================
+   UNION / WARD
+================================= */
+
+function loadUnions(){
+
+  const union =
+    document.getElementById("union");
+
+  union.innerHTML="";
+
+  const options=[
+    "ইউনিয়ন / ওয়ার্ড প্রযোজ্য নয়",
+    "সংশ্লিষ্ট ইউনিয়ন / ওয়ার্ড",
+    "অন্যান্য"
+  ];
+
+  options.forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    union.appendChild(option);
+
+  });
+
+  union.disabled=false;
+
+}
+
+
+/* =================================
+   SUCCESS
+================================= */
+
+function showSuccess(){
+
+  document
+    .getElementById("reportForm")
+    .style.display="none";
+
+  document
+    .getElementById("successScreen")
+    .style.display="block";
+
+}
+
+
+function finishSuccess(){
+
+  document
+    .getElementById("successScreen")
+    .style.display="none";
+
+  document
+    .getElementById("reportForm")
+    .style.display="block";
+
+  document
+    .getElementById("reportForm")
+    .reset();
+
+  document
+    .getElementById("department")
+    .innerHTML =
+      '<option value="">আগে প্রতিষ্ঠানের ধরন নির্বাচন করুন</option>';
+
+  document
+    .getElementById("department")
+    .disabled=true;
+
+  document
+    .getElementById("district")
+    .disabled=true;
+
+  document
+    .getElementById("upazila")
+    .disabled=true;
+
+  document
+    .getElementById("union")
+    .disabled=true;
+
+  closeReport();
+
+}
+
+
+/* =================================
    MESSAGE
-================================ */
+================================= */
 
 function showMessage(text,type){
 
@@ -844,32 +1616,29 @@ function showMessage(text,type){
   box.className =
     "message " + type;
 
-  box.innerText =
-    text;
+  box.innerText=text;
 
-  box.style.display =
-    "block";
+  box.style.display="block";
 
 }
 
 
-/* ================================
-   UPLOAD
-================================ */
+/* =================================
+   MEDIA UPLOAD
+================================= */
 
 async function uploadMedia(file){
 
   if(!file){
 
-    return {
+    return{
       url:null,
       type:null
     };
 
   }
 
-
-  if(file.size > 25 * 1024 * 1024){
+  if(file.size > 25*1024*1024){
 
     throw new Error(
       "ফাইলের আকার 25MB-এর বেশি হতে পারবে না।"
@@ -877,23 +1646,17 @@ async function uploadMedia(file){
 
   }
 
-
   const extension =
     file.name
       .split(".")
       .pop()
       .toLowerCase();
 
-
   const filename =
-    crypto.randomUUID() +
-    "." +
-    extension;
-
+    crypto.randomUUID()+"."+extension;
 
   const path =
-    "reports/" + filename;
-
+    "reports/"+filename;
 
   const {error} =
     await supabaseClient
@@ -908,11 +1671,9 @@ async function uploadMedia(file){
         }
       );
 
-
   if(error){
     throw error;
   }
-
 
   const {data} =
     supabaseClient
@@ -920,8 +1681,7 @@ async function uploadMedia(file){
       .from(mediaBucket)
       .getPublicUrl(path);
 
-
-  return {
+  return{
 
     url:data.publicUrl,
 
@@ -934,44 +1694,56 @@ async function uploadMedia(file){
 }
 
 
-/* ================================
+/* =================================
    SUBMIT
-================================ */
+================================= */
 
 async function submitReport(event){
 
   event.preventDefault();
 
-
   const button =
     document.getElementById("submitBtn");
 
-
-  button.disabled = true;
-
-  button.innerText =
-    "জমা হচ্ছে...";
-
+  button.disabled=true;
+  button.innerText="জমা হচ্ছে...";
 
   try{
+
+    const category =
+      document
+        .getElementById("officeCategory")
+        .value;
 
     const department =
       document
         .getElementById("department")
-        .value.trim();
-
+        .value;
 
     const service =
       document
         .getElementById("service")
-        .value.trim();
+        .value;
 
-
-    const location =
+    const division =
       document
-        .getElementById("location")
-        .value.trim();
+        .getElementById("division")
+        .value;
 
+    const district =
+      document
+        .getElementById("district")
+        .value;
+
+    const upazila =
+      document
+        .getElementById("upazila")
+        .value;
+
+    const union =
+      document
+        .getElementById("union")
+        .value;
 
     const amount =
       Number(
@@ -980,18 +1752,16 @@ async function submitReport(event){
           .value || 0
       );
 
-
     const outcome =
       document
         .getElementById("outcome")
         .value;
 
-
     const details =
       document
         .getElementById("details")
-        .value.trim();
-
+        .value
+        .trim();
 
     const file =
       document
@@ -1000,9 +1770,13 @@ async function submitReport(event){
 
 
     if(
+      !category ||
       !department ||
       !service ||
-      !location ||
+      !division ||
+      !district ||
+      !upazila ||
+      !union ||
       !outcome ||
       !details
     ){
@@ -1014,7 +1788,33 @@ async function submitReport(event){
     }
 
 
-    let mediaData = {
+    /*
+      বর্তমান reports টেবিলের location
+      কলামেই সম্পূর্ণ এলাকা রাখা হচ্ছে।
+    */
+
+    const location =
+      [
+        division,
+        district,
+        upazila,
+        union
+      ]
+      .filter(Boolean)
+      .join(" → ");
+
+
+    /*
+      category + department
+      একই department field-এ সুন্দরভাবে রাখা হচ্ছে।
+      ফলে নতুন SQL কলাম লাগছে না।
+    */
+
+    const finalDepartment =
+      category + " — " + department;
+
+
+    let mediaData={
       url:null,
       type:null
     };
@@ -1033,11 +1833,16 @@ async function submitReport(event){
         .from("reports")
         .insert({
 
-          department,
+          department:finalDepartment,
+
           service,
+
           location,
+
           amount,
+
           outcome,
+
           details,
 
           media_url:
@@ -1046,8 +1851,7 @@ async function submitReport(event){
           media_type:
             mediaData.type,
 
-          status:
-            "pending"
+          status:"pending"
 
         });
 
@@ -1057,22 +1861,7 @@ async function submitReport(event){
     }
 
 
-    showMessage(
-      "✅ রিপোর্ট সফলভাবে জমা হয়েছে। মডারেশনের পর প্রকাশ করা হবে।",
-      "success"
-    );
-
-
-    document
-      .querySelector("#reportModal form")
-      .reset();
-
-
-    setTimeout(() => {
-
-      closeReport();
-
-    },2500);
+    showSuccess();
 
 
   }catch(error){
@@ -1080,25 +1869,21 @@ async function submitReport(event){
     console.error(error);
 
     showMessage(
-      "রিপোর্ট জমা দেওয়া যায়নি: " +
-      error.message,
+      "রিপোর্ট জমা দেওয়া যায়নি: "+error.message,
       "error"
     );
 
   }
 
-
-  button.disabled = false;
-
-  button.innerText =
-    "রিপোর্ট জমা দিন";
+  button.disabled=false;
+  button.innerText="রিপোর্ট জমা দিন";
 
 }
 
 
-/* ================================
+/* =================================
    LOAD REPORTS
-================================ */
+================================= */
 
 async function loadReports(){
 
@@ -1106,7 +1891,6 @@ async function loadReports(){
     document.getElementById(
       "reportsContainer"
     );
-
 
   container.innerHTML =
     '<div class="loading">রিপোর্ট লোড হচ্ছে...</div>';
@@ -1139,18 +1923,16 @@ async function loadReports(){
   }
 
 
-  allReports =
-    data || [];
-
+  allReports=data || [];
 
   renderReports(allReports);
 
 }
 
 
-/* ================================
-   RENDER
-================================ */
+/* =================================
+   RENDER REPORTS
+================================= */
 
 function renderReports(reports){
 
@@ -1171,17 +1953,17 @@ function renderReports(reports){
 
 
   container.innerHTML =
-    reports.map(report => {
+    reports.map(report=>{
 
-      let media = "";
+      let media="";
 
 
       if(
         report.media_url &&
-        report.media_type === "image"
+        report.media_type==="image"
       ){
 
-        media =
+        media=
           `<img
             class="media"
             src="${escapeHtml(report.media_url)}"
@@ -1193,10 +1975,10 @@ function renderReports(reports){
 
       if(
         report.media_url &&
-        report.media_type === "video"
+        report.media_type==="video"
       ){
 
-        media =
+        media=
           `<video
             class="media"
             controls
@@ -1211,7 +1993,7 @@ function renderReports(reports){
         Number(report.amount || 0);
 
 
-      return `
+      return`
 
         <article class="report">
 
@@ -1257,7 +2039,6 @@ function renderReports(reports){
 
           ${media}
 
-
         </article>
 
       `;
@@ -1267,9 +2048,9 @@ function renderReports(reports){
 }
 
 
-/* ================================
+/* =================================
    SEARCH
-================================ */
+================================= */
 
 function filterReports(){
 
@@ -1291,9 +2072,9 @@ function filterReports(){
 
 
   const filtered =
-    allReports.filter(report => {
+    allReports.filter(report=>{
 
-      const text = [
+      const text=[
 
         report.department,
         report.service,
@@ -1317,15 +2098,15 @@ function filterReports(){
 }
 
 
-/* ================================
-   ESCAPE HTML
-================================ */
+/* =================================
+   ESCAPE
+================================= */
 
 function escapeHtml(value){
 
   if(
-    value === null ||
-    value === undefined
+    value===null ||
+    value===undefined
   ){
 
     return "";
@@ -1336,33 +2117,28 @@ function escapeHtml(value){
   return String(value)
 
     .replace(/&/g,"&amp;")
-
     .replace(/</g,"&lt;")
-
     .replace(/>/g,"&gt;")
-
     .replace(/"/g,"&quot;")
-
     .replace(/'/g,"&#039;");
 
 }
 
 
-/* ================================
+/* =================================
    CLOSE MODAL
-================================ */
+================================= */
 
 window.addEventListener(
   "click",
-  event => {
+  event=>{
 
     const modal =
       document.getElementById(
         "reportModal"
       );
 
-
-    if(event.target === modal){
+    if(event.target===modal){
 
       closeReport();
 
@@ -1374,9 +2150,9 @@ window.addEventListener(
 
 window.addEventListener(
   "keydown",
-  event => {
+  event=>{
 
-    if(event.key === "Escape"){
+    if(event.key==="Escape"){
 
       closeReport();
 
@@ -1386,9 +2162,11 @@ window.addEventListener(
 );
 
 
-/* ================================
+/* =================================
    START
-================================ */
+================================= */
+
+initDivisions();
 
 loadReports();
 
