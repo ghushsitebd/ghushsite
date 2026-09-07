@@ -20,19 +20,13 @@ html{
 }
 
 body{
-  font-family:
-    Arial,
-    "Noto Sans Bengali",
-    "Noto Sans",
-    sans-serif;
-  background:#f4f7f5;
+  font-family:Arial,"Noto Sans Bengali","Noto Sans",sans-serif;
+  background:#f5f8f6;
   color:#17231c;
+  line-height:1.5;
 }
 
-button,
-input,
-select,
-textarea{
+button,input,select,textarea{
   font-family:inherit;
 }
 
@@ -40,112 +34,134 @@ button{
   cursor:pointer;
 }
 
+/* HEADER */
+
 .header{
   position:sticky;
   top:0;
   z-index:100;
   background:#087f3e;
-  color:white;
-  box-shadow:0 2px 12px rgba(0,0,0,.12);
+  color:#fff;
+  box-shadow:0 2px 14px rgba(0,0,0,.12);
 }
 
 .nav{
   max-width:1150px;
   margin:auto;
-  padding:13px 18px;
+  padding:11px 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
 }
 
 .logo{
-  font-size:23px;
-  font-weight:800;
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:9px;
+  font-size:22px;
+  font-weight:900;
 }
 
 .logo-icon{
   width:38px;
   height:38px;
-  border-radius:12px;
-  background:white;
+  border-radius:11px;
+  background:#fff;
   color:#087f3e;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:17px;
   font-weight:900;
 }
 
-.nav-actions{
-  display:flex;
-  gap:8px;
+.report-nav-btn{
+  border:0;
+  background:#fff;
+  color:#087f3e;
+  padding:10px 15px;
+  border-radius:10px;
+  font-weight:900;
 }
 
-.nav-btn{
-  border:0;
-  background:rgba(255,255,255,.14);
-  color:white;
-  padding:9px 13px;
-  border-radius:9px;
-  font-weight:700;
-}
+/* HERO */
 
 .hero{
-  background:linear-gradient(135deg,#087f3e,#0b9b50);
-  color:white;
-  padding:55px 18px 70px;
+  background:
+    radial-gradient(circle at top right,rgba(255,255,255,.13),transparent 35%),
+    linear-gradient(135deg,#087f3e,#0ba653);
+  color:#fff;
+  padding:52px 16px 82px;
 }
 
 .hero-inner{
-  max-width:1050px;
+  max-width:850px;
   margin:auto;
   text-align:center;
+}
+
+.hero-icon{
+  width:62px;
+  height:62px;
+  margin:0 auto 16px;
+  border-radius:20px;
+  background:rgba(255,255,255,.14);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
 }
 
 .hero h1{
   font-size:42px;
   line-height:1.15;
-  margin-bottom:15px;
+  margin-bottom:14px;
 }
 
 .hero p{
-  max-width:700px;
-  margin:0 auto 25px;
+  max-width:680px;
+  margin:0 auto 24px;
   font-size:17px;
-  line-height:1.7;
   opacity:.96;
+  line-height:1.8;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
 .primary{
   border:0;
-  background:white;
+  background:#fff;
   color:#087f3e;
-  padding:14px 24px;
+  padding:14px 23px;
   border-radius:12px;
   font-size:16px;
-  font-weight:800;
-  box-shadow:0 5px 20px rgba(0,0,0,.15);
+  font-weight:900;
+  box-shadow:0 6px 20px rgba(0,0,0,.16);
 }
 
-.secondary{
-  border:1px solid #d9e4dd;
-  background:white;
-  color:#087f3e;
-  padding:11px 17px;
-  border-radius:9px;
-  font-weight:700;
+.hero-note{
+  margin-top:15px;
+  font-size:12px;
+  opacity:.85;
 }
+
+/* CONTAINER */
 
 .container{
   max-width:1100px;
   margin:auto;
-  padding:25px 16px;
+  padding:0 16px 35px;
 }
 
+/* STATS */
+
 .stats{
-  margin-top:-30px;
+  margin-top:-35px;
   position:relative;
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -153,33 +169,32 @@ button{
 }
 
 .stat{
-  background:white;
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 5px 20px rgba(0,0,0,.07);
+  background:#fff;
+  border-radius:17px;
+  padding:20px 12px;
   text-align:center;
+  box-shadow:0 6px 22px rgba(0,0,0,.07);
 }
 
 .stat-number{
   color:#087f3e;
-  font-size:28px;
+  font-size:27px;
   font-weight:900;
 }
 
 .stat-label{
-  color:#647168;
-  margin-top:6px;
-  font-size:14px;
+  color:#66726b;
+  font-size:13px;
+  margin-top:5px;
 }
 
+/* SECTION */
+
 .section{
-  margin-top:35px;
+  margin-top:36px;
 }
 
 .section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
   margin-bottom:15px;
 }
 
@@ -188,27 +203,47 @@ button{
 }
 
 .section-title p{
-  color:#6b756f;
+  color:#707a74;
   font-size:14px;
+  margin-top:3px;
 }
 
+/* SEARCH */
+
 .search-box{
-  background:white;
-  padding:15px;
-  border-radius:14px;
+  background:#fff;
+  border-radius:15px;
+  padding:12px;
   display:flex;
-  gap:10px;
+  gap:9px;
+  box-shadow:0 3px 13px rgba(0,0,0,.05);
   margin-bottom:15px;
-  box-shadow:0 3px 12px rgba(0,0,0,.05);
 }
 
 .search-box input{
   flex:1;
-  border:1px solid #d9e2dc;
-  padding:12px;
-  border-radius:9px;
+  min-width:0;
+  border:1px solid #d7e1db;
+  padding:12px 13px;
+  border-radius:10px;
   outline:none;
+  font-size:15px;
 }
+
+.search-box input:focus{
+  border-color:#087f3e;
+}
+
+.secondary{
+  border:1px solid #d4e1d9;
+  background:#fff;
+  color:#087f3e;
+  padding:10px 15px;
+  border-radius:10px;
+  font-weight:800;
+}
+
+/* REPORTS */
 
 .report-grid{
   display:grid;
@@ -217,31 +252,34 @@ button{
 }
 
 .report{
-  background:white;
-  border-radius:15px;
+  background:#fff;
+  border-radius:16px;
   padding:18px;
-  box-shadow:0 3px 14px rgba(0,0,0,.06);
+  box-shadow:0 3px 15px rgba(0,0,0,.06);
+  overflow:hidden;
 }
 
 .report-top{
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  gap:10px;
-  margin-bottom:13px;
+  gap:8px;
+  margin-bottom:12px;
 }
 
 .badge{
-  background:#e9f7ef;
+  display:inline-block;
+  background:#e8f7ee;
   color:#087f3e;
   padding:5px 9px;
   border-radius:20px;
   font-size:12px;
-  font-weight:800;
+  font-weight:900;
 }
 
 .unverified{
   background:#fff4d9;
-  color:#8a6200;
+  color:#806000;
 }
 
 .report h3{
@@ -251,25 +289,30 @@ button{
 
 .report-info{
   display:grid;
-  gap:7px;
-  color:#536159;
+  gap:6px;
+  color:#56635b;
   font-size:14px;
 }
 
 .report-details{
   margin-top:13px;
-  line-height:1.6;
+  padding-top:12px;
+  border-top:1px solid #edf1ee;
   color:#303b34;
+  line-height:1.65;
   white-space:pre-wrap;
 }
 
 .report-media{
   width:100%;
-  max-height:300px;
+  max-height:320px;
   object-fit:cover;
-  border-radius:10px;
-  margin-top:13px;
+  border-radius:11px;
+  margin-top:14px;
+  display:block;
 }
+
+/* HOW IT WORKS */
 
 .steps{
   display:grid;
@@ -278,65 +321,90 @@ button{
 }
 
 .step{
-  background:white;
-  border-radius:15px;
-  padding:22px;
-  box-shadow:0 3px 13px rgba(0,0,0,.05);
+  background:#fff;
+  border-radius:16px;
+  padding:21px;
+  box-shadow:0 3px 14px rgba(0,0,0,.05);
 }
 
 .step-number{
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
   border-radius:50%;
-  background:#e8f6ee;
+  background:#e8f7ee;
   color:#087f3e;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:17px;
   font-weight:900;
-  margin-bottom:13px;
+  margin-bottom:12px;
 }
 
 .step h3{
-  margin-bottom:8px;
+  margin-bottom:7px;
+  font-size:17px;
 }
 
 .step p{
-  color:#69736d;
-  line-height:1.6;
+  color:#69746e;
   font-size:14px;
+  line-height:1.65;
 }
+
+/* NOTICE */
 
 .notice{
-  background:#fff8e5;
+  background:#fff8e6;
   border:1px solid #f0dfa8;
-  color:#685314;
-  padding:16px;
-  border-radius:13px;
-  line-height:1.6;
+  color:#675313;
+  padding:17px;
+  border-radius:14px;
   font-size:14px;
+  line-height:1.7;
 }
 
-.footer{
-  margin-top:45px;
-  background:#102018;
-  color:#dbe7df;
-  padding:35px 18px;
+/* REPORT CTA */
+
+.cta{
+  margin-top:36px;
+  background:linear-gradient(135deg,#087f3e,#0a9850);
+  color:#fff;
+  border-radius:18px;
+  padding:27px 20px;
   text-align:center;
 }
 
-.footer strong{
-  color:white;
+.cta h2{
+  font-size:23px;
+  margin-bottom:8px;
 }
+
+.cta p{
+  font-size:14px;
+  opacity:.93;
+  margin-bottom:17px;
+}
+
+.cta button{
+  border:0;
+  background:#fff;
+  color:#087f3e;
+  padding:12px 20px;
+  border-radius:10px;
+  font-weight:900;
+}
+
+/* MODAL */
 
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.58);
   z-index:999;
+  background:rgba(0,0,0,.58);
   overflow-y:auto;
-  padding:20px;
+  padding:15px;
 }
 
 .modal.show{
@@ -344,9 +412,9 @@ button{
 }
 
 .modal-box{
-  background:white;
   max-width:650px;
-  margin:25px auto;
+  margin:20px auto;
+  background:#fff;
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 20px 60px rgba(0,0,0,.25);
@@ -354,22 +422,23 @@ button{
 
 .modal-head{
   background:#087f3e;
-  color:white;
-  padding:18px 20px;
+  color:#fff;
+  padding:17px 19px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
 .modal-head h2{
-  font-size:21px;
+  font-size:20px;
 }
 
 .close{
   border:0;
   background:transparent;
-  color:white;
-  font-size:28px;
+  color:#fff;
+  font-size:29px;
+  line-height:1;
 }
 
 .form{
@@ -383,7 +452,7 @@ button{
 .field label{
   display:block;
   font-size:14px;
-  font-weight:800;
+  font-weight:900;
   margin-bottom:7px;
 }
 
@@ -392,10 +461,10 @@ button{
 .field textarea{
   width:100%;
   border:1px solid #d5dfd9;
-  border-radius:9px;
+  border-radius:10px;
   padding:12px;
   outline:none;
-  background:white;
+  background:#fff;
   font-size:15px;
 }
 
@@ -428,9 +497,9 @@ button{
   align-items:flex-start;
   background:#f4f8f5;
   padding:12px;
-  border-radius:9px;
+  border-radius:10px;
   font-size:13px;
-  line-height:1.5;
+  line-height:1.55;
   margin-bottom:15px;
 }
 
@@ -440,11 +509,11 @@ button{
 
 .submit{
   width:100%;
-  background:#087f3e;
-  color:white;
   border:0;
+  background:#087f3e;
+  color:#fff;
   padding:14px;
-  border-radius:10px;
+  border-radius:11px;
   font-size:16px;
   font-weight:900;
 }
@@ -457,7 +526,7 @@ button{
   display:none;
   margin-bottom:15px;
   padding:12px;
-  border-radius:9px;
+  border-radius:10px;
   font-size:14px;
 }
 
@@ -471,87 +540,47 @@ button{
   color:#b00020;
 }
 
-.admin-panel{
-  display:none;
-}
-
-.admin-report{
-  background:white;
-  padding:16px;
-  border-radius:12px;
-  margin-bottom:12px;
-  box-shadow:0 2px 10px rgba(0,0,0,.06);
-}
-
-.admin-actions{
-  display:flex;
-  gap:8px;
-  margin-top:12px;
-  flex-wrap:wrap;
-}
-
-.publish-btn{
-  background:#087f3e;
-  color:white;
-  border:0;
-  padding:9px 13px;
-  border-radius:8px;
-  font-weight:700;
-}
-
-.reject-btn{
-  background:#fff0f0;
-  color:#b00020;
-  border:0;
-  padding:9px 13px;
-  border-radius:8px;
-  font-weight:700;
-}
+/* LOADING / EMPTY */
 
 .loading{
+  background:#fff;
+  border-radius:15px;
+  padding:35px;
   text-align:center;
-  padding:30px;
-  color:#66736b;
+  color:#68746d;
 }
 
 .empty{
+  background:#fff;
+  border-radius:15px;
+  padding:35px 20px;
   text-align:center;
-  background:white;
-  border-radius:14px;
-  padding:35px;
   color:#69746e;
 }
 
+/* FOOTER */
+
+.footer{
+  margin-top:20px;
+  background:#102018;
+  color:#cfdcd4;
+  padding:32px 18px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.footer strong{
+  color:#fff;
+  font-size:18px;
+}
+
+/* MOBILE */
+
 @media(max-width:700px){
 
-  .hero{
-    padding:40px 15px 60px;
-  }
-
-  .hero h1{
-    font-size:30px;
-  }
-
-  .hero p{
-    font-size:15px;
-  }
-
-  .stats{
-    grid-template-columns:1fr;
-  }
-
-  .report-grid,
-  .steps{
-    grid-template-columns:1fr;
-  }
-
-  .row{
-    grid-template-columns:1fr;
-    gap:0;
-  }
-
   .nav{
-    padding:10px 12px;
+    padding:9px 11px;
   }
 
   .logo{
@@ -561,15 +590,90 @@ button{
   .logo-icon{
     width:32px;
     height:32px;
+    border-radius:9px;
+    font-size:14px;
   }
 
-  .nav-btn{
-    padding:8px 9px;
+  .report-nav-btn{
+    padding:8px 10px;
     font-size:12px;
+  }
+
+  .hero{
+    padding:39px 15px 65px;
+  }
+
+  .hero-icon{
+    width:54px;
+    height:54px;
+    font-size:26px;
+  }
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .hero p{
+    font-size:15px;
+    line-height:1.7;
+  }
+
+  .primary{
+    width:100%;
+    max-width:300px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+    margin-top:-28px;
+    gap:9px;
+  }
+
+  .stat{
+    padding:14px;
+  }
+
+  .stat-number{
+    font-size:24px;
+  }
+
+  .report-grid,
+  .steps{
+    grid-template-columns:1fr;
   }
 
   .search-box{
     flex-direction:column;
+  }
+
+  .search-box .secondary{
+    width:100%;
+  }
+
+  .row{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .modal{
+    padding:8px;
+  }
+
+  .modal-box{
+    margin:8px auto;
+    border-radius:15px;
+  }
+
+  .form{
+    padding:16px;
+  }
+
+  .section{
+    margin-top:30px;
+  }
+
+  .section-title h2{
+    font-size:21px;
   }
 }
 </style>
@@ -577,43 +681,61 @@ button{
 
 <body>
 
+<!-- HEADER -->
+
 <header class="header">
+
   <div class="nav">
 
     <div class="logo">
+
       <div class="logo-icon">ঘু</div>
+
       <span>ঘুষ সাইট</span>
+
     </div>
 
-    <div class="nav-actions">
-      <button class="nav-btn" onclick="openReport()">
-        অভিযোগ করুন
-      </button>
-
-      <button class="nav-btn" onclick="openAdmin()">
-        Admin
-      </button>
-    </div>
+    <button
+      class="report-nav-btn"
+      onclick="openReport()"
+    >
+      অভিযোগ করুন
+    </button>
 
   </div>
+
 </header>
 
+
+<!-- HERO -->
 
 <section class="hero">
 
   <div class="hero-inner">
 
+    <div class="hero-icon">⚖️</div>
+
     <h1>ঘুষের বিরুদ্ধে আপনার কণ্ঠ</h1>
 
     <p>
-      সরকারি বা বেসরকারি সেবা নিতে ঘুষ চাওয়া হলে
-      দায়িত্বশীলভাবে জানাতে পারেন।
-      আপনার পরিচয় না দিয়েই রিপোর্ট করতে পারবেন।
+      কোথাও ঘুষ চাওয়া হলে দায়িত্বশীলভাবে জানান।
+      আপনার পরিচয় প্রকাশ না করেই রিপোর্ট করতে পারবেন।
     </p>
 
-    <button class="primary" onclick="openReport()">
-      + অভিযোগ / রিপোর্ট করুন
-    </button>
+    <div class="hero-buttons">
+
+      <button
+        class="primary"
+        onclick="openReport()"
+      >
+        + অভিযোগ / রিপোর্ট করুন
+      </button>
+
+    </div>
+
+    <div class="hero-note">
+      লগইন প্রয়োজন নেই • সহজে রিপোর্ট করুন
+    </div>
 
   </div>
 
@@ -622,34 +744,74 @@ button{
 
 <main class="container">
 
+  <!-- STATS -->
+
   <div class="stats">
 
     <div class="stat">
-      <div class="stat-number" id="totalReports">0</div>
-      <div class="stat-label">প্রকাশিত রিপোর্ট</div>
+
+      <div
+        class="stat-number"
+        id="totalReports"
+      >
+        0
+      </div>
+
+      <div class="stat-label">
+        প্রকাশিত রিপোর্ট
+      </div>
+
     </div>
 
-    <div class="stat">
-      <div class="stat-number" id="totalAmount">৳0</div>
-      <div class="stat-label">দাবিকৃত মোট অর্থ</div>
-    </div>
 
     <div class="stat">
-      <div class="stat-number" id="todayReports">0</div>
-      <div class="stat-label">আজকের রিপোর্ট</div>
+
+      <div
+        class="stat-number"
+        id="totalAmount"
+      >
+        ৳0
+      </div>
+
+      <div class="stat-label">
+        দাবিকৃত মোট অর্থ
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div
+        class="stat-number"
+        id="todayReports"
+      >
+        0
+      </div>
+
+      <div class="stat-label">
+        আজকের রিপোর্ট
+      </div>
+
     </div>
 
   </div>
 
 
+  <!-- PUBLIC REPORTS -->
+
   <section class="section">
 
     <div class="section-title">
-      <div>
-        <h2>প্রকাশিত রিপোর্ট</h2>
-        <p>মডারেশন শেষে প্রকাশিত রিপোর্ট</p>
-      </div>
+
+      <h2>প্রকাশিত রিপোর্ট</h2>
+
+      <p>
+        মডারেশন শেষে প্রকাশিত রিপোর্টগুলো এখানে দেখা যাবে।
+      </p>
+
     </div>
+
 
     <div class="search-box">
 
@@ -660,112 +822,158 @@ button{
         oninput="filterReports()"
       >
 
-      <button class="secondary" onclick="loadReports()">
-        রিফ্রেশ
+      <button
+        class="secondary"
+        onclick="loadReports()"
+      >
+        ↻ রিফ্রেশ
       </button>
 
     </div>
 
+
     <div id="reportsContainer">
+
       <div class="loading">
         রিপোর্ট লোড হচ্ছে...
       </div>
+
     </div>
 
   </section>
 
+
+  <!-- HOW IT WORKS -->
 
   <section class="section">
 
     <div class="section-title">
+
       <h2>কীভাবে কাজ করে?</h2>
+
+      <p>
+        মাত্র তিনটি সহজ ধাপ।
+      </p>
+
     </div>
+
 
     <div class="steps">
 
       <div class="step">
-        <div class="step-number">১</div>
-        <h3>রিপোর্ট করুন</h3>
+
+        <div class="step-number">
+          ১
+        </div>
+
+        <h3>
+          রিপোর্ট করুন
+        </h3>
+
         <p>
-          প্রয়োজনীয় তথ্য লিখে সহজে অভিযোগ জমা দিন।
-          লগইন করার প্রয়োজন নেই।
+          আপনার অভিজ্ঞতার প্রয়োজনীয় তথ্য লিখে
+          রিপোর্ট জমা দিন।
         </p>
+
       </div>
 
-      <div class="step">
-        <div class="step-number">২</div>
-        <h3>মডারেশন</h3>
-        <p>
-          রিপোর্ট প্রকাশের আগে Admin সেটি যাচাই
-          ও প্রয়োজনীয় তথ্য পর্যালোচনা করবে।
-        </p>
-      </div>
 
       <div class="step">
-        <div class="step-number">৩</div>
-        <h3>পাবলিক লেজার</h3>
+
+        <div class="step-number">
+          ২
+        </div>
+
+        <h3>
+          যাচাই ও মডারেশন
+        </h3>
+
+        <p>
+          রিপোর্ট প্রকাশের আগে দায়িত্বশীলভাবে
+          মডারেশন করা হবে।
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">
+          ৩
+        </div>
+
+        <h3>
+          জনসমক্ষে প্রকাশ
+        </h3>
+
         <p>
           অনুমোদিত রিপোর্ট প্রকাশিত হলে সবাই
-          দেখতে ও খুঁজে দেখতে পারবেন।
+          তা দেখতে ও খুঁজে দেখতে পারবেন।
         </p>
+
       </div>
 
     </div>
 
   </section>
 
+
+  <!-- NOTICE -->
 
   <section class="section">
 
     <div class="notice">
 
-      <strong>⚠️ গুরুত্বপূর্ণ:</strong>
+      <strong>⚠️ গুরুত্বপূর্ণ সতর্কতা</strong>
 
-      প্রকাশিত রিপোর্টগুলো ব্যবহারকারীর দেওয়া তথ্যের
-      ভিত্তিতে প্রকাশ করা হয় এবং স্বাধীনভাবে সত্যতা যাচাই করা
-      হয়েছে এমন দাবি করা হচ্ছে না।
+      <br>
 
-      কারও নাম, মোবাইল নম্বর, NID নম্বর, ঠিকানা বা ব্যক্তিগত
-      তথ্য রিপোর্টে লিখবেন না।
+      প্রকাশিত রিপোর্ট ব্যবহারকারীর দেওয়া তথ্যের ভিত্তিতে
+      প্রকাশ করা হয়। রিপোর্টের প্রতিটি তথ্য স্বাধীনভাবে
+      সত্যতা যাচাই করা হয়েছে—এমন দাবি করা হচ্ছে না।
+
+      <br><br>
+
+      রিপোর্টে কোনো ব্যক্তির নাম, মোবাইল নম্বর,
+      NID নম্বর, ব্যক্তিগত ঠিকানা বা অন্য কোনো
+      সংবেদনশীল ব্যক্তিগত তথ্য লিখবেন না।
 
     </div>
 
   </section>
 
 
-  <!-- ADMIN PANEL -->
+  <!-- CTA -->
 
-  <section id="adminPanel" class="section admin-panel">
+  <section class="cta">
 
-    <div class="section-title">
-      <div>
-        <h2>Admin Moderation</h2>
-        <p>Pending রিপোর্ট যাচাই করুন</p>
-      </div>
+    <h2>
+      ঘুষের অভিজ্ঞতা হয়েছে?
+    </h2>
 
-      <button class="secondary" onclick="loadPendingReports()">
-        Refresh
-      </button>
-    </div>
+    <p>
+      দায়িত্বশীলভাবে জানান। আপনার রিপোর্ট
+      দুর্নীতির বিরুদ্ধে সচেতনতা তৈরিতে সাহায্য করতে পারে।
+    </p>
 
-    <div id="pendingContainer">
-      <div class="loading">
-        Pending রিপোর্ট লোড হচ্ছে...
-      </div>
-    </div>
+    <button onclick="openReport()">
+      + রিপোর্ট করুন
+    </button>
 
   </section>
 
 </main>
 
 
+<!-- FOOTER -->
+
 <footer class="footer">
 
   <strong>ঘুষ সাইট</strong>
 
-  <br><br>
+  <br>
 
-  দায়িত্বশীলভাবে দুর্নীতি ও ঘুষের অভিজ্ঞতা জানান।
+  দুর্নীতি ও ঘুষের বিরুদ্ধে জনসচেতনতার একটি উদ্যোগ।
 
   <br><br>
 
@@ -776,35 +984,50 @@ button{
 
 <!-- REPORT MODAL -->
 
-<div id="reportModal" class="modal">
+<div
+  id="reportModal"
+  class="modal"
+>
 
   <div class="modal-box">
 
     <div class="modal-head">
 
-      <h2>অভিযোগ / রিপোর্ট করুন</h2>
+      <h2>
+        অভিযোগ / রিপোর্ট করুন
+      </h2>
 
-      <button class="close" onclick="closeReport()">
+      <button
+        class="close"
+        onclick="closeReport()"
+      >
         ×
       </button>
 
     </div>
 
 
-    <form class="form" onsubmit="submitReport(event)">
+    <form
+      class="form"
+      onsubmit="submitReport(event)"
+    >
 
-      <div id="formMessage" class="message"></div>
+      <div
+        id="formMessage"
+        class="message"
+      ></div>
 
 
       <div class="field">
 
         <label>
-          কোন বিভাগ / প্রতিষ্ঠান?
+          কোন বিভাগ / প্রতিষ্ঠান? *
         </label>
 
         <input
           id="department"
           required
+          maxlength="150"
           placeholder="যেমন: ভূমি অফিস"
         >
 
@@ -814,12 +1037,13 @@ button{
       <div class="field">
 
         <label>
-          কোন সেবা?
+          কোন সেবা? *
         </label>
 
         <input
           id="service"
           required
+          maxlength="150"
           placeholder="যেমন: নামজারি"
         >
 
@@ -831,12 +1055,13 @@ button{
         <div class="field">
 
           <label>
-            এলাকা
+            এলাকা *
           </label>
 
           <input
             id="location"
             required
+            maxlength="150"
             placeholder="জেলা / উপজেলা"
           >
 
@@ -846,13 +1071,14 @@ button{
         <div class="field">
 
           <label>
-            কত টাকা দাবি করা হয়েছিল?
+            দাবিকৃত অর্থ
           </label>
 
           <input
             id="amount"
             type="number"
             min="0"
+            max="100000000"
             placeholder="যেমন: 5000"
           >
 
@@ -864,10 +1090,13 @@ button{
       <div class="field">
 
         <label>
-          কী হয়েছিল?
+          কী হয়েছিল? *
         </label>
 
-        <select id="outcome" required>
+        <select
+          id="outcome"
+          required
+        >
 
           <option value="">
             নির্বাচন করুন
@@ -908,7 +1137,7 @@ button{
           id="details"
           required
           maxlength="3000"
-          placeholder="ঘটনাটি সংক্ষেপে লিখুন..."
+          placeholder="ঘটনাটি সংক্ষেপে ও দায়িত্বশীলভাবে লিখুন..."
         ></textarea>
 
       </div>
@@ -917,7 +1146,7 @@ button{
       <div class="field">
 
         <label>
-          ছবি / ভিডিও (ঐচ্ছিক)
+          ছবি / ভিডিও — ঐচ্ছিক
         </label>
 
         <input
@@ -927,7 +1156,8 @@ button{
         >
 
         <div class="file-info">
-          ব্যক্তিগত বা সংবেদনশীল তথ্যযুক্ত ছবি/ভিডিও আপলোড করবেন না।
+          সর্বোচ্চ 25MB। ব্যক্তিগত বা সংবেদনশীল
+          তথ্যযুক্ত ছবি/ভিডিও আপলোড করবেন না।
         </div>
 
       </div>
@@ -956,69 +1186,6 @@ button{
         type="submit"
       >
         রিপোর্ট জমা দিন
-      </button>
-
-    </form>
-
-  </div>
-
-</div>
-
-
-<!-- ADMIN LOGIN MODAL -->
-
-<div id="adminModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-
-      <h2>Admin Login</h2>
-
-      <button class="close" onclick="closeAdmin()">
-        ×
-      </button>
-
-    </div>
-
-    <form class="form" onsubmit="adminLogin(event)">
-
-      <div id="adminMessage" class="message"></div>
-
-      <div class="field">
-
-        <label>
-          Email
-        </label>
-
-        <input
-          id="adminEmail"
-          type="email"
-          required
-          placeholder="Admin email"
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label>
-          Password
-        </label>
-
-        <input
-          id="adminPassword"
-          type="password"
-          required
-          placeholder="Password"
-        >
-
-      </div>
-
-
-      <button class="submit">
-        Login
       </button>
 
     </form>
@@ -1066,33 +1233,24 @@ function openReport(){
     .getElementById("reportModal")
     .classList.add("show");
 
+  setTimeout(() => {
+
+    const input =
+      document.getElementById("department");
+
+    if(input){
+      input.focus();
+    }
+
+  },100);
+
 }
+
 
 function closeReport(){
 
   document
     .getElementById("reportModal")
-    .classList.remove("show");
-
-}
-
-
-/* ==========================================
-   ADMIN MODAL
-========================================== */
-
-function openAdmin(){
-
-  document
-    .getElementById("adminModal")
-    .classList.add("show");
-
-}
-
-function closeAdmin(){
-
-  document
-    .getElementById("adminModal")
     .classList.remove("show");
 
 }
@@ -1110,9 +1268,11 @@ function showMessage(id,text,type){
   box.className =
     "message " + type;
 
-  box.innerText = text;
+  box.innerText =
+    text;
 
-  box.style.display = "block";
+  box.style.display =
+    "block";
 
 }
 
@@ -1124,11 +1284,14 @@ function showMessage(id,text,type){
 async function uploadMedia(file){
 
   if(!file){
+
     return {
       url:null,
       type:null
     };
+
   }
+
 
   if(file.size > 25 * 1024 * 1024){
 
@@ -1138,13 +1301,19 @@ async function uploadMedia(file){
 
   }
 
+
   const extension =
-    file.name.split(".").pop();
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
 
   const filename =
     crypto.randomUUID() +
     "." +
     extension;
+
 
   const path =
     "reports/" +
@@ -1178,10 +1347,13 @@ async function uploadMedia(file){
 
 
   return {
+
     url:data.publicUrl,
+
     type:file.type.startsWith("video/")
       ? "video"
       : "image"
+
   };
 
 }
@@ -1199,10 +1371,13 @@ async function submitReport(event){
   const button =
     document.getElementById("submitBtn");
 
-  button.disabled = true;
+
+  button.disabled =
+    true;
+
 
   button.innerText =
-    "জমা হচ্ছে...";
+    "রিপোর্ট জমা হচ্ছে...";
 
 
   try{
@@ -1213,17 +1388,20 @@ async function submitReport(event){
         .value
         .trim();
 
+
     const service =
       document
         .getElementById("service")
         .value
         .trim();
 
+
     const location =
       document
         .getElementById("location")
         .value
         .trim();
+
 
     const amount =
       Number(
@@ -1232,16 +1410,19 @@ async function submitReport(event){
           .value || 0
       );
 
+
     const outcome =
       document
         .getElementById("outcome")
         .value;
+
 
     const details =
       document
         .getElementById("details")
         .value
         .trim();
+
 
     const file =
       document
@@ -1283,14 +1464,22 @@ async function submitReport(event){
         .from("reports")
         .insert({
 
-          department,
-          service,
-          location,
-          amount,
-          outcome,
-          details,
+          department:department,
+
+          service:service,
+
+          location:location,
+
+          amount:amount,
+
+          outcome:outcome,
+
+          details:details,
+
           media_url:mediaData.url,
+
           media_type:mediaData.type,
+
           status:"pending"
 
         });
@@ -1303,7 +1492,7 @@ async function submitReport(event){
 
     showMessage(
       "formMessage",
-      "রিপোর্ট সফলভাবে জমা হয়েছে। প্রকাশের আগে এটি মডারেশন করা হবে।",
+      "✅ রিপোর্ট সফলভাবে জমা হয়েছে। প্রকাশের আগে এটি মডারেশন করা হবে।",
       "success"
     );
 
@@ -1315,13 +1504,14 @@ async function submitReport(event){
 
     setTimeout(
       closeReport,
-      2500
+      2800
     );
 
 
   }catch(error){
 
     console.error(error);
+
 
     showMessage(
       "formMessage",
@@ -1333,7 +1523,9 @@ async function submitReport(event){
   }
 
 
-  button.disabled = false;
+  button.disabled =
+    false;
+
 
   button.innerText =
     "রিপোর্ট জমা দিন";
@@ -1351,6 +1543,7 @@ async function loadReports(){
     document.getElementById(
       "reportsContainer"
     );
+
 
   container.innerHTML =
     '<div class="loading">রিপোর্ট লোড হচ্ছে...</div>';
@@ -1375,10 +1568,12 @@ async function loadReports(){
 
     console.error(error);
 
+
     container.innerHTML =
-      '<div class="empty">রিপোর্ট লোড করা যায়নি।</div>';
+      '<div class="empty">রিপোর্ট লোড করা যায়নি। একটু পরে আবার চেষ্টা করুন।</div>';
 
     return;
+
   }
 
 
@@ -1386,9 +1581,14 @@ async function loadReports(){
     data || [];
 
 
-  renderReports(allReports);
+  renderReports(
+    allReports
+  );
 
-  updateStats(allReports);
+
+  updateStats(
+    allReports
+  );
 
 }
 
@@ -1411,6 +1611,7 @@ function renderReports(reports){
       '<div class="empty">এখনো কোনো প্রকাশিত রিপোর্ট নেই।</div>';
 
     return;
+
   }
 
 
@@ -1433,6 +1634,7 @@ function renderReports(reports){
             class="report-media"
             src="${escapeHtml(report.media_url)}"
             alt="রিপোর্টের ছবি"
+            loading="lazy"
           >`;
 
       }
@@ -1447,6 +1649,7 @@ function renderReports(reports){
           `<video
             class="report-media"
             controls
+            preload="metadata"
             src="${escapeHtml(report.media_url)}"
           ></video>`;
 
@@ -1469,9 +1672,11 @@ function renderReports(reports){
 
           </div>
 
+
           <h3>
             ${escapeHtml(report.service)}
           </h3>
+
 
           <div class="report-info">
 
@@ -1482,7 +1687,9 @@ function renderReports(reports){
 
             <div>
               💰 দাবিকৃত অর্থ:
-              ৳${Number(report.amount || 0).toLocaleString("bn-BD")}
+              ৳${Number(
+                report.amount || 0
+              ).toLocaleString("bn-BD")}
             </div>
 
             <div>
@@ -1491,14 +1698,20 @@ function renderReports(reports){
             </div>
 
             <div>
-              🕒 ${formatDate(report.published_at || report.created_at)}
+              🕒
+              ${formatDate(
+                report.published_at ||
+                report.created_at
+              )}
             </div>
 
           </div>
 
+
           <div class="report-details">
             ${escapeHtml(report.details)}
           </div>
+
 
           ${media}
 
@@ -1529,7 +1742,9 @@ function filterReports(){
 
   if(!q){
 
-    renderReports(allReports);
+    renderReports(
+      allReports
+    );
 
     return;
 
@@ -1539,25 +1754,29 @@ function filterReports(){
   const filtered =
     allReports.filter(report => {
 
-      const text =
-        (
-          report.department +
-          " " +
-          report.service +
-          " " +
-          report.location +
-          " " +
-          report.outcome +
-          " " +
-          report.details
-        ).toLowerCase();
+      const text = (
+
+        (report.department || "") +
+        " " +
+        (report.service || "") +
+        " " +
+        (report.location || "") +
+        " " +
+        (report.outcome || "") +
+        " " +
+        (report.details || "")
+
+      ).toLowerCase();
+
 
       return text.includes(q);
 
     });
 
 
-  renderReports(filtered);
+  renderReports(
+    filtered
+  );
 
 }
 
@@ -1571,13 +1790,15 @@ function updateStats(reports){
   document
     .getElementById("totalReports")
     .innerText =
-      reports.length.toLocaleString("bn-BD");
+      reports.length
+        .toLocaleString("bn-BD");
 
 
   const amount =
     reports.reduce(
       (sum,r) =>
-        sum + Number(r.amount || 0),
+        sum +
+        Number(r.amount || 0),
       0
     );
 
@@ -1591,16 +1812,31 @@ function updateStats(reports){
 
   const today =
     new Date()
-      .toISOString()
-      .slice(0,10);
+      .toLocaleDateString(
+        "en-CA",
+        {
+          timeZone:"Asia/Dhaka"
+        }
+      );
 
 
   const todayCount =
     reports.filter(r => {
 
-      return String(
-        r.created_at
-      ).slice(0,10) === today;
+      if(!r.created_at){
+        return false;
+      }
+
+      const date =
+        new Date(r.created_at)
+          .toLocaleDateString(
+            "en-CA",
+            {
+              timeZone:"Asia/Dhaka"
+            }
+          );
+
+      return date === today;
 
     }).length;
 
@@ -1608,311 +1844,8 @@ function updateStats(reports){
   document
     .getElementById("todayReports")
     .innerText =
-      todayCount.toLocaleString("bn-BD");
-
-}
-
-
-/* ==========================================
-   ADMIN LOGIN
-========================================== */
-
-async function adminLogin(event){
-
-  event.preventDefault();
-
-
-  const email =
-    document
-      .getElementById("adminEmail")
-      .value
-      .trim();
-
-  const password =
-    document
-      .getElementById("adminPassword")
-      .value;
-
-
-  const { data,error } =
-    await supabaseClient.auth
-      .signInWithPassword({
-        email,
-        password
-      });
-
-
-  if(error){
-
-    showMessage(
-      "adminMessage",
-      "Login ব্যর্থ: " + error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  const user =
-    data.user;
-
-
-  const { data:profile,error:profileError } =
-    await supabaseClient
-      .from("profiles")
-      .select("role")
-      .eq("id",user.id)
-      .single();
-
-
-  if(
-    profileError ||
-    !profile ||
-    profile.role !== "admin"
-  ){
-
-    await supabaseClient.auth.signOut();
-
-    showMessage(
-      "adminMessage",
-      "এই account-এর Admin permission নেই।",
-      "error"
-    );
-
-    return;
-  }
-
-
-  closeAdmin();
-
-
-  document
-    .getElementById("adminPanel")
-    .style.display = "block";
-
-
-  document
-    .getElementById("adminPanel")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
-
-
-  loadPendingReports();
-
-}
-
-
-/* ==========================================
-   LOAD PENDING REPORTS
-========================================== */
-
-async function loadPendingReports(){
-
-  const container =
-    document.getElementById(
-      "pendingContainer"
-    );
-
-
-  container.innerHTML =
-    '<div class="loading">লোড হচ্ছে...</div>';
-
-
-  const { data,error } =
-    await supabaseClient
-      .from("reports")
-      .select("*")
-      .eq("status","pending")
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-
-  if(error){
-
-    container.innerHTML =
-      '<div class="empty">Pending রিপোর্ট দেখা যাচ্ছে না।</div>';
-
-    console.error(error);
-
-    return;
-  }
-
-
-  if(!data.length){
-
-    container.innerHTML =
-      '<div class="empty">কোনো Pending রিপোর্ট নেই। 🎉</div>';
-
-    return;
-  }
-
-
-  container.innerHTML =
-    data.map(report => `
-
-      <div class="admin-report">
-
-        <div class="report-top">
-
-          <span class="badge">
-            Pending
-          </span>
-
-          <span>
-            ${formatDate(report.created_at)}
-          </span>
-
-        </div>
-
-        <h3>
-          ${escapeHtml(report.department)}
-        </h3>
-
-        <p>
-          <strong>সেবা:</strong>
-          ${escapeHtml(report.service)}
-        </p>
-
-        <p>
-          <strong>এলাকা:</strong>
-          ${escapeHtml(report.location)}
-        </p>
-
-        <p>
-          <strong>টাকা:</strong>
-          ৳${Number(report.amount || 0).toLocaleString("bn-BD")}
-        </p>
-
-        <p>
-          <strong>ফলাফল:</strong>
-          ${escapeHtml(report.outcome)}
-        </p>
-
-        <div class="report-details">
-          ${escapeHtml(report.details)}
-        </div>
-
-        <div class="admin-actions">
-
-          <button
-            class="publish-btn"
-            onclick="publishReport(${report.id})"
-          >
-            ✓ Publish
-          </button>
-
-          <button
-            class="reject-btn"
-            onclick="rejectReport(${report.id})"
-          >
-            ✕ Reject
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* ==========================================
-   PUBLISH
-========================================== */
-
-async function publishReport(id){
-
-  if(
-    !confirm(
-      "এই রিপোর্টটি Public-এ Publish করবেন?"
-    )
-  ){
-    return;
-  }
-
-
-  const { error } =
-    await supabaseClient
-      .from("reports")
-      .update({
-
-        status:"published",
-
-        published_at:
-          new Date().toISOString()
-
-      })
-      .eq("id",id)
-      .eq("status","pending");
-
-
-  if(error){
-
-    alert(
-      "Publish করা যায়নি: " +
-      error.message
-    );
-
-    return;
-  }
-
-
-  alert(
-    "রিপোর্ট সফলভাবে Published হয়েছে।"
-  );
-
-
-  loadPendingReports();
-
-  loadReports();
-
-}
-
-
-/* ==========================================
-   REJECT
-========================================== */
-
-async function rejectReport(id){
-
-  if(
-    !confirm(
-      "এই রিপোর্টটি Reject করবেন?"
-    )
-  ){
-    return;
-  }
-
-
-  const { error } =
-    await supabaseClient
-      .from("reports")
-      .update({
-        status:"rejected"
-      })
-      .eq("id",id)
-      .eq("status","pending");
-
-
-  if(error){
-
-    alert(
-      "Reject করা যায়নি: " +
-      error.message
-    );
-
-    return;
-  }
-
-
-  loadPendingReports();
+      todayCount
+        .toLocaleString("bn-BD");
 
 }
 
@@ -1927,6 +1860,7 @@ function formatDate(date){
     return "";
   }
 
+
   try{
 
     return new Date(date)
@@ -1934,7 +1868,8 @@ function formatDate(date){
         "bn-BD",
         {
           dateStyle:"medium",
-          timeStyle:"short"
+          timeStyle:"short",
+          timeZone:"Asia/Dhaka"
         }
       );
 
@@ -1953,87 +1888,82 @@ function formatDate(date){
 
 function escapeHtml(value){
 
-  if(value === null ||
-     value === undefined){
+  if(
+    value === null ||
+    value === undefined
+  ){
+
     return "";
+
   }
 
 
   return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
 /* ==========================================
-   SESSION CHECK
-========================================== */
-
-async function checkAdminSession(){
-
-  const { data } =
-    await supabaseClient
-      .auth
-      .getSession();
-
-
-  if(!data.session){
-    return;
-  }
-
-
-  const user =
-    data.session.user;
-
-
-  const { data:profile } =
-    await supabaseClient
-      .from("profiles")
-      .select("role")
-      .eq("id",user.id)
-      .single();
-
-
-  if(
-    profile &&
-    profile.role === "admin"
-  ){
-
-    document
-      .getElementById("adminPanel")
-      .style.display = "block";
-
-    loadPendingReports();
-
-  }
-
-}
-
-
-/* ==========================================
-   CLOSE MODAL ON BACKGROUND
+   CLOSE MODAL
 ========================================== */
 
 window.addEventListener(
   "click",
   function(event){
 
-    if(
-      event.target ===
-      document.getElementById("reportModal")
-    ){
+    const modal =
+      document.getElementById(
+        "reportModal"
+      );
+
+
+    if(event.target === modal){
+
       closeReport();
+
     }
 
-    if(
-      event.target ===
-      document.getElementById("adminModal")
-    ){
-      closeAdmin();
+  }
+);
+
+
+/* ==========================================
+   ESC KEY
+========================================== */
+
+window.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key === "Escape"){
+
+      closeReport();
+
     }
 
   }
@@ -2045,8 +1975,6 @@ window.addEventListener(
 ========================================== */
 
 loadReports();
-
-checkAdminSession();
 
 </script>
 
