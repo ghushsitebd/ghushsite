@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>ঘুষ সাইট — দুর্নীতির বিরুদ্ধে জনতার কণ্ঠ</title>
 
+<meta name="description"
+content="ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতার জন্য রিপোর্ট করার প্ল্যাটফর্ম।">
+
+<meta name="theme-color" content="#087f3e">
+
+<link rel="manifest" href="manifest.json">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -46,6 +55,7 @@ button{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:10px;
 }
 
 .logo{
@@ -68,13 +78,24 @@ button{
   font-weight:900;
 }
 
-.report-btn{
+.nav-actions{
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.report-btn,
+.install-btn{
   border:0;
   background:#fff;
   color:#087f3e;
   padding:9px 13px;
   border-radius:9px;
   font-weight:900;
+}
+
+.install-btn{
+  display:none;
 }
 
 .container{
@@ -119,6 +140,81 @@ button{
   font-size:15px;
   font-weight:900;
 }
+
+/* ADS */
+
+.ads-section{
+  margin-top:18px;
+}
+
+.ads-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:0 2px 10px;
+}
+
+.ads-title h2{
+  font-size:20px;
+}
+
+.ad-card{
+  background:#fff;
+  border-radius:15px;
+  overflow:hidden;
+  margin-bottom:12px;
+  box-shadow:0 3px 14px rgba(0,0,0,.055);
+}
+
+.ad-image{
+  width:100%;
+  max-height:300px;
+  object-fit:cover;
+  display:block;
+}
+
+.ad-content{
+  padding:14px;
+}
+
+.ad-badge{
+  display:inline-block;
+  background:#e8f7ee;
+  color:#087f3e;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:7px;
+}
+
+.ad-content h3{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.ad-content p{
+  color:#59655e;
+  font-size:13px;
+}
+
+.ad-link{
+  display:inline-block;
+  margin-top:10px;
+  background:#087f3e;
+  color:#fff;
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.no-ads{
+  display:none;
+}
+
+/* SEARCH */
 
 .search-area{
   margin-top:18px;
@@ -265,6 +361,8 @@ button{
   font-size:16px;
 }
 
+/* MODAL */
+
 .modal{
   display:none;
   position:fixed;
@@ -350,20 +448,10 @@ textarea{
   resize:vertical;
 }
 
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
 .location-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-}
-
-.location-grid .full{
-  grid-column:1/-1;
 }
 
 .select-title{
@@ -428,7 +516,7 @@ textarea{
   color:#b00020;
 }
 
-/* SUCCESS SCREEN */
+/* SUCCESS */
 
 .success-screen{
   display:none;
@@ -471,6 +559,78 @@ textarea{
   font-weight:900;
 }
 
+/* ADMIN */
+
+.admin-login-btn{
+  border:0;
+  background:#102018;
+  color:#fff;
+  padding:8px 11px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.admin-panel{
+  display:none;
+}
+
+.admin-panel.show{
+  display:block;
+}
+
+.admin-box{
+  max-width:620px;
+  margin:20px auto;
+  background:#fff;
+  border-radius:15px;
+  padding:17px;
+  box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.admin-box h2{
+  color:#087f3e;
+  margin-bottom:12px;
+}
+
+.admin-actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.admin-action{
+  border:0;
+  padding:9px 12px;
+  border-radius:8px;
+  font-weight:900;
+}
+
+.admin-primary{
+  background:#087f3e;
+  color:#fff;
+}
+
+.admin-danger{
+  background:#ffecec;
+  color:#b00020;
+}
+
+.ad-admin-item{
+  border:1px solid #e0e7e2;
+  border-radius:10px;
+  padding:11px;
+  margin-top:10px;
+}
+
+.ad-admin-item strong{
+  color:#087f3e;
+}
+
+.ad-admin-item small{
+  color:#66736b;
+}
+
 /* MOBILE */
 
 @media(max-width:600px){
@@ -496,18 +656,31 @@ textarea{
     width:100%;
   }
 
+  .nav{
+    padding:8px 10px;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+  .nav-actions{
+    gap:4px;
+  }
+
+  .report-btn,
+  .install-btn{
+    padding:8px 9px;
+    font-size:11px;
+  }
+
   .list-head h2{
     font-size:18px;
   }
 
-  .row,
   .location-grid{
     grid-template-columns:1fr;
     gap:0;
-  }
-
-  .location-grid .full{
-    grid-column:auto;
   }
 
   .report{
@@ -537,136 +710,221 @@ textarea{
   }
 
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header class="header">
+
   <div class="nav">
 
     <div class="logo">
-      <div class="logo-icon">ঘু</div>
-      <span>ঘুষ সাইট</span>
+
+      <div class="logo-icon">
+        ঘু
+      </div>
+
+      <span>
+        ঘুষ সাইট
+      </span>
+
     </div>
 
-    <button class="report-btn" onclick="openReport()">
-      অভিযোগ করুন
-    </button>
+    <div class="nav-actions">
+
+      <button
+        id="installBtn"
+        class="install-btn"
+        onclick="installApp()">
+        📱 অ্যাপ
+      </button>
+
+      <button
+        class="report-btn"
+        onclick="openReport()">
+        অভিযোগ করুন
+      </button>
+
+    </div>
 
   </div>
+
 </header>
 
 
 <main class="container">
 
-  <section class="top-card">
+<section class="top-card">
 
-    <div class="icon">⚖️</div>
-
-    <h1>ঘুষের বিরুদ্ধে আপনার কণ্ঠ</h1>
-
-    <p>
-      ঘুষ চাওয়া হলে দায়িত্বশীলভাবে জানান।
-      পরিচয় প্রকাশ না করেই রিপোর্ট করতে পারবেন।
-    </p>
-
-    <button class="big-report" onclick="openReport()">
-      ＋ রিপোর্ট করুন
-    </button>
-
-  </section>
-
-
-  <div class="search-area">
-
-    <input
-      id="searchInput"
-      class="search"
-      type="search"
-      placeholder="রিপোর্ট খুঁজুন — প্রতিষ্ঠান, সেবা বা এলাকা..."
-      oninput="filterReports()">
-
+  <div class="icon">
+    ⚖️
   </div>
 
+  <h1>
+    ঘুষের বিরুদ্ধে আপনার কণ্ঠ
+  </h1>
 
-  <div class="list-head">
+  <p>
+    ঘুষ চাওয়া হলে দায়িত্বশীলভাবে জানান।
+    পরিচয় প্রকাশ না করেই রিপোর্ট করতে পারবেন।
+  </p>
 
-    <h2>প্রকাশিত রিপোর্ট</h2>
+  <button
+    class="big-report"
+    onclick="openReport()">
+    ＋ রিপোর্ট করুন
+  </button>
 
-    <button class="refresh" onclick="loadReports()">
-      ↻
-    </button>
+</section>
 
+
+<!-- ADVERTISEMENT -->
+
+<section class="ads-section">
+
+  <div class="ads-title">
+    <h2>
+      📢 বিজ্ঞাপন
+    </h2>
   </div>
 
+  <div id="adsContainer">
 
-  <div id="reportsContainer">
     <div class="loading">
-      রিপোর্ট লোড হচ্ছে...
+      বিজ্ঞাপন লোড হচ্ছে...
     </div>
-  </div>
-
-
-  <div class="notice">
-
-    <strong>⚠️ গুরুত্বপূর্ণ</strong><br>
-
-    প্রকাশিত রিপোর্ট ব্যবহারকারীর দেওয়া তথ্যের ভিত্তিতে।
-    রিপোর্টের তথ্য স্বাধীনভাবে সত্যতা যাচাই করা হয়েছে—
-    এমন দাবি করা হচ্ছে না। কারও নাম, মোবাইল নম্বর,
-    NID, ব্যক্তিগত ঠিকানা বা সংবেদনশীল তথ্য লিখবেন না।
 
   </div>
+
+</section>
+
+
+<div class="search-area">
+
+  <input
+    id="searchInput"
+    class="search"
+    type="search"
+    placeholder="রিপোর্ট খুঁজুন — প্রতিষ্ঠান, সেবা বা এলাকা..."
+    oninput="filterReports()">
+
+</div>
+
+
+<div class="list-head">
+
+  <h2>
+    প্রকাশিত রিপোর্ট
+  </h2>
+
+  <button
+    class="refresh"
+    onclick="loadReports()">
+    ↻
+  </button>
+
+</div>
+
+
+<div id="reportsContainer">
+
+  <div class="loading">
+    রিপোর্ট লোড হচ্ছে...
+  </div>
+
+</div>
+
+
+<div class="notice">
+
+  <strong>
+    ⚠️ গুরুত্বপূর্ণ
+  </strong>
+
+  <br>
+
+  প্রকাশিত রিপোর্ট ব্যবহারকারীর দেওয়া তথ্যের ভিত্তিতে।
+  রিপোর্টের তথ্য স্বাধীনভাবে সত্যতা যাচাই করা হয়েছে—
+  এমন দাবি করা হচ্ছে না। কারও নাম, মোবাইল নম্বর,
+  NID, ব্যক্তিগত ঠিকানা বা সংবেদনশীল তথ্য লিখবেন না।
+
+</div>
 
 </main>
 
 
 <footer class="footer">
 
-  <strong>ঘুষ সাইট</strong><br>
+  <strong>
+    ঘুষ সাইট
+  </strong>
 
-  দুর্নীতি ও ঘুষের বিরুদ্ধে জনসচেতনতার একটি উদ্যোগ।<br><br>
+  <br>
+
+  দুর্নীতি ও ঘুষের বিরুদ্ধে জনসচেতনতার একটি উদ্যোগ।
+
+  <br><br>
 
   © 2026 ঘুষ সাইট
+
+  <br><br>
+
+  <button
+    class="admin-login-btn"
+    onclick="openAdminLogin()">
+    Admin
+  </button>
 
 </footer>
 
 
 <!-- REPORT MODAL -->
 
-<div id="reportModal" class="modal">
+<div
+  id="reportModal"
+  class="modal">
 
   <div class="modal-box">
 
     <div class="modal-head">
 
-      <h2>অভিযোগ / রিপোর্ট করুন</h2>
+      <h2>
+        অভিযোগ / রিপোর্ট করুন
+      </h2>
 
-      <button class="close" onclick="closeReport()">
+      <button
+        class="close"
+        onclick="closeReport()">
         ×
       </button>
 
     </div>
 
 
-    <!-- FORM -->
-
     <form
       id="reportForm"
       class="form"
       onsubmit="submitReport(event)">
 
-      <div id="formMessage" class="message"></div>
+      <div
+        id="formMessage"
+        class="message">
+      </div>
 
-
-      <!-- OFFICE CATEGORY -->
 
       <div class="field">
 
-        <label>কোন ধরনের সরকারি প্রতিষ্ঠান? *</label>
+        <label>
+          কোন ধরনের সরকারি প্রতিষ্ঠান? *
+        </label>
 
-        <select id="officeCategory" required onchange="updateDepartments()">
+        <select
+          id="officeCategory"
+          required
+          onchange="updateDepartments()">
 
           <option value="">
             নির্বাচন করুন
@@ -733,13 +991,16 @@ textarea{
       </div>
 
 
-      <!-- DEPARTMENT -->
-
       <div class="field">
 
-        <label>দপ্তর / অফিস *</label>
+        <label>
+          দপ্তর / অফিস *
+        </label>
 
-        <select id="department" required disabled>
+        <select
+          id="department"
+          required
+          disabled>
 
           <option value="">
             আগে প্রতিষ্ঠানের ধরন নির্বাচন করুন
@@ -750,13 +1011,15 @@ textarea{
       </div>
 
 
-      <!-- SERVICE -->
-
       <div class="field">
 
-        <label>কোন সেবা? *</label>
+        <label>
+          কোন সেবা? *
+        </label>
 
-        <select id="service" required>
+        <select
+          id="service"
+          required>
 
           <option value="">
             সেবা নির্বাচন করুন
@@ -778,7 +1041,6 @@ textarea{
 
           <option>পুলিশ ক্লিয়ারেন্স</option>
           <option>জিডি</option>
-          <option>মামলা সংক্রান্ত সেবা</option>
 
           <option>চিকিৎসা / হাসপাতাল সেবা</option>
           <option>টেস্ট / পরীক্ষা</option>
@@ -811,19 +1073,24 @@ textarea{
       </div>
 
 
-      <!-- LOCATION -->
-
       <div class="field">
 
-        <label>ঘটনার এলাকা *</label>
+        <label>
+          ঘটনার এলাকা *
+        </label>
 
         <div class="location-grid">
 
           <div class="field">
 
-            <div class="select-title">বিভাগ</div>
+            <div class="select-title">
+              বিভাগ
+            </div>
 
-            <select id="division" onchange="loadDistricts()" required>
+            <select
+              id="division"
+              onchange="loadDistricts()"
+              required>
 
               <option value="">
                 বিভাগ নির্বাচন
@@ -836,9 +1103,15 @@ textarea{
 
           <div class="field">
 
-            <div class="select-title">জেলা</div>
+            <div class="select-title">
+              জেলা
+            </div>
 
-            <select id="district" onchange="loadUpazilas()" required disabled>
+            <select
+              id="district"
+              onchange="loadUpazilas()"
+              required
+              disabled>
 
               <option value="">
                 আগে বিভাগ নির্বাচন করুন
@@ -851,9 +1124,15 @@ textarea{
 
           <div class="field">
 
-            <div class="select-title">উপজেলা / থানা</div>
+            <div class="select-title">
+              উপজেলা / থানা
+            </div>
 
-            <select id="upazila" onchange="loadUnions()" required disabled>
+            <select
+              id="upazila"
+              onchange="loadUnions()"
+              required
+              disabled>
 
               <option value="">
                 আগে জেলা নির্বাচন করুন
@@ -866,9 +1145,14 @@ textarea{
 
           <div class="field">
 
-            <div class="select-title">ইউনিয়ন / ওয়ার্ড</div>
+            <div class="select-title">
+              ইউনিয়ন / ওয়ার্ড
+            </div>
 
-            <select id="union" required disabled>
+            <select
+              id="union"
+              required
+              disabled>
 
               <option value="">
                 আগে উপজেলা নির্বাচন করুন
@@ -883,11 +1167,11 @@ textarea{
       </div>
 
 
-      <!-- AMOUNT -->
-
       <div class="field">
 
-        <label>দাবিকৃত অর্থ — ঐচ্ছিক</label>
+        <label>
+          দাবিকৃত অর্থ — ঐচ্ছিক
+        </label>
 
         <input
           id="amount"
@@ -899,13 +1183,15 @@ textarea{
       </div>
 
 
-      <!-- OUTCOME -->
-
       <div class="field">
 
-        <label>কী হয়েছিল? *</label>
+        <label>
+          কী হয়েছিল? *
+        </label>
 
-        <select id="outcome" required>
+        <select
+          id="outcome"
+          required>
 
           <option value="">
             নির্বাচন করুন
@@ -936,26 +1222,27 @@ textarea{
       </div>
 
 
-      <!-- DETAILS -->
-
       <div class="field">
 
-        <label>ঘটনার সংক্ষিপ্ত বিবরণ *</label>
+        <label>
+          ঘটনার সংক্ষিপ্ত বিবরণ *
+        </label>
 
         <textarea
           id="details"
           required
           maxlength="3000"
-          placeholder="কী ঘটেছিল সংক্ষেপে লিখুন..."></textarea>
+          placeholder="কী ঘটেছিল সংক্ষেপে লিখুন...">
+        </textarea>
 
       </div>
 
 
-      <!-- MEDIA -->
-
       <div class="field">
 
-        <label>ছবি / ভিডিও — ঐচ্ছিক</label>
+        <label>
+          ছবি / ভিডিও — ঐচ্ছিক
+        </label>
 
         <input
           id="media"
@@ -963,14 +1250,13 @@ textarea{
           accept="image/*,video/*">
 
         <div class="file-info">
-          সর্বোচ্চ 25MB। ব্যক্তিগত বা সংবেদনশীল তথ্যযুক্ত
+          সর্বোচ্চ <strong>50MB</strong>।
+          ব্যক্তিগত বা সংবেদনশীল তথ্যযুক্ত
           ছবি/ভিডিও আপলোড করবেন না।
         </div>
 
       </div>
 
-
-      <!-- PRIVACY -->
 
       <label class="check">
 
@@ -1000,9 +1286,9 @@ textarea{
     </form>
 
 
-    <!-- SUCCESS -->
-
-    <div id="successScreen" class="success-screen">
+    <div
+      id="successScreen"
+      class="success-screen">
 
       <div class="success-icon">
         ✓
@@ -1033,11 +1319,240 @@ textarea{
 </div>
 
 
+<!-- ADMIN LOGIN -->
+
+<div
+  id="adminLoginModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        Admin Login
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeAdminLogin()">
+        ×
+      </button>
+
+    </div>
+
+    <form
+      class="form"
+      onsubmit="adminLogin(event)">
+
+      <div
+        id="adminMessage"
+        class="message">
+      </div>
+
+      <div class="field">
+
+        <label>
+          Admin Email
+        </label>
+
+        <input
+          id="adminEmail"
+          type="email"
+          required
+          autocomplete="username">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="adminPassword"
+          type="password"
+          required
+          autocomplete="current-password">
+
+      </div>
+
+      <button
+        class="submit"
+        type="submit">
+
+        Login
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div
+  id="adminPanelModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        📢 বিজ্ঞাপন পরিচালনা
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeAdminPanel()">
+        ×
+      </button>
+
+    </div>
+
+    <div class="form">
+
+      <div
+        id="adminPanelMessage"
+        class="message">
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          বিজ্ঞাপনের শিরোনাম *
+        </label>
+
+        <input
+          id="adTitle"
+          type="text"
+          maxlength="150"
+          required>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          বিবরণ
+        </label>
+
+        <textarea
+          id="adDescription"
+          maxlength="1000"
+          placeholder="বিজ্ঞাপনের সংক্ষিপ্ত বিবরণ">
+        </textarea>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ছবির URL
+        </label>
+
+        <input
+          id="adImage"
+          type="url"
+          placeholder="https://...">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ক্লিক করলে যে লিংকে যাবে
+        </label>
+
+        <input
+          id="adLink"
+          type="url"
+          placeholder="https://...">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          শেষ হওয়ার তারিখ — ঐচ্ছিক
+        </label>
+
+        <input
+          id="adExpires"
+          type="datetime-local">
+
+      </div>
+
+
+      <label class="check">
+
+        <input
+          id="adActive"
+          type="checkbox"
+          checked>
+
+        <span>
+          বিজ্ঞাপনটি এখনই সক্রিয় থাকবে
+        </span>
+
+      </label>
+
+
+      <button
+        id="saveAdBtn"
+        class="submit"
+        onclick="saveAd()">
+
+        বিজ্ঞাপন যোগ করুন
+
+      </button>
+
+
+      <div class="admin-actions">
+
+        <button
+          class="admin-action admin-primary"
+          onclick="loadAdminAds()">
+
+          ↻ বিজ্ঞাপন দেখুন
+
+        </button>
+
+        <button
+          class="admin-action admin-danger"
+          onclick="adminLogout()">
+
+          Logout
+
+        </button>
+
+      </div>
+
+
+      <div id="adminAdsList"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <script>
 
-/* =================================
+/* =========================================
    SUPABASE
-================================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://klreqkbqyyiwmohlmgkh.supabase.co";
@@ -1053,17 +1568,17 @@ supabase.createClient(
 
 const mediaBucket = "media";
 
+const MAX_FILE_SIZE =
+50 * 1024 * 1024;
+
 let allReports = [];
 
+let deferredInstallPrompt = null;
 
-/* =================================
+
+/* =========================================
    BANGLADESH LOCATION DATA
-================================= */
-
-/*
-  প্রয়োজন অনুযায়ী ধাপে ধাপে অপশন দেখানো হবে।
-  এখানে ৮ বিভাগ + ৬৪ জেলা রাখা হয়েছে।
-*/
+========================================= */
 
 const locations = {
 
@@ -1084,9 +1599,9 @@ const locations = {
 },
 
 "চট্টগ্রাম":{
-"চট্টগ্রাম":["রাঙ্গুনিয়া","সীতাকুণ্ড","মীরসরাই","পটিয়া","সন্দ্বীপ","বাঁশখালী","আনোয়ারা","চন্দনাইশ","সাতকানিয়া","লোহাগাড়া","হাটহাজারী","ফটিকছড়ি","রাউজান","রাঙ্গুনিয়া","কর্ণফুলী"],
+"চট্টগ্রাম":["রাঙ্গুনিয়া","সীতাকুণ্ড","মীরসরাই","পটিয়া","সন্দ্বীপ","বাঁশখালী","আনোয়ারা","চন্দনাইশ","সাতকানিয়া","লোহাগাড়া","হাটহাজারী","ফটিকছড়ি","রাউজান","কর্ণফুলী"],
 "কক্সবাজার":["কক্সবাজার সদর","চকরিয়া","কুতুবদিয়া","উখিয়া","মহেশখালী","পেকুয়া","রামু","টেকনাফ"],
-"ব্রাহ্মণবাড়িয়া":["ব্রাহ্মণবাড়িয়া সদর","আশুগঞ্জ","নাসিরনগর","সরাইল","শরাইল","কসবা","আখাউড়া","নবীনগর","বাঞ্ছারামপুর","বিজয়নগর"],
+"ব্রাহ্মণবাড়িয়া":["ব্রাহ্মণবাড়িয়া সদর","আশুগঞ্জ","নাসিরনগর","সরাইল","কসবা","আখাউড়া","নবীনগর","বাঞ্ছারামপুর","বিজয়নগর"],
 "চাঁদপুর":["চাঁদপুর সদর","হাইমচর","কচুয়া","ফরিদগঞ্জ","মতলব উত্তর","মতলব দক্ষিণ","শাহরাস্তি","হাজীগঞ্জ"],
 "কুমিল্লা":["কুমিল্লা সদর","দাউদকান্দি","চান্দিনা","মুরাদনগর","বুড়িচং","ব্রাহ্মণপাড়া","বরুড়া","লাকসাম","মনোহরগঞ্জ","নাঙ্গলকোট","চৌদ্দগ্রাম","সদর দক্ষিণ","মেঘনা","তিতাস","হোমনা","দেবিদ্বার","লালমাই"],
 "ফেনী":["ফেনী সদর","ছাগলনাইয়া","সোনাগাজী","ফুলগাজী","পরশুরাম","দাগনভূঞা"],
@@ -1157,9 +1672,9 @@ const locations = {
 };
 
 
-/* =================================
-   DEPARTMENT LIST
-================================= */
+/* =========================================
+   DEPARTMENTS
+========================================= */
 
 const departments = {
 
@@ -1307,9 +1822,9 @@ const departments = {
 };
 
 
-/* =================================
-   MODAL
-================================= */
+/* =========================================
+   REPORT MODAL
+========================================= */
 
 function openReport(){
 
@@ -1318,12 +1833,6 @@ function openReport(){
     .classList.add("show");
 
   document.body.style.overflow="hidden";
-
-  setTimeout(()=>{
-    document
-      .getElementById("officeCategory")
-      .focus();
-  },100);
 
 }
 
@@ -1339,9 +1848,9 @@ function closeReport(){
 }
 
 
-/* =================================
-   DEPARTMENT OPTIONS
-================================= */
+/* =========================================
+   DEPARTMENT
+========================================= */
 
 function updateDepartments(){
 
@@ -1357,15 +1866,11 @@ function updateDepartments(){
   if(!category){
 
     select.disabled=true;
-
     return;
 
   }
 
-  const list =
-    departments[category] || [];
-
-  list.forEach(item=>{
+  (departments[category] || []).forEach(item=>{
 
     const option =
       document.createElement("option");
@@ -1382,9 +1887,9 @@ function updateDepartments(){
 }
 
 
-/* =================================
-   DIVISION
-================================= */
+/* =========================================
+   LOCATIONS
+========================================= */
 
 function initDivisions(){
 
@@ -1405,10 +1910,6 @@ function initDivisions(){
 
 }
 
-
-/* =================================
-   DISTRICT
-================================= */
 
 function loadDistricts(){
 
@@ -1433,14 +1934,12 @@ function loadDistricts(){
   union.innerHTML =
     '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
 
+  district.disabled=true;
   upazila.disabled=true;
   union.disabled=true;
 
   if(!division){
-
-    district.disabled=true;
     return;
-
   }
 
   Object.keys(locations[division]).forEach(item=>{
@@ -1459,10 +1958,6 @@ function loadDistricts(){
 
 }
 
-
-/* =================================
-   UPAZILA
-================================= */
 
 function loadUpazilas(){
 
@@ -1484,19 +1979,14 @@ function loadUpazilas(){
   union.innerHTML =
     '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
 
+  upazila.disabled=true;
   union.disabled=true;
 
   if(!division || !district){
-
-    upazila.disabled=true;
     return;
-
   }
 
-  const list =
-    locations[division][district] || [];
-
-  list.forEach(item=>{
+  (locations[division][district] || []).forEach(item=>{
 
     const option =
       document.createElement("option");
@@ -1513,10 +2003,6 @@ function loadUpazilas(){
 }
 
 
-/* =================================
-   UNION / WARD
-================================= */
-
 function loadUnions(){
 
   const union =
@@ -1524,13 +2010,11 @@ function loadUnions(){
 
   union.innerHTML="";
 
-  const options=[
+  [
     "ইউনিয়ন / ওয়ার্ড প্রযোজ্য নয়",
     "সংশ্লিষ্ট ইউনিয়ন / ওয়ার্ড",
     "অন্যান্য"
-  ];
-
-  options.forEach(item=>{
+  ].forEach(item=>{
 
     const option =
       document.createElement("option");
@@ -1547,66 +2031,9 @@ function loadUnions(){
 }
 
 
-/* =================================
-   SUCCESS
-================================= */
-
-function showSuccess(){
-
-  document
-    .getElementById("reportForm")
-    .style.display="none";
-
-  document
-    .getElementById("successScreen")
-    .style.display="block";
-
-}
-
-
-function finishSuccess(){
-
-  document
-    .getElementById("successScreen")
-    .style.display="none";
-
-  document
-    .getElementById("reportForm")
-    .style.display="block";
-
-  document
-    .getElementById("reportForm")
-    .reset();
-
-  document
-    .getElementById("department")
-    .innerHTML =
-      '<option value="">আগে প্রতিষ্ঠানের ধরন নির্বাচন করুন</option>';
-
-  document
-    .getElementById("department")
-    .disabled=true;
-
-  document
-    .getElementById("district")
-    .disabled=true;
-
-  document
-    .getElementById("upazila")
-    .disabled=true;
-
-  document
-    .getElementById("union")
-    .disabled=true;
-
-  closeReport();
-
-}
-
-
-/* =================================
+/* =========================================
    MESSAGE
-================================= */
+========================================= */
 
 function showMessage(text,type){
 
@@ -1614,18 +2041,18 @@ function showMessage(text,type){
     document.getElementById("formMessage");
 
   box.className =
-    "message " + type;
+    "message "+type;
 
-  box.innerText=text;
+  box.textContent=text;
 
   box.style.display="block";
 
 }
 
 
-/* =================================
-   MEDIA UPLOAD
-================================= */
+/* =========================================
+   MEDIA UPLOAD — 50MB
+========================================= */
 
 async function uploadMedia(file){
 
@@ -1638,10 +2065,21 @@ async function uploadMedia(file){
 
   }
 
-  if(file.size > 25*1024*1024){
+  if(file.size > MAX_FILE_SIZE){
 
     throw new Error(
-      "ফাইলের আকার 25MB-এর বেশি হতে পারবে না।"
+      "ফাইলের আকার 50MB-এর বেশি হতে পারবে না।"
+    );
+
+  }
+
+  if(
+    !file.type.startsWith("image/") &&
+    !file.type.startsWith("video/")
+  ){
+
+    throw new Error(
+      "শুধু ছবি অথবা ভিডিও আপলোড করা যাবে।"
     );
 
   }
@@ -1650,7 +2088,8 @@ async function uploadMedia(file){
     file.name
       .split(".")
       .pop()
-      .toLowerCase();
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g,"");
 
   const filename =
     crypto.randomUUID()+"."+extension;
@@ -1667,7 +2106,8 @@ async function uploadMedia(file){
         file,
         {
           cacheControl:"3600",
-          upsert:false
+          upsert:false,
+          contentType:file.type
         }
       );
 
@@ -1694,9 +2134,9 @@ async function uploadMedia(file){
 }
 
 
-/* =================================
-   SUBMIT
-================================= */
+/* =========================================
+   SUBMIT REPORT
+========================================= */
 
 async function submitReport(event){
 
@@ -1788,11 +2228,6 @@ async function submitReport(event){
     }
 
 
-    /*
-      বর্তমান reports টেবিলের location
-      কলামেই সম্পূর্ণ এলাকা রাখা হচ্ছে।
-    */
-
     const location =
       [
         division,
@@ -1804,14 +2239,8 @@ async function submitReport(event){
       .join(" → ");
 
 
-    /*
-      category + department
-      একই department field-এ সুন্দরভাবে রাখা হচ্ছে।
-      ফলে নতুন SQL কলাম লাগছে না।
-    */
-
     const finalDepartment =
-      category + " — " + department;
+      category+" — "+department;
 
 
     let mediaData={
@@ -1845,11 +2274,9 @@ async function submitReport(event){
 
           details,
 
-          media_url:
-            mediaData.url,
+          media_url:mediaData.url,
 
-          media_type:
-            mediaData.type,
+          media_type:mediaData.type,
 
           status:"pending"
 
@@ -1862,7 +2289,6 @@ async function submitReport(event){
 
 
     showSuccess();
-
 
   }catch(error){
 
@@ -1881,16 +2307,71 @@ async function submitReport(event){
 }
 
 
-/* =================================
+/* =========================================
+   SUCCESS
+========================================= */
+
+function showSuccess(){
+
+  document
+    .getElementById("reportForm")
+    .style.display="none";
+
+  document
+    .getElementById("successScreen")
+    .style.display="block";
+
+}
+
+
+function finishSuccess(){
+
+  document
+    .getElementById("successScreen")
+    .style.display="none";
+
+  document
+    .getElementById("reportForm")
+    .style.display="block";
+
+  document
+    .getElementById("reportForm")
+    .reset();
+
+  document
+    .getElementById("department")
+    .innerHTML =
+      '<option value="">আগে প্রতিষ্ঠানের ধরন নির্বাচন করুন</option>';
+
+  document
+    .getElementById("department")
+    .disabled=true;
+
+  document
+    .getElementById("district")
+    .disabled=true;
+
+  document
+    .getElementById("upazila")
+    .disabled=true;
+
+  document
+    .getElementById("union")
+    .disabled=true;
+
+  closeReport();
+
+}
+
+
+/* =========================================
    LOAD REPORTS
-================================= */
+========================================= */
 
 async function loadReports(){
 
   const container =
-    document.getElementById(
-      "reportsContainer"
-    );
+    document.getElementById("reportsContainer");
 
   container.innerHTML =
     '<div class="loading">রিপোর্ট লোড হচ্ছে...</div>';
@@ -1930,17 +2411,14 @@ async function loadReports(){
 }
 
 
-/* =================================
+/* =========================================
    RENDER REPORTS
-================================= */
+========================================= */
 
 function renderReports(reports){
 
   const container =
-    document.getElementById(
-      "reportsContainer"
-    );
-
+    document.getElementById("reportsContainer");
 
   if(!reports.length){
 
@@ -2009,11 +2487,9 @@ function renderReports(reports){
 
           </div>
 
-
           <h3>
             ${escapeHtml(report.service)}
           </h3>
-
 
           <div class="info">
 
@@ -2031,11 +2507,9 @@ function renderReports(reports){
 
           </div>
 
-
           <div class="details">
             ${escapeHtml(report.details)}
           </div>
-
 
           ${media}
 
@@ -2048,9 +2522,9 @@ function renderReports(reports){
 }
 
 
-/* =================================
+/* =========================================
    SEARCH
-================================= */
+========================================= */
 
 function filterReports(){
 
@@ -2098,9 +2572,588 @@ function filterReports(){
 }
 
 
-/* =================================
-   ESCAPE
-================================= */
+/* =========================================
+   AD URL SAFETY
+========================================= */
+
+function safeUrl(value){
+
+  if(!value){
+    return "";
+  }
+
+  try{
+
+    const url =
+      new URL(value);
+
+    if(
+      url.protocol==="https:" ||
+      url.protocol==="http:"
+    ){
+
+      return url.href;
+
+    }
+
+  }catch(e){}
+
+  return "";
+
+}
+
+
+/* =========================================
+   LOAD ADS
+========================================= */
+
+async function loadAds(){
+
+  const container =
+    document.getElementById("adsContainer");
+
+  const {data,error} =
+    await supabaseClient
+      .from("ads")
+      .select("*")
+      .eq("active",true)
+      .lte("start_at",new Date().toISOString())
+      .order("created_at",{ascending:false})
+      .limit(10);
+
+
+  if(error){
+
+    console.error("Ads error:",error);
+
+    container.innerHTML="";
+
+    return;
+
+  }
+
+
+  const now =
+    Date.now();
+
+
+  const ads =
+    (data || []).filter(ad=>{
+
+      if(!ad.expires_at){
+        return true;
+      }
+
+      return new Date(ad.expires_at).getTime() > now;
+
+    });
+
+
+  if(!ads.length){
+
+    container.innerHTML="";
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    ads.map(ad=>{
+
+      const image =
+        safeUrl(ad.image_url);
+
+      const link =
+        safeUrl(ad.link_url);
+
+
+      return`
+
+        <article class="ad-card">
+
+          ${
+            image
+            ?
+            `<img
+              class="ad-image"
+              src="${escapeHtml(image)}"
+              alt="বিজ্ঞাপন"
+              loading="lazy">`
+            :
+            ""
+          }
+
+          <div class="ad-content">
+
+            <span class="ad-badge">
+              বিজ্ঞাপন
+            </span>
+
+            <h3>
+              ${escapeHtml(ad.title)}
+            </h3>
+
+            ${
+              ad.description
+              ?
+              `<p>
+                ${escapeHtml(ad.description)}
+              </p>`
+              :
+              ""
+            }
+
+            ${
+              link
+              ?
+              `<a
+                class="ad-link"
+                href="${escapeHtml(link)}"
+                target="_blank"
+                rel="noopener noreferrer">
+                বিস্তারিত দেখুন →
+              </a>`
+              :
+              ""
+            }
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   ADMIN LOGIN
+========================================= */
+
+function openAdminLogin(){
+
+  document
+    .getElementById("adminLoginModal")
+    .classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+}
+
+
+function closeAdminLogin(){
+
+  document
+    .getElementById("adminLoginModal")
+    .classList.remove("show");
+
+  document.body.style.overflow="";
+
+}
+
+
+async function adminLogin(event){
+
+  event.preventDefault();
+
+  const email =
+    document.getElementById("adminEmail").value.trim();
+
+  const password =
+    document.getElementById("adminPassword").value;
+
+
+  const box =
+    document.getElementById("adminMessage");
+
+
+  box.className="message";
+
+  box.style.display="none";
+
+
+  try{
+
+    const {data,error} =
+      await supabaseClient.auth.signInWithPassword({
+
+        email,
+        password
+
+      });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    closeAdminLogin();
+
+    openAdminPanel();
+
+    loadAdminAds();
+
+
+  }catch(error){
+
+    box.className="message error";
+
+    box.textContent =
+      "Login করা যায়নি: "+error.message;
+
+    box.style.display="block";
+
+  }
+
+}
+
+
+/* =========================================
+   ADMIN PANEL
+========================================= */
+
+function openAdminPanel(){
+
+  document
+    .getElementById("adminPanelModal")
+    .classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+}
+
+
+function closeAdminPanel(){
+
+  document
+    .getElementById("adminPanelModal")
+    .classList.remove("show");
+
+  document.body.style.overflow="";
+
+}
+
+
+async function adminLogout(){
+
+  await supabaseClient.auth.signOut();
+
+  closeAdminPanel();
+
+}
+
+
+/* =========================================
+   SAVE AD
+========================================= */
+
+async function saveAd(){
+
+  const title =
+    document.getElementById("adTitle").value.trim();
+
+  const description =
+    document.getElementById("adDescription").value.trim();
+
+  const image =
+    safeUrl(
+      document.getElementById("adImage").value.trim()
+    );
+
+  const link =
+    safeUrl(
+      document.getElementById("adLink").value.trim()
+    );
+
+  const expiresValue =
+    document.getElementById("adExpires").value;
+
+  const active =
+    document.getElementById("adActive").checked;
+
+
+  const message =
+    document.getElementById("adminPanelMessage");
+
+
+  if(!title){
+
+    message.className="message error";
+    message.textContent=
+      "বিজ্ঞাপনের শিরোনাম দিন।";
+    message.style.display="block";
+
+    return;
+
+  }
+
+
+  const {data:{session}} =
+    await supabaseClient.auth.getSession();
+
+
+  if(!session){
+
+    message.className="message error";
+    message.textContent=
+      "Admin login প্রয়োজন।";
+    message.style.display="block";
+
+    return;
+
+  }
+
+
+  const expiresAt =
+    expiresValue
+    ?
+    new Date(expiresValue).toISOString()
+    :
+    null;
+
+
+  const {error} =
+    await supabaseClient
+      .from("ads")
+      .insert({
+
+        title,
+
+        description:
+          description || null,
+
+        image_url:
+          image || null,
+
+        link_url:
+          link || null,
+
+        active,
+
+        expires_at:
+          expiresAt
+
+      });
+
+
+  if(error){
+
+    console.error(error);
+
+    message.className="message error";
+
+    message.textContent =
+      "বিজ্ঞাপন যোগ করা যায়নি: "+error.message;
+
+    message.style.display="block";
+
+    return;
+
+  }
+
+
+  message.className="message success";
+
+  message.textContent =
+    "বিজ্ঞাপন সফলভাবে যোগ হয়েছে।";
+
+  message.style.display="block";
+
+
+  document.getElementById("adTitle").value="";
+  document.getElementById("adDescription").value="";
+  document.getElementById("adImage").value="";
+  document.getElementById("adLink").value="";
+  document.getElementById("adExpires").value="";
+  document.getElementById("adActive").checked=true;
+
+
+  loadAdminAds();
+  loadAds();
+
+}
+
+
+/* =========================================
+   ADMIN ADS LIST
+========================================= */
+
+async function loadAdminAds(){
+
+  const container =
+    document.getElementById("adminAdsList");
+
+  container.innerHTML =
+    '<div class="loading">বিজ্ঞাপন লোড হচ্ছে...</div>';
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("ads")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="message error" style="display:block">
+        ${escapeHtml(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  if(!data || !data.length){
+
+    container.innerHTML =
+      '<div class="empty">এখনো কোনো বিজ্ঞাপন নেই।</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    data.map(ad=>{
+
+      return`
+
+        <div class="ad-admin-item">
+
+          <strong>
+            ${escapeHtml(ad.title)}
+          </strong>
+
+          <br>
+
+          <small>
+            ${
+              ad.active
+              ?
+              "🟢 সক্রিয়"
+              :
+              "🔴 বন্ধ"
+            }
+          </small>
+
+          <div class="admin-actions">
+
+            <button
+              class="admin-action admin-primary"
+              onclick="toggleAd('${escapeHtml(ad.id)}',${!ad.active})">
+
+              ${ad.active ? "বন্ধ করুন" : "চালু করুন"}
+
+            </button>
+
+            <button
+              class="admin-action admin-danger"
+              onclick="deleteAd('${escapeHtml(ad.id)}')">
+
+              মুছে ফেলুন
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   TOGGLE AD
+========================================= */
+
+async function toggleAd(id,status){
+
+  const {error} =
+    await supabaseClient
+      .from("ads")
+      .update({
+
+        active:status,
+
+        updated_at:
+          new Date().toISOString()
+
+      })
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "পরিবর্তন করা যায়নি: "+error.message
+    );
+
+    return;
+
+  }
+
+
+  loadAdminAds();
+  loadAds();
+
+}
+
+
+/* =========================================
+   DELETE AD
+========================================= */
+
+async function deleteAd(id){
+
+  if(
+    !confirm(
+      "এই বিজ্ঞাপনটি মুছে ফেলতে চান?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const {error} =
+    await supabaseClient
+      .from("ads")
+      .delete()
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "বিজ্ঞাপন মুছে ফেলা যায়নি: "+
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  loadAdminAds();
+  loadAds();
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
 
 function escapeHtml(value){
 
@@ -2113,7 +3166,6 @@ function escapeHtml(value){
 
   }
 
-
   return String(value)
 
     .replace(/&/g,"&amp;")
@@ -2125,23 +3177,34 @@ function escapeHtml(value){
 }
 
 
-/* =================================
-   CLOSE MODAL
-================================= */
+/* =========================================
+   MODAL CLICK
+========================================= */
 
 window.addEventListener(
   "click",
   event=>{
 
-    const modal =
-      document.getElementById(
-        "reportModal"
-      );
+    const reportModal =
+      document.getElementById("reportModal");
 
-    if(event.target===modal){
+    const loginModal =
+      document.getElementById("adminLoginModal");
 
+    const adminModal =
+      document.getElementById("adminPanelModal");
+
+
+    if(event.target===reportModal){
       closeReport();
+    }
 
+    if(event.target===loginModal){
+      closeAdminLogin();
+    }
+
+    if(event.target===adminModal){
+      closeAdminPanel();
     }
 
   }
@@ -2155,6 +3218,8 @@ window.addEventListener(
     if(event.key==="Escape"){
 
       closeReport();
+      closeAdminLogin();
+      closeAdminPanel();
 
     }
 
@@ -2162,13 +3227,55 @@ window.addEventListener(
 );
 
 
-/* =================================
+/* =========================================
+   PWA INSTALL
+========================================= */
+
+window.addEventListener(
+  "beforeinstallprompt",
+  event=>{
+
+    event.preventDefault();
+
+    deferredInstallPrompt=event;
+
+    document
+      .getElementById("installBtn")
+      .style.display="block";
+
+  }
+);
+
+
+async function installApp(){
+
+  if(!deferredInstallPrompt){
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+
+  await deferredInstallPrompt.userChoice;
+
+  deferredInstallPrompt=null;
+
+  document
+    .getElementById("installBtn")
+    .style.display="none";
+
+}
+
+
+/* =========================================
    START
-================================= */
+========================================= */
 
 initDivisions();
 
 loadReports();
+
+loadAds();
+
 
 </script>
 
