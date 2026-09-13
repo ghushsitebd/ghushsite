@@ -114,6 +114,11 @@ button:hover{
   opacity:.92;
 }
 
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 .btn-danger{
   background:#c62828;
 }
@@ -295,8 +300,13 @@ button:hover{
   font-size:14px;
 }
 
-.error{color:#c62828}
-.success{color:#087f3e}
+.error{
+  color:#c62828;
+}
+
+.success{
+  color:#087f3e;
+}
 
 .empty{
   text-align:center;
@@ -350,7 +360,164 @@ button:hover{
   line-height:1.5;
 }
 
+
+/* =================================
+   ADS
+================================= */
+
+.ads-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.ads-head h2{
+  margin:0;
+}
+
+.ads-head small{
+  color:#68736d;
+}
+
+.ad-card{
+  border:1px solid #e0e6e2;
+  border-radius:14px;
+  padding:14px;
+  margin:12px 0;
+  background:#fff;
+}
+
+.ad-main{
+  display:flex;
+  gap:15px;
+}
+
+.ad-image{
+  width:150px;
+  height:105px;
+  flex-shrink:0;
+  border-radius:11px;
+  overflow:hidden;
+  background:#eef2ef;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.ad-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.no-image{
+  font-size:32px;
+}
+
+.ad-content{
+  flex:1;
+  min-width:0;
+}
+
+.ad-content h3{
+  margin:0 0 8px;
+  font-size:18px;
+}
+
+.ad-url{
+  color:#2563eb;
+  font-size:13px;
+  word-break:break-all;
+  margin-top:6px;
+}
+
+.ad-dates{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:8px;
+  font-size:13px;
+}
+
+.ad-date{
+  background:#f7f9f8;
+  border-radius:8px;
+  padding:8px;
+}
+
+.ad-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.ad-actions button{
+  flex:1;
+}
+
+.ad-active{
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#def6e7;
+  color:#087f3e;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.ad-inactive{
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#ffe2e2;
+  color:#b71c1c;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.ad-form-label{
+  display:block;
+  margin-top:10px;
+  margin-bottom:4px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.checkbox-line{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:12px 0;
+  font-size:14px;
+}
+
+.checkbox-line input{
+  width:18px;
+  height:18px;
+  margin:0;
+}
+
+.form-actions{
+  display:flex;
+  gap:8px;
+  margin-top:16px;
+}
+
+.form-actions button{
+  flex:1;
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
 @media(max-width:700px){
+
   .stats{
     grid-template-columns:repeat(2,1fr);
   }
@@ -366,6 +533,28 @@ button:hover{
   .header-inner{
     align-items:flex-start;
   }
+
+  .ad-main{
+    flex-direction:column;
+  }
+
+  .ad-image{
+    width:100%;
+    height:180px;
+  }
+
+  .ad-dates{
+    grid-template-columns:1fr;
+  }
+
+  .ad-actions{
+    flex-direction:column;
+  }
+
+  .ads-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
 }
 </style>
 </head>
@@ -374,23 +563,34 @@ button:hover{
 
 <header>
   <div class="header-inner">
+
     <div class="logo">
-      <div class="logo-icon">ঘু</div>
+
+      <div class="logo-icon">
+        ঘু
+      </div>
+
       <div>
         <h1>ঘুষ সাইট</h1>
         <small>Super Admin Panel</small>
       </div>
+
     </div>
 
     <button class="btn-danger" onclick="logout()">
       Logout
     </button>
+
   </div>
 </header>
 
+
 <div class="container">
 
-<!-- LOGIN -->
+
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div id="loginBox" class="card login">
 
@@ -419,9 +619,14 @@ button:hover{
 </div>
 
 
-<!-- ADMIN -->
+<!-- =========================
+     ADMIN AREA
+========================= -->
 
 <div id="adminArea" class="hidden">
+
+
+  <!-- NAV -->
 
   <div class="nav">
 
@@ -438,6 +643,12 @@ button:hover{
       🛡️ Moderator
     </button>
 
+    <button
+      id="navAds"
+      onclick="showSection('ads')">
+      📢 বিজ্ঞাপন
+    </button>
+
     <button onclick="openPublicSite()">
       🌐 Public Site
     </button>
@@ -445,7 +656,9 @@ button:hover{
   </div>
 
 
-  <!-- REPORTS -->
+  <!-- =========================
+       REPORTS
+  ========================= -->
 
   <section id="reportsSection">
 
@@ -484,19 +697,27 @@ button:hover{
 
       <div class="top-actions">
 
-        <button onclick="setFilter('all')" id="allBtn">
+        <button
+          onclick="setFilter('all')"
+          id="allBtn">
           সব
         </button>
 
-        <button onclick="setFilter('pending')" id="pendingBtn">
+        <button
+          onclick="setFilter('pending')"
+          id="pendingBtn">
           Pending
         </button>
 
-        <button onclick="setFilter('published')" id="publishedBtn">
+        <button
+          onclick="setFilter('published')"
+          id="publishedBtn">
           Published
         </button>
 
-        <button onclick="setFilter('rejected')" id="rejectedBtn">
+        <button
+          onclick="setFilter('rejected')"
+          id="rejectedBtn">
           Rejected
         </button>
 
@@ -508,6 +729,7 @@ button:hover{
 
       </div>
 
+
       <input
         id="reportSearch"
         class="search"
@@ -515,8 +737,13 @@ button:hover{
         oninput="renderReports()"
       >
 
+
       <div id="reports">
-        <div class="empty">রিপোর্ট লোড হচ্ছে...</div>
+
+        <div class="empty">
+          রিপোর্ট লোড হচ্ছে...
+        </div>
+
       </div>
 
     </div>
@@ -524,7 +751,9 @@ button:hover{
   </section>
 
 
-  <!-- MODERATORS -->
+  <!-- =========================
+       MODERATORS
+  ========================= -->
 
   <section
     id="moderatorsSection"
@@ -535,6 +764,7 @@ button:hover{
       <div class="top-actions">
 
         <div style="flex:1">
+
           <h2 style="margin:0">
             🛡️ Moderator Management
           </h2>
@@ -542,6 +772,7 @@ button:hover{
           <small>
             Moderator শুধু রিপোর্ট Approve / Reject করতে পারবে।
           </small>
+
         </div>
 
         <button onclick="openModeratorModal()">
@@ -550,22 +781,72 @@ button:hover{
 
       </div>
 
+
       <div id="moderators">
+
         <div class="empty">
           Moderator তালিকা লোড হচ্ছে...
         </div>
+
       </div>
 
     </div>
 
   </section>
 
-</div>
+
+  <!-- =========================
+       ADS
+  ========================= -->
+
+  <section
+    id="adsSection"
+    class="hidden">
+
+    <div class="card">
+
+      <div class="ads-head">
+
+        <div>
+
+          <h2>
+            📢 বিজ্ঞাপন Management
+          </h2>
+
+          <small>
+            Public Site-এ দেখানোর জন্য বিজ্ঞাপন পরিচালনা করুন।
+          </small>
+
+        </div>
+
+        <button onclick="openAdModal()">
+          ＋ নতুন বিজ্ঞাপন
+        </button>
+
+      </div>
+
+
+      <div id="ads">
+
+        <div class="empty">
+          বিজ্ঞাপন লোড হচ্ছে...
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
 
 </div>
 
+</div>
 
-<!-- MODERATOR MODAL -->
+
+<!-- =========================
+     MODERATOR MODAL
+========================= -->
 
 <div
   id="moderatorModal"
@@ -588,10 +869,14 @@ button:hover{
 
     </div>
 
+
     <div class="notice">
+
       Moderator-এর Supabase account আগে তৈরি থাকতে হবে।
       এখানে সেই account-এর email যোগ করুন।
+
     </div>
+
 
     <input
       id="moderatorEmail"
@@ -604,11 +889,143 @@ button:hover{
       placeholder="নাম (ঐচ্ছিক)"
     >
 
+
     <button onclick="addModerator()">
       ✅ Moderator যোগ করুন
     </button>
 
-    <div id="moderatorMessage" class="message"></div>
+
+    <div
+      id="moderatorMessage"
+      class="message">
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     AD MODAL
+========================= -->
+
+<div
+  id="adModal"
+  class="modal hidden"
+  onclick="closeAdModalOutside(event)">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2 id="adModalTitle">
+        ＋ নতুন বিজ্ঞাপন
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeAdModal()">
+        ✕
+      </button>
+
+    </div>
+
+
+    <input
+      id="adId"
+      type="hidden"
+    >
+
+
+    <label class="ad-form-label">
+      বিজ্ঞাপনের শিরোনাম *
+    </label>
+
+    <input
+      id="adTitle"
+      type="text"
+      placeholder="যেমন: বিশেষ অফার"
+    >
+
+
+    <label class="ad-form-label">
+      Image URL
+    </label>
+
+    <input
+      id="adImageUrl"
+      type="url"
+      placeholder="https://example.com/image.jpg"
+    >
+
+
+    <label class="ad-form-label">
+      Link URL
+    </label>
+
+    <input
+      id="adLinkUrl"
+      type="url"
+      placeholder="https://example.com"
+    >
+
+
+    <label class="ad-form-label">
+      শুরু হওয়ার সময় *
+    </label>
+
+    <input
+      id="adStartAt"
+      type="datetime-local"
+    >
+
+
+    <label class="ad-form-label">
+      শেষ হওয়ার সময় *
+    </label>
+
+    <input
+      id="adExpiresAt"
+      type="datetime-local"
+    >
+
+
+    <label class="checkbox-line">
+
+      <input
+        id="adActive"
+        type="checkbox"
+        checked
+      >
+
+      <span>
+        বিজ্ঞাপন Active থাকবে
+      </span>
+
+    </label>
+
+
+    <div class="form-actions">
+
+      <button
+        class="btn-light"
+        onclick="closeAdModal()">
+        বাতিল
+      </button>
+
+      <button
+        id="adSaveButton"
+        onclick="saveAd()">
+        💾 সংরক্ষণ
+      </button>
+
+    </div>
+
+
+    <div
+      id="adMessage"
+      class="message">
+    </div>
 
   </div>
 
@@ -616,6 +1033,11 @@ button:hover{
 
 
 <script>
+
+
+/* =================================
+   SUPABASE
+================================= */
 
 const SUPABASE_URL =
 "https://klreqkbqyyiwmohlmgkh.supabase.co";
@@ -630,36 +1052,49 @@ supabase.createClient(
 );
 
 
-/*
-  তোমার বর্তমান Admin UID
-*/
+/* =================================
+   ADMIN UID
+================================= */
 
 const ADMIN_UID =
 "bd8c8bc2-6a98-4b3f-8873-06df4493196a";
 
 
+/* =================================
+   GLOBAL
+================================= */
+
 let allReports = [];
+
 let currentFilter = "all";
 
+let editingAdId = null;
 
-/* =========================
+
+/* =================================
    LOGIN CHECK
-========================= */
+================================= */
 
 async function checkLogin(){
 
-  const {data:{session}} =
-    await supabaseClient.auth.getSession();
+  const {
+    data:{session}
+  } =
+  await supabaseClient.auth.getSession();
+
 
   if(!session){
     return;
   }
 
+
   if(session.user.id !== ADMIN_UID){
 
     await supabaseClient.auth.signOut();
 
-    document.getElementById("loginMessage").innerHTML =
+    document
+      .getElementById("loginMessage")
+      .innerHTML =
       `<span class="error">
         এই account-এর Admin access নেই।
       </span>`;
@@ -667,24 +1102,32 @@ async function checkLogin(){
     return;
   }
 
+
   showAdmin();
 }
 
 
-/* =========================
+/* =================================
    LOGIN
-========================= */
+================================= */
 
 async function login(){
 
   const email =
-    document.getElementById("email").value.trim();
+    document
+      .getElementById("email")
+      .value
+      .trim();
 
   const password =
-    document.getElementById("password").value;
+    document
+      .getElementById("password")
+      .value;
 
   const msg =
-    document.getElementById("loginMessage");
+    document
+      .getElementById("loginMessage");
+
 
   if(!email || !password){
 
@@ -696,23 +1139,32 @@ async function login(){
     return;
   }
 
-  msg.innerHTML = "Login হচ্ছে...";
 
-  const {data,error} =
-    await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
+  msg.innerHTML =
+    "Login হচ্ছে...";
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
 
   if(error){
 
     msg.innerHTML =
       `<span class="error">
-        Login হয়নি: ${escapeHTML(error.message)}
+        Login হয়নি:
+        ${escapeHTML(error.message)}
       </span>`;
 
     return;
   }
+
 
   if(data.user.id !== ADMIN_UID){
 
@@ -726,13 +1178,14 @@ async function login(){
     return;
   }
 
+
   showAdmin();
 }
 
 
-/* =========================
+/* =================================
    SHOW ADMIN
-========================= */
+================================= */
 
 function showAdmin(){
 
@@ -740,72 +1193,126 @@ function showAdmin(){
     .getElementById("loginBox")
     .classList.add("hidden");
 
+
   document
     .getElementById("adminArea")
     .classList.remove("hidden");
+
 
   loadReports();
 }
 
 
-/* =========================
+/* =================================
    SECTION
-========================= */
+================================= */
 
 function showSection(section){
 
   const reports =
-    document.getElementById("reportsSection");
+    document.getElementById(
+      "reportsSection"
+    );
 
   const moderators =
-    document.getElementById("moderatorsSection");
+    document.getElementById(
+      "moderatorsSection"
+    );
+
+  const ads =
+    document.getElementById(
+      "adsSection"
+    );
+
 
   const navReports =
-    document.getElementById("navReports");
+    document.getElementById(
+      "navReports"
+    );
 
   const navModerators =
-    document.getElementById("navModerators");
+    document.getElementById(
+      "navModerators"
+    );
+
+  const navAds =
+    document.getElementById(
+      "navAds"
+    );
+
+
+  reports.classList.add("hidden");
+  moderators.classList.add("hidden");
+  ads.classList.add("hidden");
+
+  navReports.classList.remove("active");
+  navModerators.classList.remove("active");
+  navAds.classList.remove("active");
+
 
   if(section==="reports"){
 
     reports.classList.remove("hidden");
-    moderators.classList.add("hidden");
 
     navReports.classList.add("active");
-    navModerators.classList.remove("active");
 
     loadReports();
 
-  }else{
+  }
 
-    reports.classList.add("hidden");
+
+  else if(section==="moderators"){
+
     moderators.classList.remove("hidden");
 
-    navReports.classList.remove("active");
     navModerators.classList.add("active");
 
     loadModerators();
+
   }
+
+
+  else if(section==="ads"){
+
+    ads.classList.remove("hidden");
+
+    navAds.classList.add("active");
+
+    loadAds();
+
+  }
+
 }
 
 
-/* =========================
+/* =================================
    LOAD REPORTS
-========================= */
+================================= */
 
 async function loadReports(){
 
   const box =
     document.getElementById("reports");
 
-  box.innerHTML =
-    `<div class="empty">রিপোর্ট লোড হচ্ছে...</div>`;
 
-  const {data,error} =
-    await supabaseClient
-      .from("reports")
-      .select("*")
-      .order("created_at",{ascending:false});
+  box.innerHTML =
+    `<div class="empty">
+      রিপোর্ট লোড হচ্ছে...
+    </div>`;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("reports")
+    .select("*")
+    .order(
+      "created_at",
+      {ascending:false}
+    );
+
 
   if(error){
 
@@ -818,7 +1325,10 @@ async function loadReports(){
     return;
   }
 
-  allReports = data || [];
+
+  allReports =
+    data || [];
+
 
   updateStats();
 
@@ -826,47 +1336,59 @@ async function loadReports(){
 }
 
 
-/* =========================
+/* =================================
    FILTER
-========================= */
+================================= */
 
 function setFilter(filter){
 
-  currentFilter = filter;
+  currentFilter =
+    filter;
 
   renderReports();
 }
 
 
-/* =========================
-   RENDER
-========================= */
+/* =================================
+   RENDER REPORTS
+================================= */
 
 function renderReports(){
 
   const box =
-    document.getElementById("reports");
+    document.getElementById(
+      "reports"
+    );
+
 
   const search =
     document
-      .getElementById("reportSearch")
+      .getElementById(
+        "reportSearch"
+      )
       .value
       .trim()
       .toLowerCase();
+
 
   let reports =
     allReports.filter(r=>{
 
       if(
         currentFilter !== "all" &&
-        (r.status || "pending") !== currentFilter
+        (r.status || "pending")
+        !== currentFilter
       ){
+
         return false;
       }
 
+
       if(!search){
+
         return true;
       }
+
 
       const text = [
 
@@ -876,7 +1398,10 @@ function renderReports(){
         r.outcome,
         r.details
 
-      ].join(" ").toLowerCase();
+      ]
+      .join(" ")
+      .toLowerCase();
+
 
       return text.includes(search);
 
@@ -902,7 +1427,9 @@ function renderReports(){
     const div =
       document.createElement("div");
 
-    div.className = "complaint";
+
+    div.className =
+      "complaint";
 
 
     const status =
@@ -925,58 +1452,95 @@ function renderReports(){
       : "Pending";
 
 
-    const media = r.media_url
+    const media =
+      r.media_url
       ?
-        (
-          r.media_type==="video"
-          ?
-          `<video controls src="${escapeAttr(r.media_url)}"></video>`
-          :
-          `<img src="${escapeAttr(r.media_url)}">`
-        )
+      (
+        r.media_type==="video"
+        ?
+        `<video
+          controls
+          src="${escapeAttr(r.media_url)}">
+        </video>`
+        :
+        `<img
+          src="${escapeAttr(r.media_url)}">`
+      )
       :
-        "";
+      "";
 
 
     div.innerHTML = `
 
       <h3>
-        ${escapeHTML(r.department || "দপ্তর উল্লেখ নেই")}
+        ${escapeHTML(
+          r.department ||
+          "দপ্তর উল্লেখ নেই"
+        )}
       </h3>
+
 
       <div class="meta">
 
         <div>
           <b>🏢 সেবা</b><br>
-          ${escapeHTML(r.service || "উল্লেখ নেই")}
+          ${escapeHTML(
+            r.service ||
+            "উল্লেখ নেই"
+          )}
         </div>
+
 
         <div>
           <b>📍 এলাকা</b><br>
-          ${escapeHTML(r.location || "উল্লেখ নেই")}
+          ${escapeHTML(
+            r.location ||
+            "উল্লেখ নেই"
+          )}
         </div>
+
 
         <div>
           <b>💰 অর্থ</b><br>
-          ${escapeHTML(r.amount || "উল্লেখ নেই")}
+          ${escapeHTML(
+            r.amount ||
+            "উল্লেখ নেই"
+          )}
         </div>
+
 
         <div>
           <b>⚠️ ঘটনা</b><br>
-          ${escapeHTML(r.outcome || "উল্লেখ নেই")}
+          ${escapeHTML(
+            r.outcome ||
+            "উল্লেখ নেই"
+          )}
         </div>
 
       </div>
 
+
       <p>
-        <span class="badge ${statusClass}">
+
+        <span
+          class="badge ${statusClass}">
+
           ${statusText}
+
         </span>
+
       </p>
 
+
       <div class="details">
-        ${escapeHTML(r.details || "বিস্তারিত নেই")}
+
+        ${escapeHTML(
+          r.details ||
+          "বিস্তারিত নেই"
+        )}
+
       </div>
+
 
       ${
         media
@@ -987,6 +1551,7 @@ function renderReports(){
         :
         ""
       }
+
 
       <div class="action-row">
 
@@ -1000,10 +1565,14 @@ function renderReports(){
           :
           `<button
             class="btn-light"
-            onclick="changeReportStatus('${r.id}','pending')">
+            onclick="changeReportStatus(
+              '${r.id}',
+              'pending'
+            )">
             ↩ Pending
           </button>`
         }
+
 
         ${
           status!=="rejected"
@@ -1016,12 +1585,16 @@ function renderReports(){
           :
           `<button
             class="btn-light"
-            onclick="changeReportStatus('${r.id}','pending')">
+            onclick="changeReportStatus(
+              '${r.id}',
+              'pending'
+            )">
             ↩ Pending
           </button>`
         }
 
       </div>
+
 
       <div class="action-row">
 
@@ -1035,15 +1608,16 @@ function renderReports(){
 
     `;
 
+
     box.appendChild(div);
 
   });
 }
 
 
-/* =========================
+/* =================================
    APPROVE
-========================= */
+================================= */
 
 async function approveReport(id){
 
@@ -1054,9 +1628,9 @@ async function approveReport(id){
 }
 
 
-/* =========================
+/* =================================
    REJECT
-========================= */
+================================= */
 
 async function rejectReport(id){
 
@@ -1067,9 +1641,9 @@ async function rejectReport(id){
 }
 
 
-/* =========================
+/* =================================
    STATUS
-========================= */
+================================= */
 
 async function changeReportStatus(
   id,
@@ -1083,11 +1657,13 @@ async function changeReportStatus(
     ? "Reject"
     : "Pending";
 
+
   if(
     !confirm(
       `রিপোর্টটি ${statusText} করতে চান?`
     )
   ){
+
     return;
   }
 
@@ -1105,11 +1681,13 @@ async function changeReportStatus(
   }
 
 
-  const {error} =
-    await supabaseClient
-      .from("reports")
-      .update(updateData)
-      .eq("id",id);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("reports")
+    .update(updateData)
+    .eq("id",id);
 
 
   if(error){
@@ -1136,9 +1714,9 @@ async function changeReportStatus(
 }
 
 
-/* =========================
-   DELETE
-========================= */
+/* =================================
+   DELETE REPORT
+================================= */
 
 async function deleteReport(id){
 
@@ -1147,15 +1725,18 @@ async function deleteReport(id){
       "এই রিপোর্টটি স্থায়ীভাবে Delete করতে চান?"
     )
   ){
+
     return;
   }
 
 
-  const {error} =
-    await supabaseClient
-      .from("reports")
-      .delete()
-      .eq("id",id);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("reports")
+    .delete()
+    .eq("id",id);
 
 
   if(error){
@@ -1169,46 +1750,67 @@ async function deleteReport(id){
   }
 
 
-  alert("🗑️ রিপোর্ট Delete হয়েছে।");
+  alert(
+    "🗑️ রিপোর্ট Delete হয়েছে।"
+  );
+
 
   loadReports();
 }
 
 
-/* =========================
+/* =================================
    STATS
-========================= */
+================================= */
 
 function updateStats(){
 
-  document.getElementById("total").innerText =
-    allReports.length;
+  document
+    .getElementById("total")
+    .innerText =
+      allReports.length;
 
-  document.getElementById("pending").innerText =
-    allReports.filter(
-      x=>(x.status||"pending")==="pending"
-    ).length;
 
-  document.getElementById("published").innerText =
-    allReports.filter(
-      x=>x.status==="published"
-    ).length;
+  document
+    .getElementById("pending")
+    .innerText =
+      allReports.filter(
+        x=>
+          (x.status || "pending")
+          ==="pending"
+      ).length;
 
-  document.getElementById("rejected").innerText =
-    allReports.filter(
-      x=>x.status==="rejected"
-    ).length;
+
+  document
+    .getElementById("published")
+    .innerText =
+      allReports.filter(
+        x=>
+          x.status==="published"
+      ).length;
+
+
+  document
+    .getElementById("rejected")
+    .innerText =
+      allReports.filter(
+        x=>
+          x.status==="rejected"
+      ).length;
 }
 
 
-/* =========================
-   MODERATORS
-========================= */
+/* =================================
+   LOAD MODERATORS
+================================= */
 
 async function loadModerators(){
 
   const box =
-    document.getElementById("moderators");
+    document.getElementById(
+      "moderators"
+    );
+
 
   box.innerHTML =
     `<div class="empty">
@@ -1216,11 +1818,17 @@ async function loadModerators(){
     </div>`;
 
 
-  const {data,error} =
-    await supabaseClient
-      .from("moderators")
-      .select("*")
-      .order("created_at",{ascending:false});
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("moderators")
+    .select("*")
+    .order(
+      "created_at",
+      {ascending:false}
+    );
 
 
   if(error){
@@ -1228,14 +1836,19 @@ async function loadModerators(){
     box.innerHTML =
       `<div class="empty error">
         Moderator লোড হয়নি:<br>
-        ${escapeHTML(error.message)}
+        ${escapeHTML(
+          error.message
+        )}
       </div>`;
 
     return;
   }
 
 
-  if(!data || data.length===0){
+  if(
+    !data ||
+    data.length===0
+  ){
 
     box.innerHTML =
       `<div class="empty">
@@ -1252,9 +1865,13 @@ async function loadModerators(){
   data.forEach(m=>{
 
     const div =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    div.className = "moderator";
+
+    div.className =
+      "moderator";
 
 
     div.innerHTML = `
@@ -1263,23 +1880,41 @@ async function loadModerators(){
 
         <b>
           ${escapeHTML(
-            m.name || "Moderator"
+            m.name ||
+            "Moderator"
           )}
         </b>
 
+
         <small>
-          ${escapeHTML(m.email)}
+          ${escapeHTML(
+            m.email
+          )}
         </small>
+
 
         <br>
 
+
         <span class="badge">
-          ${m.active ? "🟢 Active" : "🔴 Disabled"}
+
+          ${
+            m.active
+            ? "🟢 Active"
+            : "🔴 Disabled"
+          }
+
         </span>
 
       </div>
 
-      <div style="display:flex;gap:6px;flex-wrap:wrap">
+
+      <div
+        style="
+          display:flex;
+          gap:6px;
+          flex-wrap:wrap;
+        ">
 
         <button
           class="btn-light"
@@ -1287,18 +1922,30 @@ async function loadModerators(){
             '${m.id}',
             ${m.active}
           )">
-          ${m.active ? "🔒 Disable" : "🔓 Enable"}
+
+          ${
+            m.active
+            ? "🔒 Disable"
+            : "🔓 Enable"
+          }
+
         </button>
+
 
         <button
           class="btn-danger"
-          onclick="removeModerator('${m.id}')">
+          onclick="removeModerator(
+            '${m.id}'
+          )">
+
           ❌ Remove
+
         </button>
 
       </div>
 
     `;
+
 
     box.appendChild(div);
 
@@ -1306,24 +1953,30 @@ async function loadModerators(){
 }
 
 
-/* =========================
+/* =================================
    ADD MODERATOR
-========================= */
+================================= */
 
 async function addModerator(){
 
   const email =
     document
-      .getElementById("moderatorEmail")
+      .getElementById(
+        "moderatorEmail"
+      )
       .value
       .trim()
       .toLowerCase();
 
+
   const name =
     document
-      .getElementById("moderatorName")
+      .getElementById(
+        "moderatorName"
+      )
       .value
       .trim();
+
 
   const msg =
     document.getElementById(
@@ -1357,14 +2010,16 @@ async function addModerator(){
     "Moderator যোগ হচ্ছে...";
 
 
-  const {error} =
-    await supabaseClient
-      .from("moderators")
-      .insert({
-        email:email,
-        name:name || null,
-        active:true
-      });
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("moderators")
+    .insert({
+      email:email,
+      name:name || null,
+      active:true
+    });
 
 
   if(error){
@@ -1372,7 +2027,9 @@ async function addModerator(){
     msg.innerHTML =
       `<span class="error">
         যোগ করা যায়নি:<br>
-        ${escapeHTML(error.message)}
+        ${escapeHTML(
+          error.message
+        )}
       </span>`;
 
     return;
@@ -1386,11 +2043,16 @@ async function addModerator(){
 
 
   document
-    .getElementById("moderatorEmail")
+    .getElementById(
+      "moderatorEmail"
+    )
     .value="";
 
+
   document
-    .getElementById("moderatorName")
+    .getElementById(
+      "moderatorName"
+    )
     .value="";
 
 
@@ -1404,9 +2066,9 @@ async function addModerator(){
 }
 
 
-/* =========================
-   ENABLE / DISABLE
-========================= */
+/* =================================
+   ENABLE / DISABLE MODERATOR
+================================= */
 
 async function toggleModerator(
   id,
@@ -1424,17 +2086,20 @@ async function toggleModerator(
       `Moderator-কে ${action} করতে চান?`
     )
   ){
+
     return;
   }
 
 
-  const {error} =
-    await supabaseClient
-      .from("moderators")
-      .update({
-        active:!currentlyActive
-      })
-      .eq("id",id);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("moderators")
+    .update({
+      active:!currentlyActive
+    })
+    .eq("id",id);
 
 
   if(error){
@@ -1452,9 +2117,9 @@ async function toggleModerator(
 }
 
 
-/* =========================
+/* =================================
    REMOVE MODERATOR
-========================= */
+================================= */
 
 async function removeModerator(id){
 
@@ -1463,15 +2128,18 @@ async function removeModerator(id){
       "এই Moderator-কে স্থায়ীভাবে Remove করতে চান?"
     )
   ){
+
     return;
   }
 
 
-  const {error} =
-    await supabaseClient
-      .from("moderators")
-      .delete()
-      .eq("id",id);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("moderators")
+    .delete()
+    .eq("id",id);
 
 
   if(error){
@@ -1494,18 +2162,25 @@ async function removeModerator(id){
 }
 
 
-/* =========================
-   MODAL
-========================= */
+/* =================================
+   MODERATOR MODAL
+================================= */
 
 function openModeratorModal(){
 
   document
-    .getElementById("moderatorModal")
-    .classList.remove("hidden");
+    .getElementById(
+      "moderatorModal"
+    )
+    .classList.remove(
+      "hidden"
+    );
+
 
   document
-    .getElementById("moderatorEmail")
+    .getElementById(
+      "moderatorEmail"
+    )
     .focus();
 }
 
@@ -1513,11 +2188,18 @@ function openModeratorModal(){
 function closeModeratorModal(){
 
   document
-    .getElementById("moderatorModal")
-    .classList.add("hidden");
+    .getElementById(
+      "moderatorModal"
+    )
+    .classList.add(
+      "hidden"
+    );
+
 
   document
-    .getElementById("moderatorMessage")
+    .getElementById(
+      "moderatorMessage"
+    )
     .innerHTML="";
 }
 
@@ -1525,23 +2207,913 @@ function closeModeratorModal(){
 function closeModalOutside(event){
 
   if(
-    event.target.id==="moderatorModal"
+    event.target.id ===
+    "moderatorModal"
   ){
+
     closeModeratorModal();
   }
 }
 
 
-/* =========================
+/* =================================
+   ADS — LOAD
+================================= */
+
+async function loadAds(){
+
+  const box =
+    document.getElementById(
+      "ads"
+    );
+
+
+  box.innerHTML =
+    `<div class="empty">
+      বিজ্ঞাপন লোড হচ্ছে...
+    </div>`;
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("ads")
+    .select("*")
+    .order(
+      "created_at",
+      {ascending:false}
+    );
+
+
+  if(error){
+
+    box.innerHTML =
+      `<div class="empty error">
+
+        বিজ্ঞাপন লোড হয়নি:<br>
+
+        ${escapeHTML(
+          error.message
+        )}
+
+      </div>`;
+
+    return;
+  }
+
+
+  if(
+    !data ||
+    data.length===0
+  ){
+
+    box.innerHTML =
+      `<div class="empty">
+
+        📢 এখনো কোনো বিজ্ঞাপন যোগ করা হয়নি।
+
+      </div>`;
+
+    return;
+  }
+
+
+  box.innerHTML = "";
+
+
+  data.forEach(ad=>{
+
+    const div =
+      document.createElement(
+        "div"
+      );
+
+
+    div.className =
+      "ad-card";
+
+
+    const image =
+      ad.image_url
+      ?
+      `<img
+        src="${escapeAttr(
+          ad.image_url
+        )}"
+        alt="${escapeAttr(
+          ad.title
+        )}"
+        onerror="
+          this.style.display='none';
+          this.parentElement.innerHTML='🖼️';
+        "
+      >`
+      :
+      `<div class="no-image">
+        🖼️
+      </div>`;
+
+
+    const activeBadge =
+      ad.active
+      ?
+      `<span class="ad-active">
+        🟢 Active
+      </span>`
+      :
+      `<span class="ad-inactive">
+        🔴 Inactive
+      </span>`;
+
+
+    div.innerHTML = `
+
+      <div class="ad-main">
+
+
+        <div class="ad-image">
+          ${image}
+        </div>
+
+
+        <div class="ad-content">
+
+          <h3>
+            ${escapeHTML(
+              ad.title
+            )}
+          </h3>
+
+
+          ${activeBadge}
+
+
+          ${
+            ad.link_url
+            ?
+            `<div class="ad-url">
+              🔗 ${escapeHTML(
+                ad.link_url
+              )}
+            </div>`
+            :
+            ""
+          }
+
+
+          <div class="ad-dates">
+
+            <div class="ad-date">
+
+              <b>▶ শুরু</b><br>
+
+              ${formatAdDate(
+                ad.start_at
+              )}
+
+            </div>
+
+
+            <div class="ad-date">
+
+              <b>⏰ শেষ</b><br>
+
+              ${formatAdDate(
+                ad.expires_at
+              )}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="ad-actions">
+
+
+        <button
+          onclick="editAd(
+            '${ad.id}'
+          )">
+
+          ✏️ Edit
+
+        </button>
+
+
+        <button
+          class="${
+            ad.active
+            ? "btn-warning"
+            : ""
+          }"
+          onclick="toggleAd(
+            '${ad.id}',
+            ${ad.active}
+          )">
+
+          ${
+            ad.active
+            ? "⏸️ বন্ধ করুন"
+            : "▶️ চালু করুন"
+          }
+
+        </button>
+
+
+        <button
+          class="btn-danger"
+          onclick="deleteAd(
+            '${ad.id}'
+          )">
+
+          🗑️ Delete
+
+        </button>
+
+      </div>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+}
+
+
+/* =================================
+   ADS — OPEN ADD MODAL
+================================= */
+
+function openAdModal(){
+
+  editingAdId = null;
+
+
+  document
+    .getElementById(
+      "adModalTitle"
+    )
+    .innerText =
+      "＋ নতুন বিজ্ঞাপন";
+
+
+  document
+    .getElementById(
+      "adTitle"
+    )
+    .value="";
+
+
+  document
+    .getElementById(
+      "adImageUrl"
+    )
+    .value="";
+
+
+  document
+    .getElementById(
+      "adLinkUrl"
+    )
+    .value="";
+
+
+  document
+    .getElementById(
+      "adActive"
+    )
+    .checked=true;
+
+
+  document
+    .getElementById(
+      "adMessage"
+    )
+    .innerHTML="";
+
+
+  const now =
+    new Date();
+
+
+  const localNow =
+    new Date(
+      now.getTime() -
+      now.getTimezoneOffset()*60000
+    )
+    .toISOString()
+    .slice(0,16);
+
+
+  document
+    .getElementById(
+      "adStartAt"
+    )
+    .value =
+      localNow;
+
+
+  document
+    .getElementById(
+      "adExpiresAt"
+    )
+    .value="";
+
+
+  document
+    .getElementById(
+      "adModal"
+    )
+    .classList.remove(
+      "hidden"
+    );
+}
+
+
+/* =================================
+   ADS — CLOSE MODAL
+================================= */
+
+function closeAdModal(){
+
+  document
+    .getElementById(
+      "adModal"
+    )
+    .classList.add(
+      "hidden"
+    );
+}
+
+
+function closeAdModalOutside(event){
+
+  if(
+    event.target.id ===
+    "adModal"
+  ){
+
+    closeAdModal();
+  }
+}
+
+
+/* =================================
+   ADS — SAVE
+================================= */
+
+async function saveAd(){
+
+  const title =
+    document
+      .getElementById(
+        "adTitle"
+      )
+      .value
+      .trim();
+
+
+  const image_url =
+    document
+      .getElementById(
+        "adImageUrl"
+      )
+      .value
+      .trim();
+
+
+  const link_url =
+    document
+      .getElementById(
+        "adLinkUrl"
+      )
+      .value
+      .trim();
+
+
+  const start_at =
+    document
+      .getElementById(
+        "adStartAt"
+      )
+      .value;
+
+
+  const expires_at =
+    document
+      .getElementById(
+        "adExpiresAt"
+      )
+      .value;
+
+
+  const active =
+    document
+      .getElementById(
+        "adActive"
+      )
+      .checked;
+
+
+  const msg =
+    document
+      .getElementById(
+        "adMessage"
+      );
+
+
+  const saveButton =
+    document
+      .getElementById(
+        "adSaveButton"
+      );
+
+
+  if(!title){
+
+    msg.innerHTML =
+      `<span class="error">
+        বিজ্ঞাপনের শিরোনাম দিন।
+      </span>`;
+
+    return;
+  }
+
+
+  if(!start_at){
+
+    msg.innerHTML =
+      `<span class="error">
+        বিজ্ঞাপনের শুরু হওয়ার সময় দিন।
+      </span>`;
+
+    return;
+  }
+
+
+  if(!expires_at){
+
+    msg.innerHTML =
+      `<span class="error">
+        বিজ্ঞাপনের শেষ হওয়ার সময় দিন।
+      </span>`;
+
+    return;
+  }
+
+
+  if(
+    new Date(expires_at)
+    <=
+    new Date(start_at)
+  ){
+
+    msg.innerHTML =
+      `<span class="error">
+        শেষ হওয়ার সময় অবশ্যই শুরুর সময়ের পরে হতে হবে।
+      </span>`;
+
+    return;
+  }
+
+
+  saveButton.disabled =
+    true;
+
+  saveButton.innerText =
+    "সংরক্ষণ হচ্ছে...";
+
+
+  const adData = {
+
+    title:title,
+
+    image_url:
+      image_url || null,
+
+    link_url:
+      link_url || null,
+
+    start_at:
+      new Date(
+        start_at
+      ).toISOString(),
+
+    expires_at:
+      new Date(
+        expires_at
+      ).toISOString(),
+
+    active:active
+
+  };
+
+
+  try{
+
+    /* UPDATE */
+
+    if(editingAdId){
+
+      const {
+        error
+      } =
+      await supabaseClient
+        .from("ads")
+        .update(adData)
+        .eq(
+          "id",
+          editingAdId
+        );
+
+
+      if(error){
+        throw error;
+      }
+
+
+      alert(
+        "✅ বিজ্ঞাপন Update হয়েছে।"
+      );
+
+    }
+
+
+    /* INSERT */
+
+    else{
+
+      const {
+        error
+      } =
+      await supabaseClient
+        .from("ads")
+        .insert(
+          [adData]
+        );
+
+
+      if(error){
+        throw error;
+      }
+
+
+      alert(
+        "✅ নতুন বিজ্ঞাপন যোগ হয়েছে।"
+      );
+    }
+
+
+    closeAdModal();
+
+    loadAds();
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Ad save error:",
+      error
+    );
+
+
+    msg.innerHTML =
+      `<span class="error">
+
+        ❌ সংরক্ষণ করা যায়নি:<br>
+
+        ${escapeHTML(
+          error.message
+        )}
+
+      </span>`;
+
+  }
+
+  finally{
+
+    saveButton.disabled =
+      false;
+
+    saveButton.innerText =
+      "💾 সংরক্ষণ";
+  }
+}
+
+
+/* =================================
+   ADS — EDIT
+================================= */
+
+async function editAd(id){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from("ads")
+      .select("*")
+      .eq(
+        "id",
+        id
+      )
+      .single();
+
+
+    if(error){
+      throw error;
+    }
+
+
+    editingAdId =
+      id;
+
+
+    document
+      .getElementById(
+        "adModalTitle"
+      )
+      .innerText =
+        "✏️ বিজ্ঞাপন Edit করুন";
+
+
+    document
+      .getElementById(
+        "adId"
+      )
+      .value =
+        data.id;
+
+
+    document
+      .getElementById(
+        "adTitle"
+      )
+      .value =
+        data.title || "";
+
+
+    document
+      .getElementById(
+        "adImageUrl"
+      )
+      .value =
+        data.image_url || "";
+
+
+    document
+      .getElementById(
+        "adLinkUrl"
+      )
+      .value =
+        data.link_url || "";
+
+
+    document
+      .getElementById(
+        "adStartAt"
+      )
+      .value =
+        toDateTimeLocal(
+          data.start_at
+        );
+
+
+    document
+      .getElementById(
+        "adExpiresAt"
+      )
+      .value =
+        toDateTimeLocal(
+          data.expires_at
+        );
+
+
+    document
+      .getElementById(
+        "adActive"
+      )
+      .checked =
+        data.active === true;
+
+
+    document
+      .getElementById(
+        "adMessage"
+      )
+      .innerHTML="";
+
+
+    document
+      .getElementById(
+        "adModal"
+      )
+      .classList.remove(
+        "hidden"
+      );
+
+  }
+
+  catch(error){
+
+    alert(
+      "❌ বিজ্ঞাপনের তথ্য পাওয়া যায়নি:\n"+
+      error.message
+    );
+
+  }
+}
+
+
+/* =================================
+   ADS — TOGGLE
+================================= */
+
+async function toggleAd(
+  id,
+  currentStatus
+){
+
+  const action =
+    currentStatus
+    ? "বন্ধ"
+    : "চালু";
+
+
+  if(
+    !confirm(
+      `আপনি কি বিজ্ঞাপনটি ${action} করতে চান?`
+    )
+  ){
+
+    return;
+  }
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("ads")
+    .update({
+      active:
+        !currentStatus
+    })
+    .eq(
+      "id",
+      id
+    );
+
+
+  if(error){
+
+    alert(
+      "❌ Status পরিবর্তন করা যায়নি:\n"+
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    currentStatus
+    ?
+    "⏸️ বিজ্ঞাপন বন্ধ করা হয়েছে।"
+    :
+    "▶️ বিজ্ঞাপন চালু করা হয়েছে।"
+  );
+
+
+  loadAds();
+}
+
+
+/* =================================
+   ADS — DELETE
+================================= */
+
+async function deleteAd(id){
+
+  if(
+    !confirm(
+      "⚠️ এই বিজ্ঞাপনটি স্থায়ীভাবে Delete করতে চান?"
+    )
+  ){
+
+    return;
+  }
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("ads")
+    .delete()
+    .eq(
+      "id",
+      id
+    );
+
+
+  if(error){
+
+    alert(
+      "❌ বিজ্ঞাপন Delete করা যায়নি:\n"+
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "🗑️ বিজ্ঞাপন Delete হয়েছে।"
+  );
+
+
+  loadAds();
+}
+
+
+/* =================================
+   ADS — DATE FORMAT
+================================= */
+
+function toDateTimeLocal(
+  dateString
+){
+
+  if(!dateString){
+    return "";
+  }
+
+
+  const date =
+    new Date(
+      dateString
+    );
+
+
+  const offset =
+    date.getTimezoneOffset()
+    * 60000;
+
+
+  return new Date(
+    date.getTime() -
+    offset
+  )
+  .toISOString()
+  .slice(0,16);
+}
+
+
+function formatAdDate(
+  dateString
+){
+
+  if(!dateString){
+    return "-";
+  }
+
+
+  const date =
+    new Date(
+      dateString
+    );
+
+
+  return date.toLocaleString(
+    "bn-BD",
+    {
+      year:"numeric",
+      month:"short",
+      day:"numeric",
+      hour:"numeric",
+      minute:"2-digit"
+    }
+  );
+}
+
+
+/* =================================
    PUBLIC SITE
-========================= */
+================================= */
 
 function openPublicSite(){
-
-  /*
-    তোমার Public HTML-এর filename
-    যদি index.html হয় তাহলে ঠিক আছে।
-  */
 
   window.open(
     "index.html",
@@ -1550,42 +3122,64 @@ function openPublicSite(){
 }
 
 
-/* =========================
+/* =================================
    LOGOUT
-========================= */
+================================= */
 
 async function logout(){
 
-  await supabaseClient.auth.signOut();
+  await supabaseClient
+    .auth
+    .signOut();
+
 
   location.reload();
 }
 
 
-/* =========================
+/* =================================
    SECURITY HELPERS
-========================= */
+================================= */
 
 function escapeHTML(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
 }
 
 
 function escapeAttr(value){
 
-  return escapeHTML(value);
+  return escapeHTML(
+    value
+  );
 }
 
 
-/* =========================
+/* =================================
    START
-========================= */
+================================= */
 
 checkLogin();
 
