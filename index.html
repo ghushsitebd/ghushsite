@@ -775,9 +775,10 @@ textarea{
       </button>
 
       <button
+        id="topAppDownloadBtn"
         class="report-btn"
-        onclick="openReport()">
-        অভিযোগ করুন
+        onclick="installApp()">
+        📱 App Download
       </button>
 
     </div>
@@ -3299,11 +3300,19 @@ function setInstallButtonsVisible(visible){
   const topInstallBtn =
     document.getElementById("installBtn");
 
+  const topAppDownloadBtn =
+    document.getElementById("topAppDownloadBtn");
+
   const footerInstallBtn =
     document.getElementById("footerInstallBtn");
 
   if(topInstallBtn){
     topInstallBtn.style.display =
+      visible ? "block" : "none";
+  }
+
+  if(topAppDownloadBtn){
+    topAppDownloadBtn.style.display =
       visible ? "block" : "none";
   }
 
