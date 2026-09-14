@@ -1,0 +1,3357 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>ঘুষ সাইট — দুর্নীতির বিরুদ্ধে জনতার কণ্ঠ</title>
+
+<meta name="description"
+content="ঘুষ ও দুর্নীতির বিরুদ্ধে জনসচেতনতার জন্য রিপোর্ট করার প্ল্যাটফর্ম।">
+
+<meta name="theme-color" content="#087f3e">
+
+<link rel="manifest" href="manifest.json">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,"Noto Sans Bengali","Noto Sans",sans-serif;
+  background:#f5f8f6;
+  color:#17231c;
+  line-height:1.55;
+}
+
+button,input,select,textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#087f3e;
+  color:#fff;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+
+.nav{
+  max-width:900px;
+  margin:auto;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:20px;
+  font-weight:900;
+}
+
+.logo-icon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  background:#fff;
+  color:#087f3e;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
+
+.nav-actions{
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.report-btn,
+.install-btn{
+  border:0;
+  background:#fff;
+  color:#087f3e;
+  padding:9px 13px;
+  border-radius:9px;
+  font-weight:900;
+}
+
+.install-btn{
+  display:none;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px 13px 35px;
+}
+
+.top-card{
+  background:linear-gradient(135deg,#087f3e,#0ba653);
+  color:#fff;
+  border-radius:18px;
+  padding:25px 18px;
+  text-align:center;
+  box-shadow:0 7px 25px rgba(0,0,0,.08);
+}
+
+.top-card .icon{
+  font-size:28px;
+  margin-bottom:5px;
+}
+
+.top-card h1{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.top-card p{
+  font-size:14px;
+  opacity:.94;
+  max-width:600px;
+  margin:auto;
+}
+
+.big-report{
+  margin-top:17px;
+  border:0;
+  background:#fff;
+  color:#087f3e;
+  padding:12px 21px;
+  border-radius:11px;
+  font-size:15px;
+  font-weight:900;
+}
+
+/* ADS */
+
+.ads-section{
+  margin-top:18px;
+}
+
+.ads-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:0 2px 10px;
+}
+
+.ads-title h2{
+  font-size:20px;
+}
+
+.ad-card{
+  background:#fff;
+  border-radius:15px;
+  overflow:hidden;
+  margin-bottom:12px;
+  box-shadow:0 3px 14px rgba(0,0,0,.055);
+}
+
+.ad-image{
+  width:100%;
+  max-height:300px;
+  object-fit:cover;
+  display:block;
+}
+
+.ad-content{
+  padding:14px;
+}
+
+.ad-badge{
+  display:inline-block;
+  background:#e8f7ee;
+  color:#087f3e;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:900;
+  margin-bottom:7px;
+}
+
+.ad-content h3{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.ad-content p{
+  color:#59655e;
+  font-size:13px;
+}
+
+.ad-link{
+  display:inline-block;
+  margin-top:10px;
+  background:#087f3e;
+  color:#fff;
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.no-ads{
+  display:none;
+}
+
+/* SEARCH */
+
+.search-area{
+  margin-top:18px;
+  background:#fff;
+  padding:11px;
+  border-radius:14px;
+  box-shadow:0 3px 13px rgba(0,0,0,.05);
+}
+
+.search{
+  width:100%;
+  border:1px solid #d6e0da;
+  border-radius:10px;
+  padding:12px 13px;
+  outline:none;
+  font-size:15px;
+}
+
+.search:focus{
+  border-color:#087f3e;
+}
+
+.list-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:23px 2px 11px;
+}
+
+.list-head h2{
+  font-size:20px;
+}
+
+.refresh{
+  border:0;
+  background:#e8f7ee;
+  color:#087f3e;
+  padding:7px 10px;
+  border-radius:8px;
+  font-weight:800;
+}
+
+.report{
+  background:#fff;
+  border-radius:15px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 3px 14px rgba(0,0,0,.055);
+}
+
+.report-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.department{
+  color:#087f3e;
+  background:#e8f7ee;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.unverified{
+  color:#806000;
+  background:#fff5d9;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.report h3{
+  font-size:18px;
+  margin-bottom:9px;
+}
+
+.info{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  color:#5d6962;
+  font-size:13px;
+}
+
+.info span{
+  background:#f5f7f6;
+  padding:5px 8px;
+  border-radius:7px;
+}
+
+.details{
+  border-top:1px solid #edf1ee;
+  margin-top:12px;
+  padding-top:11px;
+  font-size:14px;
+  line-height:1.7;
+  white-space:pre-wrap;
+}
+
+.media{
+  width:100%;
+  max-height:350px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:12px;
+  display:block;
+}
+
+.loading,
+.empty{
+  background:#fff;
+  padding:30px 15px;
+  text-align:center;
+  border-radius:14px;
+  color:#69746e;
+}
+
+.notice{
+  margin-top:18px;
+  background:#fff8e6;
+  border:1px solid #f0dfa8;
+  color:#665313;
+  padding:13px;
+  border-radius:12px;
+  font-size:12px;
+  line-height:1.65;
+}
+
+.footer{
+  background:#102018;
+  color:#bfcfc5;
+  text-align:center;
+  padding:22px 14px;
+  font-size:12px;
+}
+
+.footer strong{
+  color:#fff;
+  font-size:16px;
+}
+
+
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:999;
+  background:rgba(0,0,0,.62);
+  padding:8px;
+  overflow-y:auto;
+}
+
+.modal.show{
+  display:block;
+}
+
+.modal-box{
+  max-width:620px;
+  margin:8px auto;
+  background:#fff;
+  border-radius:17px;
+  overflow:hidden;
+  box-shadow:0 15px 45px rgba(0,0,0,.22);
+}
+
+.modal-head{
+  background:#087f3e;
+  color:#fff;
+  padding:15px 17px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+.modal-head h2{
+  font-size:19px;
+}
+
+.close{
+  border:0;
+  background:transparent;
+  color:#fff;
+  font-size:28px;
+}
+
+.form{
+  padding:17px;
+}
+
+.field{
+  margin-bottom:13px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  border:1px solid #d5dfd9;
+  border-radius:9px;
+  padding:11px;
+  outline:none;
+  font-size:14px;
+  background:#fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#087f3e;
+  box-shadow:0 0 0 2px rgba(8,127,62,.08);
+}
+
+textarea{
+  min-height:115px;
+  resize:vertical;
+}
+
+.location-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.select-title{
+  font-size:12px;
+  color:#64716a;
+  margin-bottom:7px;
+}
+
+.file-info{
+  margin-top:5px;
+  color:#707a74;
+  font-size:11px;
+}
+
+.check{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  background:#f4f8f5;
+  padding:10px;
+  border-radius:9px;
+  font-size:12px;
+  line-height:1.55;
+  margin-bottom:13px;
+}
+
+.check input{
+  width:auto;
+  margin-top:3px;
+}
+
+.submit{
+  width:100%;
+  border:0;
+  background:#087f3e;
+  color:#fff;
+  padding:13px;
+  border-radius:10px;
+  font-weight:900;
+  font-size:15px;
+}
+
+.submit:disabled{
+  opacity:.6;
+}
+
+.message{
+  display:none;
+  padding:11px;
+  border-radius:9px;
+  margin-bottom:12px;
+  font-size:13px;
+}
+
+.success{
+  background:#e9f8ef;
+  color:#087f3e;
+}
+
+.error{
+  background:#ffecec;
+  color:#b00020;
+}
+
+/* SUCCESS */
+
+.success-screen{
+  display:none;
+  padding:35px 20px;
+  text-align:center;
+}
+
+.success-icon{
+  width:68px;
+  height:68px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  background:#e9f8ef;
+  color:#087f3e;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:35px;
+}
+
+.success-screen h2{
+  font-size:22px;
+  margin-bottom:8px;
+  color:#087f3e;
+}
+
+.success-screen p{
+  font-size:14px;
+  color:#5e6963;
+  line-height:1.7;
+}
+
+.ok-btn{
+  margin-top:20px;
+  border:0;
+  background:#087f3e;
+  color:#fff;
+  padding:11px 28px;
+  border-radius:9px;
+  font-weight:900;
+}
+
+/* ADMIN */
+
+.admin-login-btn{
+  border:0;
+  background:#102018;
+  color:#fff;
+  padding:8px 11px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.admin-panel{
+  display:none;
+}
+
+.admin-panel.show{
+  display:block;
+}
+
+.admin-box{
+  max-width:620px;
+  margin:20px auto;
+  background:#fff;
+  border-radius:15px;
+  padding:17px;
+  box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.admin-box h2{
+  color:#087f3e;
+  margin-bottom:12px;
+}
+
+.admin-actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.admin-action{
+  border:0;
+  padding:9px 12px;
+  border-radius:8px;
+  font-weight:900;
+}
+
+.admin-primary{
+  background:#087f3e;
+  color:#fff;
+}
+
+.admin-danger{
+  background:#ffecec;
+  color:#b00020;
+}
+
+.ad-admin-item{
+  border:1px solid #e0e7e2;
+  border-radius:10px;
+  padding:11px;
+  margin-top:10px;
+}
+
+.ad-admin-item strong{
+  color:#087f3e;
+}
+
+.ad-admin-item small{
+  color:#66736b;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .container{
+    padding:12px 10px 25px;
+  }
+
+  .top-card{
+    padding:21px 14px;
+    border-radius:15px;
+  }
+
+  .top-card h1{
+    font-size:24px;
+  }
+
+  .top-card p{
+    font-size:13px;
+  }
+
+  .big-report{
+    width:100%;
+  }
+
+  .nav{
+    padding:8px 10px;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+  .nav-actions{
+    gap:4px;
+  }
+
+  .report-btn,
+  .install-btn{
+    padding:8px 9px;
+    font-size:11px;
+  }
+
+
+  .list-head h2{
+    font-size:18px;
+  }
+
+  .location-grid{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+
+  .report{
+    padding:14px;
+  }
+
+  .report h3{
+    font-size:17px;
+  }
+
+  .info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .modal{
+    padding:5px;
+  }
+
+  .modal-box{
+    margin:3px auto;
+    border-radius:14px;
+  }
+
+  .form{
+    padding:14px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+  <div class="nav">
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        ঘু
+      </div>
+
+      <span>
+        ঘুষ সাইট
+      </span>
+
+    </div>
+
+    <div class="nav-actions">
+
+      <button
+        id="installBtn"
+        class="install-btn"
+        type="button"
+        onclick="installApp()">
+        📱 অ্যাপ ডাউনলোড
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+<section class="top-card">
+
+  <div class="icon">
+    ⚖️
+  </div>
+
+  <h1>
+    ঘুষের বিরুদ্ধে আপনার কণ্ঠ
+  </h1>
+
+  <p>
+    ঘুষ চাওয়া হলে দায়িত্বশীলভাবে জানান।
+    পরিচয় প্রকাশ না করেই রিপোর্ট করতে পারবেন।
+  </p>
+
+  <button
+    class="big-report"
+    onclick="openReport()">
+    ＋ রিপোর্ট করুন
+  </button>
+
+</section>
+
+
+<!-- ADVERTISEMENT -->
+
+<section class="ads-section">
+
+  <div class="ads-title">
+    <h2>
+      📢 বিজ্ঞাপন
+    </h2>
+  </div>
+
+  <div id="adsContainer">
+
+    <div class="loading">
+      বিজ্ঞাপন লোড হচ্ছে...
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="search-area">
+
+  <input
+    id="searchInput"
+    class="search"
+    type="search"
+    placeholder="রিপোর্ট খুঁজুন — প্রতিষ্ঠান, সেবা বা এলাকা..."
+    oninput="filterReports()">
+
+</div>
+
+
+<div class="list-head">
+
+  <h2>
+    প্রকাশিত রিপোর্ট
+  </h2>
+
+  <button
+    class="refresh"
+    onclick="loadReports()">
+    ↻
+  </button>
+
+</div>
+
+
+<div id="reportsContainer">
+
+  <div class="loading">
+    রিপোর্ট লোড হচ্ছে...
+  </div>
+
+</div>
+
+
+<div class="notice">
+
+  <strong>
+    ⚠️ গুরুত্বপূর্ণ
+  </strong>
+
+  <br>
+
+  প্রকাশিত রিপোর্ট ব্যবহারকারীর দেওয়া তথ্যের ভিত্তিতে।
+  রিপোর্টের তথ্য স্বাধীনভাবে সত্যতা যাচাই করা হয়েছে—
+  এমন দাবি করা হচ্ছে না। কারও নাম, মোবাইল নম্বর,
+  NID, ব্যক্তিগত ঠিকানা বা সংবেদনশীল তথ্য লিখবেন না।
+
+</div>
+
+</main>
+
+
+<footer class="footer">
+
+  <strong>
+    ঘুষ সাইট
+  </strong>
+
+  <br>
+
+  দুর্নীতি ও ঘুষের বিরুদ্ধে জনসচেতনতার একটি উদ্যোগ।
+
+  <br><br>
+
+  © 2026 ঘুষ সাইট
+
+  <br>
+
+
+</footer>
+
+
+<!-- REPORT MODAL -->
+
+<div
+  id="reportModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        অভিযোগ / রিপোর্ট করুন
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeReport()">
+        ×
+      </button>
+
+    </div>
+
+
+    <form
+      id="reportForm"
+      class="form"
+      onsubmit="submitReport(event)">
+
+      <div
+        id="formMessage"
+        class="message">
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          কোন ধরনের সরকারি প্রতিষ্ঠান? *
+        </label>
+
+        <select
+          id="officeCategory"
+          required
+          onchange="updateDepartments()">
+
+          <option value="">
+            নির্বাচন করুন
+          </option>
+
+          <option value="মন্ত্রণালয় ও সরকারি দপ্তর">
+            🏛️ মন্ত্রণালয় ও সরকারি দপ্তর
+          </option>
+
+          <option value="অধিদপ্তর ও অধীনস্থ দপ্তর">
+            🏢 অধিদপ্তর ও অধীনস্থ দপ্তর
+          </option>
+
+          <option value="ভূমি সেবা">
+            🌾 ভূমি সেবা
+          </option>
+
+          <option value="আদালত ও বিচার বিভাগ">
+            ⚖️ আদালত ও বিচার বিভাগ
+          </option>
+
+          <option value="পুলিশ ও আইনশৃঙ্খলা">
+            👮 পুলিশ ও আইনশৃঙ্খলা
+          </option>
+
+          <option value="স্বাস্থ্যসেবা">
+            🏥 স্বাস্থ্যসেবা
+          </option>
+
+          <option value="শিক্ষা">
+            🎓 শিক্ষা
+          </option>
+
+          <option value="পাসপোর্ট ও ইমিগ্রেশন">
+            🛂 পাসপোর্ট ও ইমিগ্রেশন
+          </option>
+
+          <option value="BRTA ও পরিবহন">
+            🚗 BRTA ও পরিবহন
+          </option>
+
+          <option value="কর ও রাজস্ব">
+            🧾 কর ও রাজস্ব
+          </option>
+
+          <option value="স্থানীয় সরকার">
+            🏘️ স্থানীয় সরকার
+          </option>
+
+          <option value="বিদ্যুৎ পানি গ্যাস">
+            ⚡ বিদ্যুৎ / পানি / গ্যাস
+          </option>
+
+          <option value="সরকারি ব্যাংক ও আর্থিক প্রতিষ্ঠান">
+            🏦 সরকারি ব্যাংক / আর্থিক প্রতিষ্ঠান
+          </option>
+
+          <option value="অন্যান্য সরকারি সেবা">
+            📋 অন্যান্য সরকারি সেবা
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          দপ্তর / অফিস *
+        </label>
+
+        <select
+          id="department"
+          required
+          disabled>
+
+          <option value="">
+            আগে প্রতিষ্ঠানের ধরন নির্বাচন করুন
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          কোন সেবা? *
+        </label>
+
+        <select
+          id="service"
+          required>
+
+          <option value="">
+            সেবা নির্বাচন করুন
+          </option>
+
+          <option>নামজারি</option>
+          <option>খতিয়ান / পর্চা</option>
+          <option>জমির রেকর্ড</option>
+          <option>ভূমি উন্নয়ন কর</option>
+          <option>জমি সংক্রান্ত অন্যান্য সেবা</option>
+
+          <option>পাসপোর্ট আবেদন</option>
+          <option>পাসপোর্ট সংশোধন</option>
+          <option>ইমিগ্রেশন সেবা</option>
+
+          <option>মামলা সংক্রান্ত সেবা</option>
+          <option>জামিন সংক্রান্ত সেবা</option>
+          <option>নথি / কাগজপত্র</option>
+
+          <option>পুলিশ ক্লিয়ারেন্স</option>
+          <option>জিডি</option>
+
+          <option>চিকিৎসা / হাসপাতাল সেবা</option>
+          <option>টেস্ট / পরীক্ষা</option>
+          <option>ওষুধ / চিকিৎসা সংক্রান্ত সেবা</option>
+
+          <option>শিক্ষা সংক্রান্ত সেবা</option>
+          <option>সনদ / সার্টিফিকেট</option>
+          <option>ভর্তি / প্রশাসনিক সেবা</option>
+
+          <option>ড্রাইভিং লাইসেন্স</option>
+          <option>গাড়ির রেজিস্ট্রেশন</option>
+          <option>ফিটনেস</option>
+
+          <option>কর / আয়কর</option>
+          <option>ভ্যাট</option>
+          <option>কাস্টমস</option>
+
+          <option>জন্ম নিবন্ধন</option>
+          <option>মৃত্যু নিবন্ধন</option>
+          <option>নাগরিক সেবা</option>
+
+          <option>বিদ্যুৎ সংযোগ</option>
+          <option>পানি সংযোগ</option>
+          <option>গ্যাস সংযোগ</option>
+
+          <option>অন্যান্য</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ঘটনার এলাকা *
+        </label>
+
+        <div class="location-grid">
+
+          <div class="field">
+
+            <div class="select-title">
+              বিভাগ
+            </div>
+
+            <select
+              id="division"
+              onchange="loadDistricts()"
+              required>
+
+              <option value="">
+                বিভাগ নির্বাচন
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <div class="select-title">
+              জেলা
+            </div>
+
+            <select
+              id="district"
+              onchange="loadUpazilas()"
+              required
+              disabled>
+
+              <option value="">
+                আগে বিভাগ নির্বাচন করুন
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <div class="select-title">
+              উপজেলা / থানা
+            </div>
+
+            <select
+              id="upazila"
+              onchange="loadUnions()"
+              required
+              disabled>
+
+              <option value="">
+                আগে জেলা নির্বাচন করুন
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <div class="select-title">
+              ইউনিয়ন / ওয়ার্ড
+            </div>
+
+            <select
+              id="union"
+              required
+              disabled>
+
+              <option value="">
+                আগে উপজেলা নির্বাচন করুন
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          দাবিকৃত অর্থ — ঐচ্ছিক
+        </label>
+
+        <input
+          id="amount"
+          type="number"
+          min="0"
+          max="100000000"
+          placeholder="যেমন: 5000">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          কী হয়েছিল? *
+        </label>
+
+        <select
+          id="outcome"
+          required>
+
+          <option value="">
+            নির্বাচন করুন
+          </option>
+
+          <option value="ঘুষ দাবি করা হয়েছিল">
+            ঘুষ দাবি করা হয়েছিল
+          </option>
+
+          <option value="ঘুষ দেওয়া হয়েছে">
+            ঘুষ দেওয়া হয়েছে
+          </option>
+
+          <option value="ঘুষ দিতে অস্বীকার করেছি">
+            ঘুষ দিতে অস্বীকার করেছি
+          </option>
+
+          <option value="সেবা আটকে আছে">
+            সেবা আটকে আছে
+          </option>
+
+          <option value="অন্যান্য">
+            অন্যান্য
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ঘটনার সংক্ষিপ্ত বিবরণ *
+        </label>
+
+        <textarea
+          id="details"
+          required
+          maxlength="3000"
+          placeholder="কী ঘটেছিল সংক্ষেপে লিখুন...">
+        </textarea>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ছবি / ভিডিও — ঐচ্ছিক
+        </label>
+
+        <input
+          id="media"
+          type="file"
+          accept="image/*,video/*">
+
+        <div class="file-info">
+          সর্বোচ্চ <strong>50MB</strong>।
+          ব্যক্তিগত বা সংবেদনশীল তথ্যযুক্ত
+          ছবি/ভিডিও আপলোড করবেন না।
+        </div>
+
+      </div>
+
+
+      <label class="check">
+
+        <input
+          id="privacyCheck"
+          type="checkbox"
+          required>
+
+        <span>
+          আমি নিশ্চিত করছি যে রিপোর্টে কোনো ব্যক্তির
+          নাম, মোবাইল নম্বর, NID, ব্যক্তিগত ঠিকানা বা
+          সংবেদনশীল তথ্য দিইনি।
+        </span>
+
+      </label>
+
+
+      <button
+        id="submitBtn"
+        class="submit"
+        type="submit">
+
+        রিপোর্ট জমা দিন
+
+      </button>
+
+    </form>
+
+
+    <div
+      id="successScreen"
+      class="success-screen">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2>
+        অভিযোগ গ্রহণ করা হয়েছে
+      </h2>
+
+      <p>
+        আপনার রিপোর্টটি সফলভাবে জমা হয়েছে।<br>
+        মডারেশনের পর উপযুক্ত হলে এটি প্রকাশ করা হবে।<br>
+        আপনার পরিচয় প্রকাশ করা হবে না।
+      </p>
+
+      <button
+        class="ok-btn"
+        onclick="finishSuccess()">
+
+        ঠিক আছে
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ADMIN LOGIN -->
+
+<div
+  id="adminLoginModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        Admin Login
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeAdminLogin()">
+        ×
+      </button>
+
+    </div>
+
+    <form
+      class="form"
+      onsubmit="adminLogin(event)">
+
+      <div
+        id="adminMessage"
+        class="message">
+      </div>
+
+      <div class="field">
+
+        <label>
+          Admin Email
+        </label>
+
+        <input
+          id="adminEmail"
+          type="email"
+          required
+          autocomplete="username">
+
+      </div>
+
+      <div class="field">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="adminPassword"
+          type="password"
+          required
+          autocomplete="current-password">
+
+      </div>
+
+      <button
+        class="submit"
+        type="submit">
+
+        Login
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div
+  id="adminPanelModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <h2>
+        📢 বিজ্ঞাপন পরিচালনা
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeAdminPanel()">
+        ×
+      </button>
+
+    </div>
+
+    <div class="form">
+
+      <div
+        id="adminPanelMessage"
+        class="message">
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          বিজ্ঞাপনের শিরোনাম *
+        </label>
+
+        <input
+          id="adTitle"
+          type="text"
+          maxlength="150"
+          required>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          বিবরণ
+        </label>
+
+        <textarea
+          id="adDescription"
+          maxlength="1000"
+          placeholder="বিজ্ঞাপনের সংক্ষিপ্ত বিবরণ">
+        </textarea>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ছবির URL
+        </label>
+
+        <input
+          id="adImage"
+          type="url"
+          placeholder="https://...">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          ক্লিক করলে যে লিংকে যাবে
+        </label>
+
+        <input
+          id="adLink"
+          type="url"
+          placeholder="https://...">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          শেষ হওয়ার তারিখ — ঐচ্ছিক
+        </label>
+
+        <input
+          id="adExpires"
+          type="datetime-local">
+
+      </div>
+
+
+      <label class="check">
+
+        <input
+          id="adActive"
+          type="checkbox"
+          checked>
+
+        <span>
+          বিজ্ঞাপনটি এখনই সক্রিয় থাকবে
+        </span>
+
+      </label>
+
+
+      <button
+        id="saveAdBtn"
+        class="submit"
+        onclick="saveAd()">
+
+        বিজ্ঞাপন যোগ করুন
+
+      </button>
+
+
+      <div class="admin-actions">
+
+        <button
+          class="admin-action admin-primary"
+          onclick="loadAdminAds()">
+
+          ↻ বিজ্ঞাপন দেখুন
+
+        </button>
+
+        <button
+          class="admin-action admin-danger"
+          onclick="adminLogout()">
+
+          Logout
+
+        </button>
+
+      </div>
+
+
+      <div id="adminAdsList"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+"https://klreqkbqyyiwmohlmgkh.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_xlqcHTsDaMpBq4n54iMs4A_S7gKpiZc";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const mediaBucket = "media";
+
+const MAX_FILE_SIZE =
+50 * 1024 * 1024;
+
+let allReports = [];
+
+let deferredInstallPrompt = null;
+
+
+/* =========================================
+   BANGLADESH LOCATION DATA
+========================================= */
+
+const locations = {
+
+"ঢাকা":{
+"ঢাকা":["ধামরাই","দোহার","কেরানীগঞ্জ","নবাবগঞ্জ","সাভার"],
+"ফরিদপুর":["ফরিদপুর সদর","বোয়ালমারী","আলফাডাঙ্গা","মধুখালী","নগরকান্দা","ভাঙ্গা","সদরপুর","চরভদ্রাসন","সালথা"],
+"গাজীপুর":["গাজীপুর সদর","কালিয়াকৈর","কালীগঞ্জ","কাপাসিয়া","শ্রীপুর"],
+"গোপালগঞ্জ":["গোপালগঞ্জ সদর","কাশিয়ানী","কোটালীপাড়া","মুকসুদপুর","টুঙ্গিপাড়া"],
+"কিশোরগঞ্জ":["কিশোরগঞ্জ সদর","করিমগঞ্জ","তাড়াইল","ইটনা","মিঠামইন","নিকলী","অষ্টগ্রাম","পাকুন্দিয়া","কটিয়াদী","কুলিয়ারচর","ভৈরব","বাজিতপুর","হোসেনপুর"],
+"মাদারীপুর":["মাদারীপুর সদর","কালকিনি","রাজৈর","শিবচর","ডাসার"],
+"মানিকগঞ্জ":["মানিকগঞ্জ সদর","সাটুরিয়া","শিবালয়","ঘিওর","দৌলতপুর","হরিরামপুর","সিংগাইর"],
+"মুন্সিগঞ্জ":["মুন্সিগঞ্জ সদর","শ্রীনগর","সিরাজদিখান","লৌহজং","গজারিয়া","টঙ্গীবাড়ী"],
+"নারায়ণগঞ্জ":["নারায়ণগঞ্জ সদর","বন্দর","আড়াইহাজার","রূপগঞ্জ","সোনারগাঁ"],
+"নরসিংদী":["নরসিংদী সদর","বেলাব","মনোহরদী","পলাশ","রায়পুরা","শিবপুর"],
+"রাজবাড়ী":["রাজবাড়ী সদর","গোয়ালন্দ","পাংশা","বালিয়াকান্দি","কালুখালী"],
+"শরীয়তপুর":["শরীয়তপুর সদর","নড়িয়া","জাজিরা","ভেদরগঞ্জ","ডামুড্যা","গোসাইরহাট"],
+"টাঙ্গাইল":["টাঙ্গাইল সদর","বাসাইল","ভুয়াপুর","দেলদুয়ার","ঘাটাইল","কালিহাতী","মধুপুর","মির্জাপুর","নাগরপুর","সখীপুর","ধনবাড়ী","গোপালপুর"]
+},
+
+"চট্টগ্রাম":{
+"চট্টগ্রাম":["রাঙ্গুনিয়া","সীতাকুণ্ড","মীরসরাই","পটিয়া","সন্দ্বীপ","বাঁশখালী","আনোয়ারা","চন্দনাইশ","সাতকানিয়া","লোহাগাড়া","হাটহাজারী","ফটিকছড়ি","রাউজান","কর্ণফুলী"],
+"কক্সবাজার":["কক্সবাজার সদর","চকরিয়া","কুতুবদিয়া","উখিয়া","মহেশখালী","পেকুয়া","রামু","টেকনাফ"],
+"ব্রাহ্মণবাড়িয়া":["ব্রাহ্মণবাড়িয়া সদর","আশুগঞ্জ","নাসিরনগর","সরাইল","কসবা","আখাউড়া","নবীনগর","বাঞ্ছারামপুর","বিজয়নগর"],
+"চাঁদপুর":["চাঁদপুর সদর","হাইমচর","কচুয়া","ফরিদগঞ্জ","মতলব উত্তর","মতলব দক্ষিণ","শাহরাস্তি","হাজীগঞ্জ"],
+"কুমিল্লা":["কুমিল্লা সদর","দাউদকান্দি","চান্দিনা","মুরাদনগর","বুড়িচং","ব্রাহ্মণপাড়া","বরুড়া","লাকসাম","মনোহরগঞ্জ","নাঙ্গলকোট","চৌদ্দগ্রাম","সদর দক্ষিণ","মেঘনা","তিতাস","হোমনা","দেবিদ্বার","লালমাই"],
+"ফেনী":["ফেনী সদর","ছাগলনাইয়া","সোনাগাজী","ফুলগাজী","পরশুরাম","দাগনভূঞা"],
+"খাগড়াছড়ি":["খাগড়াছড়ি সদর","দীঘিনালা","পানছড়ি","মাটিরাঙ্গা","মানিকছড়ি","মহালছড়ি","রামগড়","লক্ষ্মীছড়ি","গুইমারা"],
+"লক্ষ্মীপুর":["লক্ষ্মীপুর সদর","কমলনগর","রামগতি","রায়পুর","রামগঞ্জ"],
+"নোয়াখালী":["নোয়াখালী সদর","বেগমগঞ্জ","চাটখিল","সেনবাগ","কোম্পানীগঞ্জ","কবিরহাট","সুবর্ণচর","হাতিয়া"],
+"রাঙ্গামাটি":["রাঙ্গামাটি সদর","কাপ্তাই","কাউখালী","বাঘাইছড়ি","বরকল","লংগদু","নানিয়ারচর","বিলাইছড়ি","জুরাছড়ি","রাজস্থলী"]
+},
+
+"রাজশাহী":{
+"রাজশাহী":["বাগমারা","বাঘা","চারঘাট","দুর্গাপুর","গোদাগাড়ী","মোহনপুর","পবা","পুঠিয়া","তানোর"],
+"বগুড়া":["বগুড়া সদর","শেরপুর","শাজাহানপুর","শিবগঞ্জ","দুপচাঁচিয়া","আদমদীঘি","ধুনট","সারিয়াকান্দি","গাবতলী","কাহালু","নন্দীগ্রাম","সোনাতলা"],
+"জয়পুরহাট":["জয়পুরহাট সদর","আক্কেলপুর","কালাই","ক্ষেতলাল","পাঁচবিবি"],
+"নওগাঁ":["নওগাঁ সদর","মহাদেবপুর","মান্দা","নিয়ামতপুর","আত্রাই","রাণীনগর","পত্নীতলা","ধামইরহাট","সাপাহার","পোরশা","বদলগাছী"],
+"নাটোর":["নাটোর সদর","সিংড়া","বড়াইগ্রাম","বাগাতিপাড়া","লালপুর","গুরুদাসপুর","নলডাঙ্গা"],
+"চাঁপাইনবাবগঞ্জ":["চাঁপাইনবাবগঞ্জ সদর","শিবগঞ্জ","গোমস্তাপুর","নাচোল","ভোলাহাট"],
+"পাবনা":["পাবনা সদর","ঈশ্বরদী","আটঘরিয়া","চাটমোহর","ভাঙ্গুড়া","ফরিদপুর","সাঁথিয়া","সুজানগর","বেড়া"],
+"সিরাজগঞ্জ":["সিরাজগঞ্জ সদর","কাজীপুর","রায়গঞ্জ","তাড়াশ","উল্লাপাড়া","কামারখন্দ","শাহজাদপুর","চৌহালী","বেলকুচি"]
+},
+
+"খুলনা":{
+"খুলনা":["বটিয়াঘাটা","দাকোপ","ডুমুরিয়া","দিঘলিয়া","কয়রা","পাইকগাছা","রূপসা","তেরখাদা","ফুলতলা"],
+"বাগেরহাট":["বাগেরহাট সদর","চিতলমারী","ফকিরহাট","কচুয়া","মোল্লাহাট","মোংলা","মোড়েলগঞ্জ","রামপাল","শরণখোলা"],
+"চুয়াডাঙ্গা":["চুয়াডাঙ্গা সদর","আলমডাঙ্গা","দামুড়হুদা","জীবননগর"],
+"যশোর":["যশোর সদর","অভয়নগর","বাঘারপাড়া","চৌগাছা","ঝিকরগাছা","কেশবপুর","মণিরামপুর","শার্শা"],
+"ঝিনাইদহ":["ঝিনাইদহ সদর","কালীগঞ্জ","কোটচাঁদপুর","মহেশপুর","শৈলকুপা","হরিণাকুণ্ডু"],
+"কুষ্টিয়া":["কুষ্টিয়া সদর","কুমারখালী","খোকসা","মিরপুর","ভেড়ামারা","দৌলতপুর"],
+"মাগুরা":["মাগুরা সদর","শ্রীপুর","শালিখা","মোহাম্মদপুর"],
+"মেহেরপুর":["মেহেরপুর সদর","গাংনী","মুজিবনগর"],
+"নড়াইল":["নড়াইল সদর","লোহাগড়া","কালিয়া"],
+"সাতক্ষীরা":["সাতক্ষীরা সদর","আশাশুনি","কলারোয়া","কালিগঞ্জ","শ্যামনগর","তালা","দেবহাটা"]
+},
+
+"বরিশাল":{
+"বরিশাল":["বরিশাল সদর","আগৈলঝাড়া","বাবুগঞ্জ","বাকেরগঞ্জ","বানারীপাড়া","গৌরনদী","হিজলা","মেহেন্দিগঞ্জ","মুলাদী","উজিরপুর"],
+"ভোলা":["ভোলা সদর","বোরহানউদ্দিন","চরফ্যাশন","দৌলতখান","লালমোহন","মনপুরা","তজুমদ্দিন"],
+"ঝালকাঠি":["ঝালকাঠি সদর","কাঁঠালিয়া","নলছিটি","রাজাপুর"],
+"পটুয়াখালী":["পটুয়াখালী সদর","বাউফল","দশমিনা","দুমকি","কলাপাড়া","মির্জাগঞ্জ","গলাচিপা","রাঙ্গাবালী"],
+"পিরোজপুর":["পিরোজপুর সদর","ভান্ডারিয়া","কাউখালী","মঠবাড়িয়া","নাজিরপুর","নেছারাবাদ","ইন্দুরকানী"],
+"বরগুনা":["বরগুনা সদর","আমতলী","বামনা","বেতাগী","পাথরঘাটা","তালতলী"]
+},
+
+"সিলেট":{
+"সিলেট":["সিলেট সদর","বালাগঞ্জ","বিয়ানীবাজার","বিশ্বনাথ","কোম্পানীগঞ্জ","ফেঞ্চুগঞ্জ","গোলাপগঞ্জ","গোয়াইনঘাট","জৈন্তাপুর","কানাইঘাট","জকিগঞ্জ","দক্ষিণ সুরমা","ওসমানীনগর"],
+"মৌলভীবাজার":["মৌলভীবাজার সদর","বড়লেখা","জুড়ী","কমলগঞ্জ","কুলাউড়া","রাজনগর","শ্রীমঙ্গল"],
+"হবিগঞ্জ":["হবিগঞ্জ সদর","আজমিরীগঞ্জ","বাহুবল","বানিয়াচং","চুনারুঘাট","লাখাই","মাধবপুর","নবীগঞ্জ","শায়েস্তাগঞ্জ"],
+"সুনামগঞ্জ":["সুনামগঞ্জ সদর","ছাতক","দোয়ারাবাজার","দিরাই","ধর্মপাশা","জামালগঞ্জ","জগন্নাথপুর","তাহিরপুর","শাল্লা","শান্তিগঞ্জ","মধ্যনগর"]
+},
+
+"রংপুর":{
+"রংপুর":["রংপুর সদর","বদরগঞ্জ","গঙ্গাচড়া","কাউনিয়া","মিঠাপুকুর","পীরগাছা","পীরগঞ্জ","তারাগঞ্জ"],
+"দিনাজপুর":["দিনাজপুর সদর","বিরামপুর","বীরগঞ্জ","বোচাগঞ্জ","চিরিরবন্দর","ফুলবাড়ী","ঘোড়াঘাট","হাকিমপুর","কাহারোল","খানসামা","নবাবগঞ্জ","পার্বতীপুর"],
+"গাইবান্ধা":["গাইবান্ধা সদর","ফুলছড়ি","গোবিন্দগঞ্জ","পলাশবাড়ী","সাদুল্লাপুর","সাঘাটা","সুন্দরগঞ্জ"],
+"কুড়িগ্রাম":["কুড়িগ্রাম সদর","ভুরুঙ্গামারী","চর রাজিবপুর","চিলমারী","ফুলবাড়ী","নাগেশ্বরী","রাজারহাট","রৌমারী","উলিপুর"],
+"লালমনিরহাট":["লালমনিরহাট সদর","আদিতমারী","কালীগঞ্জ","হাতীবান্ধা","পাটগ্রাম"],
+"নীলফামারী":["নীলফামারী সদর","ডোমার","ডিমলা","জলঢাকা","কিশোরগঞ্জ","সৈয়দপুর"],
+"পঞ্চগড়":["পঞ্চগড় সদর","আটোয়ারী","বোদা","দেবীগঞ্জ","তেঁতুলিয়া"],
+"ঠাকুরগাঁও":["ঠাকুরগাঁও সদর","বালিয়াডাঙ্গী","হরিপুর","পীরগঞ্জ","রানীশংকৈল"]
+},
+
+"ময়মনসিংহ":{
+"ময়মনসিংহ":["ময়মনসিংহ সদর","ভালুকা","ধোবাউড়া","ফুলবাড়ীয়া","গফরগাঁও","গৌরীপুর","হালুয়াঘাট","ঈশ্বরগঞ্জ","মুক্তাগাছা","নান্দাইল","ফুলপুর","তারাকান্দা","ত্রিশাল"],
+"জামালপুর":["জামালপুর সদর","বকশীগঞ্জ","দেওয়ানগঞ্জ","ইসলামপুর","মাদারগঞ্জ","মেলান্দহ","সরিষাবাড়ী"],
+"নেত্রকোনা":["নেত্রকোনা সদর","আটপাড়া","বারহাট্টা","দুর্গাপুর","খালিয়াজুরী","কলমাকান্দা","কেন্দুয়া","মদন","মোহনগঞ্জ","পূর্বধলা"],
+"শেরপুর":["শেরপুর সদর","ঝিনাইগাতী","নকলা","নালিতাবাড়ী","শ্রীবরদী"]
+}
+
+};
+
+
+/* =========================================
+   DEPARTMENTS
+========================================= */
+
+const departments = {
+
+"মন্ত্রণালয় ও সরকারি দপ্তর":[
+"জনপ্রশাসন মন্ত্রণালয়",
+"স্বরাষ্ট্র মন্ত্রণালয়",
+"ভূমি মন্ত্রণালয়",
+"আইন, বিচার ও সংসদ বিষয়ক মন্ত্রণালয়",
+"স্বাস্থ্য ও পরিবার কল্যাণ মন্ত্রণালয়",
+"শিক্ষা মন্ত্রণালয়",
+"স্থানীয় সরকার বিভাগ",
+"সড়ক পরিবহন ও সেতু মন্ত্রণালয়",
+"গৃহায়ন ও গণপূর্ত মন্ত্রণালয়",
+"অর্থ মন্ত্রণালয়",
+"বাণিজ্য মন্ত্রণালয়",
+"কৃষি মন্ত্রণালয়",
+"মৎস্য ও প্রাণিসম্পদ মন্ত্রণালয়",
+"সমাজকল্যাণ মন্ত্রণালয়",
+"শ্রম ও কর্মসংস্থান মন্ত্রণালয়",
+"অন্যান্য সরকারি দপ্তর"
+],
+
+"অধিদপ্তর ও অধীনস্থ দপ্তর":[
+"দুর্নীতি দমন কমিশন",
+"সমাজসেবা অধিদপ্তর",
+"স্বাস্থ্য অধিদপ্তর",
+"শিক্ষা অধিদপ্তর",
+"প্রাথমিক শিক্ষা অধিদপ্তর",
+"কৃষি সম্প্রসারণ অধিদপ্তর",
+"মৎস্য অধিদপ্তর",
+"প্রাণিসম্পদ অধিদপ্তর",
+"সড়ক ও জনপথ অধিদপ্তর",
+"গণপূর্ত অধিদপ্তর",
+"স্থানীয় সরকার প্রকৌশল অধিদপ্তর",
+"পাসপোর্ট অধিদপ্তর",
+"ফায়ার সার্ভিস ও সিভিল ডিফেন্স",
+"অন্যান্য অধিদপ্তর"
+],
+
+"ভূমি সেবা":[
+"সহকারী কমিশনার (ভূমি) অফিস",
+"উপজেলা ভূমি অফিস",
+"ইউনিয়ন ভূমি অফিস",
+"ভূমি রেকর্ড ও জরিপ অফিস",
+"সেটেলমেন্ট অফিস",
+"অন্যান্য ভূমি অফিস"
+],
+
+"আদালত ও বিচার বিভাগ":[
+"জেলা ও দায়রা জজ আদালত",
+"চীফ জুডিশিয়াল ম্যাজিস্ট্রেট আদালত",
+"চীফ মেট্রোপলিটন ম্যাজিস্ট্রেট আদালত",
+"উপজেলা / ম্যাজিস্ট্রেট আদালত",
+"সাব-রেজিস্ট্রি অফিস",
+"অন্যান্য আদালত সংশ্লিষ্ট অফিস"
+],
+
+"পুলিশ ও আইনশৃঙ্খলা":[
+"থানা",
+"জেলা পুলিশ",
+"মেট্রোপলিটন পুলিশ",
+"পুলিশ সুপারের কার্যালয়",
+"পুলিশ ক্লিয়ারেন্স অফিস",
+"অন্যান্য আইনশৃঙ্খলা অফিস"
+],
+
+"স্বাস্থ্যসেবা":[
+"সরকারি মেডিকেল কলেজ হাসপাতাল",
+"জেলা সদর হাসপাতাল",
+"উপজেলা স্বাস্থ্য কমপ্লেক্স",
+"কমিউনিটি ক্লিনিক",
+"সিভিল সার্জনের কার্যালয়",
+"অন্যান্য সরকারি স্বাস্থ্য প্রতিষ্ঠান"
+],
+
+"শিক্ষা":[
+"মাধ্যমিক ও উচ্চ শিক্ষা অফিস",
+"জেলা শিক্ষা অফিস",
+"উপজেলা শিক্ষা অফিস",
+"প্রাথমিক শিক্ষা অফিস",
+"সরকারি স্কুল",
+"সরকারি কলেজ",
+"অন্যান্য সরকারি শিক্ষা প্রতিষ্ঠান"
+],
+
+"পাসপোর্ট ও ইমিগ্রেশন":[
+"আঞ্চলিক পাসপোর্ট অফিস",
+"পাসপোর্ট অফিস",
+"ইমিগ্রেশন অফিস",
+"অন্যান্য"
+],
+
+"BRTA ও পরিবহন":[
+"BRTA সার্কেল অফিস",
+"BRTA জেলা অফিস",
+"ড্রাইভিং লাইসেন্স শাখা",
+"মোটরযান রেজিস্ট্রেশন শাখা",
+"অন্যান্য পরিবহন অফিস"
+],
+
+"কর ও রাজস্ব":[
+"কর অঞ্চল / আয়কর অফিস",
+"ভ্যাট অফিস",
+"কাস্টমস অফিস",
+"রাজস্ব অফিস",
+"অন্যান্য রাজস্ব অফিস"
+],
+
+"স্থানীয় সরকার":[
+"জেলা প্রশাসকের কার্যালয়",
+"উপজেলা নির্বাহী অফিস",
+"ইউনিয়ন পরিষদ",
+"পৌরসভা",
+"সিটি কর্পোরেশন",
+"ওয়ার্ড অফিস",
+"অন্যান্য স্থানীয় সরকার অফিস"
+],
+
+"বিদ্যুৎ পানি গ্যাস":[
+"বিদ্যুৎ অফিস",
+"পল্লী বিদ্যুৎ অফিস",
+"ওয়াসা",
+"পানি সরবরাহ অফিস",
+"গ্যাস অফিস",
+"অন্যান্য সেবা অফিস"
+],
+
+"সরকারি ব্যাংক ও আর্থিক প্রতিষ্ঠান":[
+"সোনালী ব্যাংক",
+"জনতা ব্যাংক",
+"অগ্রণী ব্যাংক",
+"রূপালী ব্যাংক",
+"বাংলাদেশ কৃষি ব্যাংক",
+"রাজশাহী কৃষি উন্নয়ন ব্যাংক",
+"অন্যান্য সরকারি আর্থিক প্রতিষ্ঠান"
+],
+
+"অন্যান্য সরকারি সেবা":[
+"সরকারি অফিস",
+"সরকারি সেবা কেন্দ্র",
+"ডিজিটাল সেন্টার",
+"অন্যান্য"
+]
+
+};
+
+
+/* =========================================
+   REPORT MODAL
+========================================= */
+
+function openReport(){
+
+  document
+    .getElementById("reportModal")
+    .classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+}
+
+
+function closeReport(){
+
+  document
+    .getElementById("reportModal")
+    .classList.remove("show");
+
+  document.body.style.overflow="";
+
+}
+
+
+/* =========================================
+   DEPARTMENT
+========================================= */
+
+function updateDepartments(){
+
+  const category =
+    document.getElementById("officeCategory").value;
+
+  const select =
+    document.getElementById("department");
+
+  select.innerHTML =
+    '<option value="">দপ্তর / অফিস নির্বাচন করুন</option>';
+
+  if(!category){
+
+    select.disabled=true;
+    return;
+
+  }
+
+  (departments[category] || []).forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    select.appendChild(option);
+
+  });
+
+  select.disabled=false;
+
+}
+
+
+/* =========================================
+   LOCATIONS
+========================================= */
+
+function initDivisions(){
+
+  const select =
+    document.getElementById("division");
+
+  Object.keys(locations).forEach(div=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=div;
+    option.textContent=div;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+function loadDistricts(){
+
+  const division =
+    document.getElementById("division").value;
+
+  const district =
+    document.getElementById("district");
+
+  const upazila =
+    document.getElementById("upazila");
+
+  const union =
+    document.getElementById("union");
+
+  district.innerHTML =
+    '<option value="">জেলা নির্বাচন করুন</option>';
+
+  upazila.innerHTML =
+    '<option value="">আগে জেলা নির্বাচন করুন</option>';
+
+  union.innerHTML =
+    '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
+
+  district.disabled=true;
+  upazila.disabled=true;
+  union.disabled=true;
+
+  if(!division){
+    return;
+  }
+
+  Object.keys(locations[division]).forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    district.appendChild(option);
+
+  });
+
+  district.disabled=false;
+
+}
+
+
+function loadUpazilas(){
+
+  const division =
+    document.getElementById("division").value;
+
+  const district =
+    document.getElementById("district").value;
+
+  const upazila =
+    document.getElementById("upazila");
+
+  const union =
+    document.getElementById("union");
+
+  upazila.innerHTML =
+    '<option value="">উপজেলা নির্বাচন করুন</option>';
+
+  union.innerHTML =
+    '<option value="">আগে উপজেলা নির্বাচন করুন</option>';
+
+  upazila.disabled=true;
+  union.disabled=true;
+
+  if(!division || !district){
+    return;
+  }
+
+  (locations[division][district] || []).forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    upazila.appendChild(option);
+
+  });
+
+  upazila.disabled=false;
+
+}
+
+
+function loadUnions(){
+
+  const union =
+    document.getElementById("union");
+
+  union.innerHTML="";
+
+  [
+    "ইউনিয়ন / ওয়ার্ড প্রযোজ্য নয়",
+    "সংশ্লিষ্ট ইউনিয়ন / ওয়ার্ড",
+    "অন্যান্য"
+  ].forEach(item=>{
+
+    const option =
+      document.createElement("option");
+
+    option.value=item;
+    option.textContent=item;
+
+    union.appendChild(option);
+
+  });
+
+  union.disabled=false;
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showMessage(text,type){
+
+  const box =
+    document.getElementById("formMessage");
+
+  box.className =
+    "message "+type;
+
+  box.textContent=text;
+
+  box.style.display="block";
+
+}
+
+
+/* =========================================
+   MEDIA UPLOAD — 50MB
+========================================= */
+
+async function uploadMedia(file){
+
+  if(!file){
+
+    return{
+      url:null,
+      type:null
+    };
+
+  }
+
+  if(file.size > MAX_FILE_SIZE){
+
+    throw new Error(
+      "ফাইলের আকার 50MB-এর বেশি হতে পারবে না।"
+    );
+
+  }
+
+  if(
+    !file.type.startsWith("image/") &&
+    !file.type.startsWith("video/")
+  ){
+
+    throw new Error(
+      "শুধু ছবি অথবা ভিডিও আপলোড করা যাবে।"
+    );
+
+  }
+
+  const extension =
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g,"");
+
+  const filename =
+    crypto.randomUUID()+"."+extension;
+
+  const path =
+    "reports/"+filename;
+
+  const {error} =
+    await supabaseClient
+      .storage
+      .from(mediaBucket)
+      .upload(
+        path,
+        file,
+        {
+          cacheControl:"3600",
+          upsert:false,
+          contentType:file.type
+        }
+      );
+
+  if(error){
+    throw error;
+  }
+
+  const {data} =
+    supabaseClient
+      .storage
+      .from(mediaBucket)
+      .getPublicUrl(path);
+
+  return{
+
+    url:data.publicUrl,
+
+    type:file.type.startsWith("video/")
+      ? "video"
+      : "image"
+
+  };
+
+}
+
+
+/* =========================================
+   SUBMIT REPORT
+========================================= */
+
+async function submitReport(event){
+
+  event.preventDefault();
+
+  const button =
+    document.getElementById("submitBtn");
+
+  button.disabled=true;
+  button.innerText="জমা হচ্ছে...";
+
+  try{
+
+    const category =
+      document
+        .getElementById("officeCategory")
+        .value;
+
+    const department =
+      document
+        .getElementById("department")
+        .value;
+
+    const service =
+      document
+        .getElementById("service")
+        .value;
+
+    const division =
+      document
+        .getElementById("division")
+        .value;
+
+    const district =
+      document
+        .getElementById("district")
+        .value;
+
+    const upazila =
+      document
+        .getElementById("upazila")
+        .value;
+
+    const union =
+      document
+        .getElementById("union")
+        .value;
+
+    const amount =
+      Number(
+        document
+          .getElementById("amount")
+          .value || 0
+      );
+
+    const outcome =
+      document
+        .getElementById("outcome")
+        .value;
+
+    const details =
+      document
+        .getElementById("details")
+        .value
+        .trim();
+
+    const file =
+      document
+        .getElementById("media")
+        .files[0];
+
+
+    if(
+      !category ||
+      !department ||
+      !service ||
+      !division ||
+      !district ||
+      !upazila ||
+      !union ||
+      !outcome ||
+      !details
+    ){
+
+      throw new Error(
+        "প্রয়োজনীয় তথ্য পূরণ করুন।"
+      );
+
+    }
+
+
+    const location =
+      [
+        division,
+        district,
+        upazila,
+        union
+      ]
+      .filter(Boolean)
+      .join(" → ");
+
+
+    const finalDepartment =
+      category+" — "+department;
+
+
+    let mediaData={
+      url:null,
+      type:null
+    };
+
+
+    if(file){
+
+      mediaData =
+        await uploadMedia(file);
+
+    }
+
+
+    const {error} =
+      await supabaseClient
+        .from("reports")
+        .insert({
+
+          department:finalDepartment,
+
+          service,
+
+          location,
+
+          amount,
+
+          outcome,
+
+          details,
+
+          media_url:mediaData.url,
+
+          media_type:mediaData.type,
+
+          status:"pending"
+
+        });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    showSuccess();
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "রিপোর্ট জমা দেওয়া যায়নি: "+error.message,
+      "error"
+    );
+
+  }
+
+  button.disabled=false;
+  button.innerText="রিপোর্ট জমা দিন";
+
+}
+
+
+/* =========================================
+   SUCCESS
+========================================= */
+
+function showSuccess(){
+
+  document
+    .getElementById("reportForm")
+    .style.display="none";
+
+  document
+    .getElementById("successScreen")
+    .style.display="block";
+
+}
+
+
+function finishSuccess(){
+
+  document
+    .getElementById("successScreen")
+    .style.display="none";
+
+  document
+    .getElementById("reportForm")
+    .style.display="block";
+
+  document
+    .getElementById("reportForm")
+    .reset();
+
+  document
+    .getElementById("department")
+    .innerHTML =
+      '<option value="">আগে প্রতিষ্ঠানের ধরন নির্বাচন করুন</option>';
+
+  document
+    .getElementById("department")
+    .disabled=true;
+
+  document
+    .getElementById("district")
+    .disabled=true;
+
+  document
+    .getElementById("upazila")
+    .disabled=true;
+
+  document
+    .getElementById("union")
+    .disabled=true;
+
+  closeReport();
+
+}
+
+
+/* =========================================
+   LOAD REPORTS
+========================================= */
+
+async function loadReports(){
+
+  const container =
+    document.getElementById("reportsContainer");
+
+  container.innerHTML =
+    '<div class="loading">রিপোর্ট লোড হচ্ছে...</div>';
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("reports")
+      .select("*")
+      .eq("status","published")
+      .order(
+        "published_at",
+        {
+          ascending:false,
+          nullsFirst:false
+        }
+      )
+      .limit(100);
+
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML =
+      '<div class="empty">রিপোর্ট লোড করা যায়নি। আবার চেষ্টা করুন।</div>';
+
+    return;
+
+  }
+
+
+  allReports=data || [];
+
+  renderReports(allReports);
+
+}
+
+
+/* =========================================
+   RENDER REPORTS
+========================================= */
+
+function renderReports(reports){
+
+  const container =
+    document.getElementById("reportsContainer");
+
+  if(!reports.length){
+
+    container.innerHTML =
+      '<div class="empty">এখনো কোনো প্রকাশিত রিপোর্ট নেই।</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    reports.map(report=>{
+
+      let media="";
+
+
+      if(
+        report.media_url &&
+        report.media_type==="image"
+      ){
+
+        media=
+          `<img
+            class="media"
+            src="${escapeHtml(report.media_url)}"
+            alt="রিপোর্টের ছবি"
+            loading="lazy">`;
+
+      }
+
+
+      if(
+        report.media_url &&
+        report.media_type==="video"
+      ){
+
+        media=
+          `<video
+            class="media"
+            controls
+            preload="metadata"
+            src="${escapeHtml(report.media_url)}">
+          </video>`;
+
+      }
+
+
+      const amount =
+        Number(report.amount || 0);
+
+
+      return`
+
+        <article class="report">
+
+          <div class="report-header">
+
+            <span class="department">
+              ${escapeHtml(report.department)}
+            </span>
+
+            <span class="unverified">
+              যাচাইাধীন তথ্য
+            </span>
+
+          </div>
+
+          <h3>
+            ${escapeHtml(report.service)}
+          </h3>
+
+          <div class="info">
+
+            <span>
+              📍 ${escapeHtml(report.location)}
+            </span>
+
+            <span>
+              💰 ৳${amount.toLocaleString("bn-BD")}
+            </span>
+
+            <span>
+              📌 ${escapeHtml(report.outcome)}
+            </span>
+
+          </div>
+
+          <div class="details">
+            ${escapeHtml(report.details)}
+          </div>
+
+          ${media}
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+function filterReports(){
+
+  const q =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  if(!q){
+
+    renderReports(allReports);
+
+    return;
+
+  }
+
+
+  const filtered =
+    allReports.filter(report=>{
+
+      const text=[
+
+        report.department,
+        report.service,
+        report.location,
+        report.outcome,
+        report.details
+
+      ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+
+      return text.includes(q);
+
+    });
+
+
+  renderReports(filtered);
+
+}
+
+
+/* =========================================
+   AD URL SAFETY
+========================================= */
+
+function safeUrl(value){
+
+  if(!value){
+    return "";
+  }
+
+  try{
+
+    const url =
+      new URL(value);
+
+    if(
+      url.protocol==="https:" ||
+      url.protocol==="http:"
+    ){
+
+      return url.href;
+
+    }
+
+  }catch(e){}
+
+  return "";
+
+}
+
+
+/* =========================================
+   LOAD ADS
+========================================= */
+
+async function loadAds(){
+
+  const container =
+    document.getElementById("adsContainer");
+
+  const {data,error} =
+    await supabaseClient
+      .from("ads")
+      .select("*")
+      .eq("active",true)
+      .lte("start_at",new Date().toISOString())
+      .order("created_at",{ascending:false})
+      .limit(10);
+
+
+  if(error){
+
+    console.error("Ads error:",error);
+
+    container.innerHTML="";
+
+    return;
+
+  }
+
+
+  const now =
+    Date.now();
+
+
+  const ads =
+    (data || []).filter(ad=>{
+
+      if(!ad.expires_at){
+        return true;
+      }
+
+      return new Date(ad.expires_at).getTime() > now;
+
+    });
+
+
+  if(!ads.length){
+
+    container.innerHTML="";
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    ads.map(ad=>{
+
+      const image =
+        safeUrl(ad.image_url);
+
+      const link =
+        safeUrl(ad.link_url);
+
+
+      return`
+
+        <article class="ad-card">
+
+          ${
+            image
+            ?
+            `<img
+              class="ad-image"
+              src="${escapeHtml(image)}"
+              alt="বিজ্ঞাপন"
+              loading="lazy">`
+            :
+            ""
+          }
+
+          <div class="ad-content">
+
+            <span class="ad-badge">
+              বিজ্ঞাপন
+            </span>
+
+            <h3>
+              ${escapeHtml(ad.title)}
+            </h3>
+
+            ${
+              ad.description
+              ?
+              `<p>
+                ${escapeHtml(ad.description)}
+              </p>`
+              :
+              ""
+            }
+
+            ${
+              link
+              ?
+              `<a
+                class="ad-link"
+                href="${escapeHtml(link)}"
+                target="_blank"
+                rel="noopener noreferrer">
+                বিস্তারিত দেখুন →
+              </a>`
+              :
+              ""
+            }
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   ADMIN LOGIN
+========================================= */
+
+function openAdminLogin(){
+
+  document
+    .getElementById("adminLoginModal")
+    .classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+}
+
+
+function closeAdminLogin(){
+
+  document
+    .getElementById("adminLoginModal")
+    .classList.remove("show");
+
+  document.body.style.overflow="";
+
+}
+
+
+async function adminLogin(event){
+
+  event.preventDefault();
+
+  const email =
+    document.getElementById("adminEmail").value.trim();
+
+  const password =
+    document.getElementById("adminPassword").value;
+
+
+  const box =
+    document.getElementById("adminMessage");
+
+
+  box.className="message";
+
+  box.style.display="none";
+
+
+  try{
+
+    const {data,error} =
+      await supabaseClient.auth.signInWithPassword({
+
+        email,
+        password
+
+      });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    closeAdminLogin();
+
+    openAdminPanel();
+
+    loadAdminAds();
+
+
+  }catch(error){
+
+    box.className="message error";
+
+    box.textContent =
+      "Login করা যায়নি: "+error.message;
+
+    box.style.display="block";
+
+  }
+
+}
+
+
+/* =========================================
+   ADMIN PANEL
+========================================= */
+
+function openAdminPanel(){
+
+  document
+    .getElementById("adminPanelModal")
+    .classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+}
+
+
+function closeAdminPanel(){
+
+  document
+    .getElementById("adminPanelModal")
+    .classList.remove("show");
+
+  document.body.style.overflow="";
+
+}
+
+
+async function adminLogout(){
+
+  await supabaseClient.auth.signOut();
+
+  closeAdminPanel();
+
+}
+
+
+/* =========================================
+   SAVE AD
+========================================= */
+
+async function saveAd(){
+
+  const title =
+    document.getElementById("adTitle").value.trim();
+
+  const description =
+    document.getElementById("adDescription").value.trim();
+
+  const image =
+    safeUrl(
+      document.getElementById("adImage").value.trim()
+    );
+
+  const link =
+    safeUrl(
+      document.getElementById("adLink").value.trim()
+    );
+
+  const expiresValue =
+    document.getElementById("adExpires").value;
+
+  const active =
+    document.getElementById("adActive").checked;
+
+
+  const message =
+    document.getElementById("adminPanelMessage");
+
+
+  if(!title){
+
+    message.className="message error";
+    message.textContent=
+      "বিজ্ঞাপনের শিরোনাম দিন।";
+    message.style.display="block";
+
+    return;
+
+  }
+
+
+  const {data:{session}} =
+    await supabaseClient.auth.getSession();
+
+
+  if(!session){
+
+    message.className="message error";
+    message.textContent=
+      "Admin login প্রয়োজন।";
+    message.style.display="block";
+
+    return;
+
+  }
+
+
+  const expiresAt =
+    expiresValue
+    ?
+    new Date(expiresValue).toISOString()
+    :
+    null;
+
+
+  const {error} =
+    await supabaseClient
+      .from("ads")
+      .insert({
+
+        title,
+
+        description:
+          description || null,
+
+        image_url:
+          image || null,
+
+        link_url:
+          link || null,
+
+        active,
+
+        expires_at:
+          expiresAt
+
+      });
+
+
+  if(error){
+
+    console.error(error);
+
+    message.className="message error";
+
+    message.textContent =
+      "বিজ্ঞাপন যোগ করা যায়নি: "+error.message;
+
+    message.style.display="block";
+
+    return;
+
+  }
+
+
+  message.className="message success";
+
+  message.textContent =
+    "বিজ্ঞাপন সফলভাবে যোগ হয়েছে।";
+
+  message.style.display="block";
+
+
+  document.getElementById("adTitle").value="";
+  document.getElementById("adDescription").value="";
+  document.getElementById("adImage").value="";
+  document.getElementById("adLink").value="";
+  document.getElementById("adExpires").value="";
+  document.getElementById("adActive").checked=true;
+
+
+  loadAdminAds();
+  loadAds();
+
+}
+
+
+/* =========================================
+   ADMIN ADS LIST
+========================================= */
+
+async function loadAdminAds(){
+
+  const container =
+    document.getElementById("adminAdsList");
+
+  container.innerHTML =
+    '<div class="loading">বিজ্ঞাপন লোড হচ্ছে...</div>';
+
+
+  const {data,error} =
+    await supabaseClient
+      .from("ads")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="message error" style="display:block">
+        ${escapeHtml(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  if(!data || !data.length){
+
+    container.innerHTML =
+      '<div class="empty">এখনো কোনো বিজ্ঞাপন নেই।</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    data.map(ad=>{
+
+      return`
+
+        <div class="ad-admin-item">
+
+          <strong>
+            ${escapeHtml(ad.title)}
+          </strong>
+
+          <br>
+
+          <small>
+            ${
+              ad.active
+              ?
+              "🟢 সক্রিয়"
+              :
+              "🔴 বন্ধ"
+            }
+          </small>
+
+          <div class="admin-actions">
+
+            <button
+              class="admin-action admin-primary"
+              onclick="toggleAd('${escapeHtml(ad.id)}',${!ad.active})">
+
+              ${ad.active ? "বন্ধ করুন" : "চালু করুন"}
+
+            </button>
+
+            <button
+              class="admin-action admin-danger"
+              onclick="deleteAd('${escapeHtml(ad.id)}')">
+
+              মুছে ফেলুন
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   TOGGLE AD
+========================================= */
+
+async function toggleAd(id,status){
+
+  const {error} =
+    await supabaseClient
+      .from("ads")
+      .update({
+
+        active:status,
+
+        updated_at:
+          new Date().toISOString()
+
+      })
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "পরিবর্তন করা যায়নি: "+error.message
+    );
+
+    return;
+
+  }
+
+
+  loadAdminAds();
+  loadAds();
+
+}
+
+
+/* =========================================
+   DELETE AD
+========================================= */
+
+async function deleteAd(id){
+
+  if(
+    !confirm(
+      "এই বিজ্ঞাপনটি মুছে ফেলতে চান?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const {error} =
+    await supabaseClient
+      .from("ads")
+      .delete()
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "বিজ্ঞাপন মুছে ফেলা যায়নি: "+
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  loadAdminAds();
+  loadAds();
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value){
+
+  if(
+    value===null ||
+    value===undefined
+  ){
+
+    return "";
+
+  }
+
+  return String(value)
+
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   MODAL CLICK
+========================================= */
+
+window.addEventListener(
+  "click",
+  event=>{
+
+    const reportModal =
+      document.getElementById("reportModal");
+
+    const loginModal =
+      document.getElementById("adminLoginModal");
+
+    const adminModal =
+      document.getElementById("adminPanelModal");
+
+
+    if(event.target===reportModal){
+      closeReport();
+    }
+
+    if(event.target===loginModal){
+      closeAdminLogin();
+    }
+
+    if(event.target===adminModal){
+      closeAdminPanel();
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  "keydown",
+  event=>{
+
+    if(event.key==="Escape"){
+
+      closeReport();
+      closeAdminLogin();
+      closeAdminPanel();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   PWA INSTALL
+========================================= */
+
+function isAppInstalled(){
+
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true
+  );
+
+}
+
+function setInstallButtonVisible(visible){
+
+  const button =
+    document.getElementById("installBtn");
+
+  if(!button){
+    return;
+  }
+
+  if(isAppInstalled()){
+    button.style.display="none";
+    return;
+  }
+
+  button.style.display =
+    visible ? "block" : "none";
+
+}
+
+window.addEventListener(
+  "beforeinstallprompt",
+  event=>{
+
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    setInstallButtonVisible(true);
+
+  }
+);
+
+async function installApp(){
+
+  if(!deferredInstallPrompt){
+    return;
+  }
+
+  try{
+
+    deferredInstallPrompt.prompt();
+
+    const result =
+      await deferredInstallPrompt.userChoice;
+
+    if(
+      result &&
+      result.outcome === "accepted"
+    ){
+      setInstallButtonVisible(false);
+    }
+
+  }catch(error){
+
+    console.error(
+      "App install error:",
+      error
+    );
+
+  }
+
+  deferredInstallPrompt = null;
+
+}
+
+window.addEventListener(
+  "appinstalled",
+  ()=>{
+
+    deferredInstallPrompt = null;
+    setInstallButtonVisible(false);
+
+  }
+);
+
+window.addEventListener(
+  "load",
+  ()=>{
+
+    if(isAppInstalled()){
+      setInstallButtonVisible(false);
+    }
+
+  }
+);
+
+window.addEventListener(
+  "pageshow",
+  ()=>{
+
+    if(isAppInstalled()){
+      setInstallButtonVisible(false);
+    }
+
+  }
+);
+
+/* =========================================
+   START
+========================================= */
+
+initDivisions();
+
+loadReports();
+
+loadAds();
+
+
+</script>
+
+
+<script>
+/* PWA SERVICE WORKER REGISTRATION */
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").catch(error=>{
+      console.error("Service worker registration failed:",error);
+    });
+  });
+}
+</script>
+
+</body>
+</html>
