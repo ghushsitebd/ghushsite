@@ -3336,31 +3336,47 @@ window.addEventListener(
 
 async function installApp(){
 
-  if(!deferredInstallPrompt){
+  /* Android/Chrome PWA install prompt available */
+  if(deferredInstallPrompt){
+    try{
+      deferredInstallPrompt.prompt();
+
+      const result =
+        await deferredInstallPrompt.userChoice;
+
+      if(result && result.outcome === "accepted"){
+        setInstallButtonsVisible(false);
+      }
+
+    }catch(error){
+      console.error("PWA install error:", error);
+    }
+
+    deferredInstallPrompt = null;
     return;
   }
 
-  try{
-
-    deferredInstallPrompt.prompt();
-
-    const result =
-      await deferredInstallPrompt.userChoice;
-
-    if(result && result.outcome === "accepted"){
-      setInstallButtonsVisible(false);
-    }
-
-  }catch(error){
-
-    console.error(
-      "PWA install error:",
-      error
-    );
-
+  /* Already installed */
+  if(window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true){
+    alert("অ্যাপটি ইতিমধ্যে ইনস্টল করা আছে।");
+    return;
   }
 
-  deferredInstallPrompt = null;
+  /* Android Chrome: explain manual install when automatic prompt is unavailable */
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if(isAndroid){
+    alert("অ্যাপ ইনস্টল করতে Chrome-এর উপরের ⋮ মেনু খুলুন → 'Add to Home screen' / 'Install app' নির্বাচন করুন।");
+    return;
+  }
+
+  if(isIOS){
+    alert("iPhone/iPad-এ Share (↑) চাপুন → 'Add to Home Screen' নির্বাচন করুন।");
+    return;
+  }
+
+  alert("এই ব্রাউজারে সরাসরি App Install অপশন পাওয়া যাচ্ছে না। Chrome বা Edge দিয়ে সাইটটি খুলে আবার App Download চাপুন।");
 }
 
 window.addEventListener(
