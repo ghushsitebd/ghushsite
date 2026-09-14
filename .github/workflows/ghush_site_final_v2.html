@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ghush Site</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,"Noto Sans",sans-serif;background:#07150f;color:#eef7f0}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+:root{--bg:#07150f;--panel:#0d2117;--panel2:#102a1c;--green:#25c46a;--green2:#159957;--text:#eef7f0;--muted:#9fb5a7;--border:#1e4931;--danger:#e45757;--gold:#d8b44a}
+#toast{position:fixed;top:18px;right:18px;z-index:9999;padding:13px 18px;border-radius:12px;background:#173b26;border:1px solid var(--border);box-shadow:0 12px 30px #0008;max-width:330px;display:none}
+#toast.error{background:#451b1b;border-color:#783333}#toast.success{background:#123b25;border-color:#26794a}
+.auth-wrap{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;background:radial-gradient(circle at top right,#164f2d55,transparent 35%),radial-gradient(circle at bottom left,#123b2555,transparent 35%),var(--bg)}
+.auth-card{width:100%;max-width:450px;background:#0b1d13;border:1px solid var(--border);border-radius:24px;padding:28px;box-shadow:0 25px 70px #0008}
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#22c96b,#08733c);font-size:25px}.logo h1{margin:0;font-size:26px}.logo small{display:block;color:var(--muted);margin-top:3px}
+.tabs{display:flex;background:#07150f;border-radius:12px;padding:4px;margin-bottom:20px}.tabs button{flex:1;border:0;background:transparent;color:var(--muted);padding:11px;border-radius:9px}.tabs button.active{background:#16472a;color:white}
+.field{margin-bottom:15px}.field label{display:block;color:#bcd1c3;font-size:14px;margin-bottom:7px}
+input,textarea,select{width:100%;background:#07150f;border:1px solid #245337;color:white;border-radius:11px;padding:12px 13px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px #25c46a18}textarea{min-height:120px;resize:vertical}
+.primary{width:100%;border:0;border-radius:12px;padding:13px;background:linear-gradient(135deg,#25c46a,#159957);color:white;font-weight:bold}.primary:disabled{opacity:.6;cursor:not-allowed}
+.secondary{border:1px solid var(--border);background:#10281a;color:white;border-radius:10px;padding:10px 14px}.danger{border:1px solid #743535;background:#3a1717;color:#ffb1b1;border-radius:10px;padding:10px 14px}
+.muted{color:var(--muted)}.small{font-size:13px}.auth-note{color:#8fa99a;font-size:12px;line-height:1.6;margin-top:14px}
+.app{min-height:100vh}.topbar{position:sticky;top:0;z-index:100;background:#081910ee;backdrop-filter:blur(15px);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1180px;margin:auto;min-height:64px;padding:10px 16px;display:flex;align-items:center;gap:14px}.brand{display:flex;align-items:center;gap:9px;font-weight:bold;white-space:nowrap}.brand-icon{width:35px;height:35px;display:grid;place-items:center;background:#1b713e;border-radius:10px}
+.nav{display:flex;gap:5px;overflow:auto;flex:1}.nav button{white-space:nowrap;border:0;background:transparent;color:#a9beaf;padding:9px 11px;border-radius:9px}.nav button.active,.nav button:hover{background:#12351f;color:white}
+.user-mini{display:flex;align-items:center;gap:8px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#269c58,#0d5530);font-weight:bold;flex:none}
+.container{max-width:1180px;margin:auto;padding:22px 16px 60px}.grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.side{display:none}.nav button{padding:8px}.brand span{display:none}}
+.card{background:linear-gradient(180deg,#0d2117,#0b1d13);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 10px 35px #0002}.card-title{font-size:18px;font-weight:bold;margin:0 0 12px}
+.hero{padding:25px;background:linear-gradient(135deg,#103e23,#0b2117 55%,#0d2b1b)}.hero h2{margin:0 0 7px;font-size:28px}.hero p{margin:0;color:#adc1b3;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.stat{padding:13px;border:1px solid var(--border);border-radius:13px;background:#07150f88}.stat b{display:block;font-size:21px}.stat span{font-size:12px;color:var(--muted)}
+.category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}@media(min-width:650px){.category-grid{grid-template-columns:repeat(3,1fr)}}.cat{padding:11px;border:1px solid var(--border);border-radius:10px;color:#b8cdbf;cursor:pointer;background:#091b11}.cat:hover,.cat.active{border-color:#2dbf69;background:#124324;color:white}
+.upload-box{border:1px dashed #326845;padding:14px;border-radius:13px;background:#07150f}.preview{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.preview-item{position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:1}.preview-item img,.preview-item video{width:100%;height:100%;object-fit:cover}.preview-item span{position:absolute;top:5px;right:5px;background:#000b;border-radius:6px;padding:3px 6px;font-size:11px}
+.post{overflow:hidden}.post-head{display:flex;align-items:center;gap:10px}.post-user{flex:1;min-width:0}.post-user b{display:block}.post-user span{color:var(--muted);font-size:12px}.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#16472a;color:#9ff0bc;font-size:11px;white-space:nowrap}
+.post-content{margin:15px 0;line-height:1.7;white-space:pre-wrap;word-break:break-word}.media-grid{display:grid;gap:4px;margin:0 -18px}.media-grid.one{grid-template-columns:1fr}.media-grid.two{grid-template-columns:1fr 1fr}.media-grid.three{grid-template-columns:repeat(3,1fr)}.media-grid.more{grid-template-columns:repeat(3,1fr)}
+.media-cell{position:relative;min-width:0;background:#000;overflow:hidden}.media-grid img,.media-grid video{display:block;width:100%;height:100%;min-height:180px;max-height:500px;object-fit:cover;background:#000}.media-grid.one .media-cell img,.media-grid.one .media-cell video{max-height:560px}.media-type{position:absolute;left:8px;bottom:8px;background:#000b;color:#fff;border-radius:7px;padding:4px 7px;font-size:11px}.media-error{min-height:180px;display:grid;place-items:center;color:#9fb5a7;padding:20px;text-align:center}
+.actions{display:flex;gap:6px;border-top:1px solid var(--border);padding-top:10px;margin-top:12px}.action{flex:1;border:0;background:transparent;color:#9db4a4;padding:9px 5px;border-radius:9px}.action:hover,.action.liked{background:#12351f;color:#42db7e}
+.post-menu{position:relative}.menu-btn{border:0;background:transparent;color:#9db4a4;font-size:22px;padding:3px 8px;border-radius:8px}.menu-btn:hover{background:#12351f;color:#fff}.menu{position:absolute;right:0;top:36px;z-index:20;min-width:155px;background:#10281a;border:1px solid var(--border);border-radius:11px;padding:5px;box-shadow:0 15px 35px #0008}.menu button{display:block;width:100%;text-align:left;border:0;background:transparent;color:#dcebe1;padding:9px;border-radius:7px}.menu button:hover{background:#173b26}
+.comments{margin-top:10px;border-top:1px solid var(--border);padding-top:10px}.comment{background:#081910;border-radius:10px;padding:9px 11px;margin:7px 0}.comment b{font-size:13px}.comment p{margin:4px 0 0;color:#c2d2c7;font-size:14px}
+.side-card{position:sticky;top:85px}.news{padding:13px;border:1px solid var(--border);border-radius:12px;margin-bottom:9px;background:#091b11}.news b{display:block;margin-bottom:4px}.news span{color:#8fa99a;font-size:12px;line-height:1.5}
+.profile-cover{height:145px;border-radius:18px 18px 0 0;background:linear-gradient(135deg,#124d2a,#0b2116)}.profile-info{margin-top:-35px;position:relative;padding:0 20px 20px}.big-avatar{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:27px;font-weight:bold;border:4px solid #0b2117;background:linear-gradient(135deg,#2acb70,#0b6335)}.profile-info h2{margin:8px 0 3px}.profile-info p{color:var(--muted);margin:4px 0}
+.search-row{display:flex;gap:8px}.search-row input{flex:1}.empty{padding:35px 15px;text-align:center;color:#8fa99a}.loader{text-align:center;padding:25px;color:#8fa99a}.checkbox{display:flex;align-items:center;gap:9px;color:#b9cbbf;font-size:14px}.checkbox input{width:auto}.footer{text-align:center;color:#637b6c;padding:25px;font-size:12px}
+
+/* Ghush Site mobile bottom navigation */
+.mobile-bottom-nav{display:none}
+@media(max-width:850px){
+  .mobile-bottom-nav{
+    display:flex;
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:5000;
+    background:rgba(6,22,14,.97);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-top:1px solid rgba(255,255,255,.10);
+    padding:6px 3px calc(6px + env(safe-area-inset-bottom));
+    justify-content:space-around;
+    box-shadow:0 -8px 25px rgba(0,0,0,.22);
+  }
+  .mobile-bottom-nav button{
+    appearance:none;
+    border:0;
+    background:transparent;
+    color:#aebdb4;
+    min-width:52px;
+    padding:5px 4px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    border-radius:12px;
+    font:inherit;
+    cursor:pointer;
+  }
+  .mobile-bottom-nav button span{
+    font-size:20px;
+    line-height:20px;
+  }
+  .mobile-bottom-nav button small{
+    font-size:10px;
+    line-height:12px;
+    white-space:nowrap;
+  }
+  .mobile-bottom-nav button.active{
+    color:#d9f7e6;
+    background:rgba(44,116,76,.22);
+  }
+  .container{
+    padding-bottom:96px !important;
+  }
+  .topbar .nav{
+    display:none !important;
+  }
+}
+
+
+/* Ghush Site Stories */
+.stories-section{max-width:760px;margin:18px auto;padding:14px;background:rgba(10,35,23,.88);border:1px solid rgba(255,255,255,.09);border-radius:18px;box-shadow:0 12px 35px rgba(0,0,0,.18)}
+.stories-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.stories-head h3{margin:0;font-size:18px}.stories-head p{margin:3px 0 0;opacity:.65;font-size:12px}
+.story-add-btn{border:1px solid rgba(255,255,255,.12);background:#1f7045;color:#fff;border-radius:12px;padding:9px 12px;font-weight:700}
+.stories-row{display:flex;gap:12px;overflow-x:auto;padding:3px 2px 6px;scrollbar-width:thin}
+.story-card{flex:0 0 88px;height:128px;border-radius:16px;overflow:hidden;position:relative;background:#12251b;border:1px solid rgba(255,255,255,.1);cursor:pointer}
+.story-card img,.story-card video{width:100%;height:100%;object-fit:cover}
+.story-card .story-overlay{position:absolute;inset:auto 0 0;padding:24px 7px 7px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:11px;color:#fff}
+.story-card .story-ring{position:absolute;top:6px;left:6px;width:30px;height:30px;border-radius:50%;border:2px solid #61c889;background:#193a28}
+.story-card .story-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.story-empty{opacity:.65;font-size:13px;padding:14px 4px}
+.story-viewer{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:18px}
+.story-viewer-card{width:min(440px,96vw);max-height:92vh;background:#08170f;border:1px solid rgba(255,255,255,.12);border-radius:18px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.6)}
+.story-viewer-media{height:min(72vh,700px);display:flex;align-items:center;justify-content:center;background:#000}
+.story-viewer-media img,.story-viewer-media video{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.story-viewer-user{padding:12px 15px;font-weight:800}.story-viewer-caption{padding:10px 15px 14px;color:#d9e7df}
+.story-close{position:fixed;right:16px;top:12px;border:0;background:rgba(0,0,0,.5);color:#fff;font-size:32px;width:44px;height:44px;border-radius:50%;z-index:10001}
+.private-profile-panel{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);display:flex;flex-direction:column;overflow:auto;padding:20px}
+.private-profile-panel>*{width:min(760px,100%);margin-left:auto;margin-right:auto}
+.private-profile-head{display:flex;justify-content:space-between;align-items:center;background:#0a2418;border:1px solid rgba(255,255,255,.1);border-radius:18px 18px 0 0;padding:18px}
+.private-profile-head h2{margin:0}.private-profile-head p{margin:5px 0 0;opacity:.65;font-size:12px}
+.private-profile-head>button{border:0;background:transparent;color:#fff;font-size:28px}
+.private-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#0a2418;padding:18px}
+.private-profile-grid label{font-size:12px;color:#b9c9c0}.private-profile-grid input,.private-profile-grid textarea{display:block;width:100%;margin-top:6px;padding:11px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#07170f;color:#fff;outline:none}
+.private-profile-grid label:last-child{grid-column:1/-1}
+.password-note{background:#102b1e;padding:13px 18px;font-size:12px;color:#cfe5d8}
+.private-profile-actions{display:flex;gap:10px;background:#0a2418;padding:15px 18px 20px;border-radius:0 0 18px 18px}
+.private-profile-actions button{border:0;border-radius:11px;padding:11px 16px;background:#267b4c;color:#fff;font-weight:800}.private-profile-actions .secondary-btn{background:#25382d}
+@media(max-width:650px){.private-profile-grid{grid-template-columns:1fr}.private-profile-grid label:last-child{grid-column:auto}.stories-section{margin:12px 8px}}
+
+</style>
+<!--
+SUPABASE SQL FOR NEW FEATURES
+
+-- GHUSH SITE: Stories + profile details
+create table if not exists public.stories (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  media_url text not null,
+  media_type text not null,
+  caption text default '',
+  created_at timestamptz not null default now()
+);
+
+alter table public.stories enable row level security;
+
+drop policy if exists stories_select_authenticated on public.stories;
+drop policy if exists stories_insert_own on public.stories;
+drop policy if exists stories_delete_own on public.stories;
+
+create policy stories_select_authenticated
+on public.stories for select to authenticated using (true);
+
+create policy stories_insert_own
+on public.stories for insert to authenticated
+with check (auth.uid() = user_id);
+
+create policy stories_delete_own
+on public.stories for delete to authenticated
+using (auth.uid() = user_id);
+
+alter table public.profiles
+  add column if not exists avatar_url text default '',
+  add column if not exists address text default '',
+  add column if not exists profession text default '',
+  add column if not exists date_of_birth date;
+
+-- Password is NEVER stored in profiles.
+-- Supabase Auth stores the password securely and the app only allows changing it,
+-- never displaying the actual password.
+
+-->
+</head>
+<body>
+<div id="toast"></div>
+
+<section id="authScreen" class="auth-wrap">
+<div class="auth-card">
+<div class="logo"><div class="logo-icon">🛡️</div><div><h1>Ghush Site</h1><small>Anti-Corruption Community</small></div></div>
+<div class="tabs"><button id="loginTab" class="active" onclick="showAuth('login')">Login</button><button id="signupTab" onclick="showAuth('signup')">Create Account</button></div>
+
+<div id="loginBox">
+<div class="field"><label>Username</label><input id="loginUsername" autocomplete="username" placeholder="Enter username"></div>
+<div class="field"><label>Password</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter password"></div>
+<button class="primary" onclick="login()">Login</button>
+<p class="auth-note">Use the username and password created for your Ghush Site account.</p>
+</div>
+
+<div id="signupBox" class="hidden">
+<div class="field"><label>Name</label><input id="signupName" placeholder="Your name"></div>
+<div class="field"><label>Phone Number</label><input id="signupPhone" type="tel" placeholder="01XXXXXXXXX"></div>
+<div class="field"><label>Username</label><input id="signupUsername" autocomplete="username" placeholder="3-24 letters, numbers or _"></div>
+<div class="field"><label>Password</label><input id="signupPassword" type="password" autocomplete="new-password" placeholder="Minimum 6 characters"></div>
+<button class="primary" onclick="signup()">Create Account</button>
+<p class="auth-note">Username must be unique. Keep your password private.</p>
+</div>
+</div>
+</section>
+
+<section id="app" class="app hidden">
+<header class="topbar"><div class="topbar-inner">
+<div class="brand"><div class="brand-icon">🛡️</div><span>Ghush Site</span></div>
+<nav class="nav">
+<button id="navHome" class="active" onclick="go('home')">Home</button>
+<button id="navPosts" onclick="go('posts')">Reports</button>
+<button id="navSearch" onclick="go('search')">Search</button>
+<button id="navNews" onclick="go('news')">News</button>
+<button id="navHelp" onclick="go('help')">Help Desk</button>
+<button id="navProfile" onclick="go('profile')">Profile</button>
+</nav>
+<div class="user-mini"><div id="miniAvatar" class="avatar">U</div><button class="danger" onclick="logout()">Logout</button></div>
+</div></header>
+
+
+<!-- Ghush Site: Stories + Private Profile -->
+<section id="storiesSection" class="stories-section" style="display:none">
+  <div class="stories-head">
+    <div>
+      <h3>Stories</h3>
+      <p>Share a photo or video for 24 hours.</p>
+    </div>
+    <button class="story-add-btn" type="button" onclick="openStoryPicker()">＋ Add Story</button>
+    <input id="storyFileInput" type="file" accept="image/*,video/*" multiple style="display:none" onchange="uploadStories(this.files)">
+  </div>
+  <div id="storiesRow" class="stories-row"></div>
+</section>
+
+<div id="storyViewer" class="story-viewer" style="display:none" onclick="closeStoryViewer(event)">
+  <button class="story-close" type="button" onclick="closeStoryViewer()">×</button>
+  <div class="story-viewer-card" onclick="event.stopPropagation()">
+    <div id="storyViewerUser" class="story-viewer-user"></div>
+    <div id="storyViewerMedia" class="story-viewer-media"></div>
+    <div id="storyViewerCaption" class="story-viewer-caption"></div>
+  </div>
+</div>
+
+<div id="privateProfilePanel" class="private-profile-panel" style="display:none">
+  <div class="private-profile-head">
+    <div>
+      <h2>My Private Profile</h2>
+      <p>Your account details are private and visible only to you.</p>
+    </div>
+    <button type="button" onclick="closePrivateProfile()">×</button>
+  </div>
+
+  <div class="private-profile-grid">
+    <label>Name<input id="privateName" type="text" autocomplete="name"></label>
+    <label>Phone Number<input id="privatePhone" type="tel" autocomplete="tel" readonly></label>
+    <label>Username<input id="privateUsername" type="text" autocomplete="username" readonly></label>
+    <label>Profession<input id="privateProfession" type="text"></label>
+    <label>Date of Birth<input id="privateDob" type="date"></label>
+    <label>Address<input id="privateAddress" type="text"></label>
+    <label>Bio<textarea id="privateBio" rows="3"></textarea></label>
+    <label>New Password<input id="privateNewPassword" type="password" autocomplete="new-password" placeholder="Leave blank to keep current password"></label>
+  </div>
+
+  <div class="password-note">
+    🔒 Password is protected by Supabase Auth. For security, the real/current password is never displayed anywhere.
+  </div>
+
+  <div class="private-profile-actions">
+    <button type="button" onclick="savePrivateProfile()">Save Profile</button>
+    <button type="button" class="secondary-btn" onclick="closePrivateProfile()">Close</button>
+  </div>
+</div>
+
+<main class="container">
+<section id="homePage">
+<div class="hero card"><h2>Speak Up Against Corruption</h2><p>Share information responsibly. Protect your identity when needed. Together we can raise awareness and support a cleaner Bangladesh.</p>
+<div class="stats"><div class="stat"><b id="statReports">0</b><span>Reports</span></div><div class="stat"><b id="statComments">0</b><span>Comments</span></div><div class="stat"><b>24/7</b><span>Community</span></div></div></div>
+
+<div class="grid"><div>
+<div class="card"><h3 class="card-title">Create a Report</h3>
+<div class="field"><label>Complaint Category</label><div id="categoryGrid" class="category-grid"></div></div>
+<div class="field"><label>Details</label><textarea id="postText" placeholder="Describe what happened. Avoid unsupported accusations against identifiable people."></textarea></div>
+<div class="field"><label>Photos / Videos</label><div class="upload-box">
+<input id="mediaInput" type="file" accept="image/*,video/*" multiple onchange="previewMedia()">
+<div class="small muted">You can select multiple photos and videos. Maximum 10 files, 100 MB each.</div>
+<div id="preview" class="preview"></div></div></div>
+<div class="field"><label class="checkbox"><input id="anonymousCheck" type="checkbox">Post anonymously</label></div>
+<button id="postButton" class="primary" onclick="createPost()">Publish Report</button>
+</div>
+
+<div><h3 class="card-title">Latest Reports</h3><div id="feed"><div class="loader">Loading reports...</div></div></div>
+</div>
+<aside class="side"><div class="card side-card"><h3 class="card-title">Awareness</h3>
+<div class="news"><b>Report Responsibly</b><span>Share facts and experiences without deliberately spreading false information.</span></div>
+<div class="news"><b>Protect Privacy</b><span>Do not publish private information such as NID numbers, passwords or sensitive personal data.</span></div>
+<div class="news"><b>Stay Safe</b><span>If a situation is dangerous, contact appropriate emergency or legal authorities.</span></div>
+</div></aside>
+</div>
+</section>
+
+<section id="postsPage" class="hidden"><div class="card"><h2 class="card-title">All Reports</h2><div id="allPosts"></div></div></section>
+
+<section id="searchPage" class="hidden"><div class="card"><h2 class="card-title">Search Reports</h2><div class="search-row"><input id="searchInput" placeholder="Search reports..." onkeydown="if(event.key==='Enter')searchPosts()"><button class="primary" style="width:auto" onclick="searchPosts()">Search</button></div></div><div id="searchResults"></div></section>
+
+<section id="newsPage" class="hidden"><div class="card"><h2 class="card-title">News & Awareness</h2>
+<div class="news"><b>Anti-Corruption Awareness</b><span>Corruption affects public services, trust and development. Responsible reporting can help increase awareness.</span></div>
+<div class="news"><b>Evidence Matters</b><span>When sharing a complaint, describe the facts clearly and distinguish personal experience from assumptions.</span></div>
+<div class="news"><b>Do Not Share Sensitive Data</b><span>Never publish passwords, financial credentials, NID numbers or unnecessary private information.</span></div>
+<div class="news"><b>Community Responsibility</b><span>The platform is intended for awareness and responsible community discussion.</span></div>
+</div></section>
+
+<section id="helpPage" class="hidden"><div class="card"><h2 class="card-title">Help Desk</h2>
+<div class="news"><b>How to create a report?</b><span>Select a complaint category, describe the incident, optionally attach photos or videos, then choose whether you want to post anonymously.</span></div>
+<div class="news"><b>How does Anonymous mode work?</b><span>Your public post displays an anonymous identity instead of your profile name.</span></div>
+<div class="news"><b>Account Security</b><span>Never share your username or password with anyone. Each username is unique.</span></div>
+<div class="news"><b>Content Responsibility</b><span>Do not use the platform to spread knowingly false claims, threats, harassment or private information.</span></div>
+</div></section>
+
+<section id="profilePage" class="hidden">
+<div class="card" style="padding:0;overflow:hidden"><div class="profile-cover"></div><div class="profile-info">
+<div id="bigAvatar" class="big-avatar">U</div><h2 id="profileName">User</h2><p id="profileUsername">@username</p><p id="profilePhone"></p><p id="profileBio"></p>
+<div style="margin-top:15px"><button class="secondary" onclick="openEditProfile()">Edit Profile</button></div>
+</div></div>
+<div id="editProfileBox" class="card hidden"><h3 class="card-title">Edit Profile</h3><div class="field"><label>Name</label><input id="editName"></div><div class="field"><label>Bio</label><textarea id="editBio" style="min-height:80px"></textarea></div><button class="primary" onclick="saveProfile()">Save Changes</button></div>
+<div class="card"><h3 class="card-title">My Reports</h3><div id="myPosts"></div></div>
+</section>
+<div class="footer">Ghush Site • Responsible reporting & public awareness</div>
+</main>
+</section>
+
+<script>
+const SUPABASE_URL="https://klreqkbqyyiwmohlmgkh.supabase.co";
+const SUPABASE_KEY="sb_publishable_xlqcHTsDaMpBq4n54iMs4A_S7gKpiZc";
+const db=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY)||null;
+
+let currentUser=null,currentProfile=null,selectedCategory="ঘুষ",selectedFiles=[],currentPage="home";
+const AUTH_DOMAIN="ghussite.local";
+
+const categories=["ঘুষ","দালালি","চাঁদাবাজি","প্রতারণা","ক্ষমতার অপব্যবহার","সরকারি সেবা হয়রানি","চাকরির নামে টাকা দাবি","টেন্ডার অনিয়ম","জমি/দখল সংক্রান্ত অনিয়ম","ভুয়া কাগজপত্র","অর্থ আত্মসাৎ","অন্যান্য"];
+
+function $(id){return document.getElementById(id)}
+function toast(message,type="success"){const el=$("toast");el.textContent=message;el.className="";el.classList.add(type);el.style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.style.display="none",3500)}
+function normalizeUsername(v){return String(v||"").trim().toLowerCase()}
+function validUsername(v){return /^[a-z0-9_]{3,24}$/.test(v)}
+function authEmail(username){return normalizeUsername(username)+"@"+AUTH_DOMAIN}
+function escapeHTML(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function initials(name){const s=String(name||"User").trim();if(!s)return"U";const p=s.split(/\s+/);return p.length===1?p[0].slice(0,1).toUpperCase():(p[0].slice(0,1)+p[p.length-1].slice(0,1)).toUpperCase()}
+function timeAgo(date){const diff=Math.max(0,Date.now()-new Date(date).getTime()),sec=Math.floor(diff/1000);if(sec<60)return"Just now";const min=Math.floor(sec/60);if(min<60)return min+"m ago";const h=Math.floor(min/60);if(h<24)return h+"h ago";const d=Math.floor(h/24);if(d<30)return d+"d ago";return new Date(date).toLocaleDateString()}
+
+function showAuth(type){$("loginBox").classList.toggle("hidden",type!=="login");$("signupBox").classList.toggle("hidden",type==="login");$("loginTab").classList.toggle("active",type==="login");$("signupTab").classList.toggle("active",type==="signup")}
+
+async function signup(){
+ if(!db)return toast("Database connection is unavailable.","error");
+ const name=$("signupName").value.trim(),phone=$("signupPhone").value.trim(),username=normalizeUsername($("signupUsername").value),password=$("signupPassword").value;
+ if(name.length<2)return toast("Please enter your name.","error");
+ if(!/^01[0-9]{9}$/.test(phone))return toast("Enter a valid Bangladesh phone number.","error");
+ if(!validUsername(username))return toast("Username must contain only lowercase letters, numbers or underscore.","error");
+ if(password.length<6)return toast("Password must be at least 6 characters.","error");
+ try{
+  const {data:existing,error:checkError}=await db.from("profiles").select("id").eq("username",username).maybeSingle();
+  if(checkError){console.error(checkError);return toast("Could not check username. Please make sure the Supabase SQL setup was completed.","error")}
+  if(existing)return toast("That username is already taken.","error");
+  const {data,error}=await db.auth.signUp({email:authEmail(username),password,options:{data:{name,username,phone}}});
+  if(error)return toast(error.message,"error");
+  if(!data.user)return toast("Account creation failed.","error");
+  if(!data.session){
+   toast("Account created. Please check whether email confirmation is enabled in Supabase Auth settings.","error");
+   return;
+  }
+  const {error:profileError}=await db.from("profiles").insert({id:data.user.id,display_name:name,username,phone,bio:""});
+  if(profileError){console.error(profileError);return toast("Account created, but profile setup failed: "+profileError.message,"error")}
+  toast("Account created successfully.","success");await loadCurrentUser();
+ }catch(err){console.error(err);toast("Something went wrong while creating the account.","error")}
+}
+
+async function login(){
+ if(!db)return toast("Database connection is unavailable.","error");
+ const username=normalizeUsername($("loginUsername").value),password=$("loginPassword").value;
+ if(!validUsername(username))return toast("Enter a valid username.","error");
+ if(!password)return toast("Enter your password.","error");
+ try{
+  const {data,error}=await db.auth.signInWithPassword({email:authEmail(username),password});
+  if(error||!data.user)return toast("Invalid username or password.","error");
+  await loadCurrentUser();
+ }catch(err){console.error(err);toast("Login failed. Please try again.","error")}
+}
+
+async function loadCurrentUser(){
+ if(!db)return;
+ const {data:{user}}=await db.auth.getUser();
+ if(!user){showAuthScreen();return}
+ currentUser=user;
+ let {data:profile}=await db.from("profiles").select("*").eq("id",user.id).maybeSingle();
+ if(!profile){const m=user.user_metadata||{};profile={id:user.id,display_name:m.name||"User",username:m.username||"user",phone:m.phone||"",bio:""}}
+ currentProfile=profile;showApp();renderProfile();await loadFeed()
+}
+function showApp(){$("authScreen").classList.add("hidden");$("app").classList.remove("hidden");updateMiniUser()}
+function showAuthScreen(){$("app").classList.add("hidden");$("authScreen").classList.remove("hidden")}
+function updateMiniUser(){if(currentProfile)$("miniAvatar").textContent=initials(currentProfile.display_name)}
+
+function go(page){
+ currentPage=page;
+ ["homePage","postsPage","searchPage","newsPage","helpPage","profilePage"].forEach(id=>$(id).classList.add("hidden"));
+ const target=$(page+"Page");if(target)target.classList.remove("hidden");
+ ["navHome","navPosts","navSearch","navNews","navHelp","navProfile"].forEach(id=>$(id).classList.remove("active"));
+ const navId="nav"+page.charAt(0).toUpperCase()+page.slice(1);if($(navId))$(navId).classList.add("active");
+ if(page==="posts")loadAllPosts();if(page==="profile"){renderProfile();loadMyPosts()}if(page==="home")loadFeed()
+}
+
+function renderCategories(){
+ const box=$("categoryGrid");box.innerHTML="";
+ categories.forEach(category=>{const div=document.createElement("div");div.className="cat"+(category===selectedCategory?" active":"");div.textContent=category;div.onclick=()=>{selectedCategory=category;renderCategories()};box.appendChild(div)})
+}
+
+function previewMedia(){
+ selectedFiles=Array.from($("mediaInput").files||[]);
+ const preview=$("preview");preview.innerHTML="";
+ selectedFiles.forEach(file=>{
+  const item=document.createElement("div");item.className="preview-item";
+  if(file.type.startsWith("image/")){const img=document.createElement("img");img.src=URL.createObjectURL(file);item.appendChild(img)}
+  else if(file.type.startsWith("video/")){const v=document.createElement("video");v.src=URL.createObjectURL(file);v.controls=true;item.appendChild(v)}
+  const span=document.createElement("span");span.textContent=file.type.startsWith("video/")?"VIDEO":"PHOTO";item.appendChild(span);preview.appendChild(item)
+ })
+}
+
+async function createPost(){
+ if(!currentUser)return toast("Please login first.","error");
+ const text=$("postText").value.trim(),anonymous=$("anonymousCheck").checked;
+ if(!text&&!selectedFiles.length)return toast("Write something or attach a photo/video.","error");
+ if(selectedFiles.length>10)return toast("You can upload up to 10 files at a time.","error");
+ for(const file of selectedFiles)if(file.size>100*1024*1024)return toast(file.name+" is larger than 100 MB.","error");
+ const button=$("postButton");button.disabled=true;button.textContent="Publishing...";
+ let createdPostId=null;
+ try{
+  const {data:post,error}=await db.from("posts").insert({user_id:currentUser.id,content:text,category:selectedCategory,is_anonymous:anonymous}).select().single();
+  if(error)throw error;createdPostId=post.id;
+  let failed=0;
+  for(const file of selectedFiles){
+   const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+   const path=currentUser.id+"/"+post.id+"/"+Date.now()+"_"+Math.random().toString(36).slice(2,8)+"_"+safeName;
+   const {error:uploadError}=await db.storage.from("media").upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type});
+   if(uploadError){console.error(uploadError);failed++;continue}
+   const {data:publicData}=db.storage.from("media").getPublicUrl(path);
+   const {error:mediaDbError}=await db.from("post_media").insert({post_id:post.id,media_url:publicData.publicUrl,media_type:file.type.startsWith("video/")?"video":"image"});
+   if(mediaDbError){console.error(mediaDbError);failed++}
+  }
+  $("postText").value="";$("mediaInput").value="";$("preview").innerHTML="";$("anonymousCheck").checked=false;selectedFiles=[];
+  toast(failed?"Report published, but some media files failed.":"Report published successfully.",failed?"error":"success");
+  await loadFeed();
+ }catch(err){
+  console.error(err);
+  if(createdPostId)toast("Report was created, but an upload step failed.","error");else toast("Could not publish report: "+(err.message||"Unknown error"),"error");
+ }finally{button.disabled=false;button.textContent="Publish Report"}
+}
+
+async function fetchPosts(limit=50){
+ const {data,error}=await db.from("posts").select(`id,user_id,content,category,is_anonymous,created_at,post_media(id,media_url,media_type,created_at)`).order("created_at",{ascending:false}).limit(limit);
+ if(error)throw error;return data||[]
+}
+
+async function getProfiles(ids){
+ if(!ids.length)return{};const unique=[...new Set(ids)];
+ const {data,error}=await db.from("profiles").select("id,display_name,username").in("id",unique);
+ if(error){console.error(error);return{}}
+ const map={};(data||[]).forEach(p=>map[p.id]=p);return map
+}
+
+async function getLikeCounts(postIds){
+ if(!postIds.length)return{};
+ const {data,error}=await db.from("reactions").select("post_id,user_id").eq("reaction_type","like").in("post_id",postIds);
+ if(error){console.error(error);return{}}
+ const map={};(data||[]).forEach(r=>map[r.post_id]=(map[r.post_id]||0)+1);return map
+}
+
+async function getCommentCounts(postIds){
+ if(!postIds.length)return{};
+ const {data,error}=await db.from("comments").select("post_id").in("post_id",postIds);
+ if(error){console.error(error);return{}}
+ const map={};(data||[]).forEach(c=>map[c.post_id]=(map[c.post_id]||0)+1);return map
+}
+
+async function getMyLikedPosts(postIds){
+ if(!currentUser||!postIds.length)return new Set();
+ const {data,error}=await db.from("reactions").select("post_id").eq("user_id",currentUser.id).eq("reaction_type","like").in("post_id",postIds);
+ if(error){console.error(error);return new Set()}return new Set((data||[]).map(x=>x.post_id))
+}
+
+async function renderPosts(posts,profiles,container){
+ if(!posts.length){container.innerHTML='<div class="empty">No reports yet.</div>';return}
+ container.innerHTML="";
+ const ids=posts.map(p=>p.id);
+ const [likes,comments,liked]=await Promise.all([getLikeCounts(ids),getCommentCounts(ids),getMyLikedPosts(ids)]);
+ for(const post of posts){const card=buildPostCard(post,profiles[post.user_id]||{display_name:"User",username:"user"},likes[post.id]||0,comments[post.id]||0,liked.has(post.id));container.appendChild(card)}
+}
+
+function buildPostCard(post,profile,likeCount,commentCount,isLiked){
+ const card=document.createElement("article");card.className="card post";
+ const anonymous=post.is_anonymous,displayName=anonymous?"Anonymous User":(profile.display_name||"User"),username=anonymous?"":"@"+(profile.username||"user"),avatar=anonymous?"?":initials(profile.display_name);
+ const media=post.post_media||[];
+ let mediaHTML="";
+ if(media.length){
+  let cls=media.length===1?"one":media.length===2?"two":media.length===3?"three":"more";
+  mediaHTML='<div class="media-grid '+cls+'">'+media.map(m=>{
+   const url=escapeHTML(m.media_url);
+   if(m.media_type==="video")return `<div class="media-cell"><video controls preload="metadata" src="${url}" onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')"></video><div class="media-error hidden">Video could not be loaded.</div><span class="media-type">VIDEO</span></div>`;
+   return `<div class="media-cell"><img src="${url}" loading="lazy" alt="Report photo" onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden')"><div class="media-error hidden">Photo could not be loaded.</div><span class="media-type">PHOTO</span></div>`;
+  }).join("")+'</div>'
+ }
+ card.innerHTML=`
+ <div class="post-head"><div class="avatar">${escapeHTML(avatar)}</div><div class="post-user"><b>${escapeHTML(displayName)}</b><span>${escapeHTML(username)}${username?" • ":""}${escapeHTML(timeAgo(post.created_at))}</span></div><span class="badge">${escapeHTML(post.category)}</span>
+ <div class="post-menu"><button class="menu-btn" aria-label="Post menu">⋯</button><div class="menu hidden">
+ ${post.user_id===currentUser?.id?'<button data-delete>Delete Report</button>':''}
+ <button data-copy>Copy Report Link</button><button data-share>Share</button>
+ </div></div></div>
+ <div class="post-content">${escapeHTML(post.content||"")}</div>${mediaHTML}
+ <div class="actions"><button class="action ${isLiked?"liked":""}" data-like>👍 Like <span data-like-count>${likeCount}</span></button><button class="action" data-comment>💬 Comment <span data-comment-count>${commentCount}</span></button><button class="action" data-share-main>🔗 Share</button></div>
+ <div class="comments hidden" data-comments><div data-comments-list></div><div style="display:flex;gap:7px;margin-top:8px"><input data-comment-input placeholder="Write a comment..."><button class="secondary" data-comment-submit>Send</button></div></div>`;
+ const menuBtn=card.querySelector(".menu-btn"),menu=card.querySelector(".menu");menuBtn.onclick=e=>{e.stopPropagation();menu.classList.toggle("hidden")};
+ document.addEventListener("click",()=>menu.classList.add("hidden"),{once:true});
+ const likeBtn=card.querySelector("[data-like]"),likeEl=card.querySelector("[data-like-count]");
+ likeBtn.onclick=()=>toggleLike(post.id,likeBtn,likeEl);
+ const commentsBox=card.querySelector("[data-comments]"),commentBtn=card.querySelector("[data-comment]");
+ commentBtn.onclick=async()=>{commentsBox.classList.toggle("hidden");if(!commentsBox.classList.contains("hidden"))await loadComments(post.id,commentsBox.querySelector("[data-comments-list"]))};
+ const input=card.querySelector("[data-comment-input]"),send=card.querySelector("[data-comment-submit]");
+ send.onclick=async()=>{await addComment(post.id,input,commentsBox.querySelector("[data-comments-list"]),card.querySelector("[data-comment-count]"))};
+ input.onkeydown=e=>{if(e.key==="Enter")send.click()};
+ const share=()=>sharePost(post);card.querySelector("[data-share-main]").onclick=share;card.querySelector("[data-share]").onclick=share;
+ card.querySelector("[data-copy]").onclick=async()=>{await copyReportLink(post.id);menu.classList.add("hidden")};
+ const del=card.querySelector("[data-delete]");if(del)del.onclick=async()=>{menu.classList.add("hidden");await deletePost(post.id,card)};
+ return card
+}
+
+async function sharePost(post){
+ const text=(post.content||"").slice(0,120),url=location.href.split("#")[0]+"#report-"+post.id;
+ if(navigator.share){try{await navigator.share({title:"Ghush Site Report",text,url})}catch(e){}}
+ else await copyText(url,"Report link copied.")
+}
+async function copyText(text,msg){try{await navigator.clipboard.writeText(text);toast(msg,"success")}catch(e){toast("Could not copy link.","error")}}
+async function copyReportLink(id){await copyText(location.href.split("#")[0]+"#report-"+id,"Report link copied.")}
+async function deletePost(id,card){
+ if(!currentUser)return;
+ if(!confirm("Delete this report? This cannot be undone."))return;
+ const {error}=await db.from("posts").delete().eq("id",id).eq("user_id",currentUser.id);
+ if(error)return toast("Could not delete report: "+error.message,"error");
+ card.remove();toast("Report deleted.","success");await loadFeed()
+}
+
+async function toggleLike(postId,button,countElement){
+ if(!currentUser)return toast("Please login first.","error");
+ try{
+  const {data:existing}=await db.from("reactions").select("id").eq("post_id",postId).eq("user_id",currentUser.id).eq("reaction_type","like").maybeSingle();
+  if(existing){const {error}=await db.from("reactions").delete().eq("id",existing.id);if(error)throw error;button.classList.remove("liked")}
+  else{const {error}=await db.from("reactions").insert({post_id:postId,user_id:currentUser.id,reaction_type:"like"});if(error)throw error;button.classList.add("liked")}
+  const {data}=await db.from("reactions").select("id").eq("post_id",postId).eq("reaction_type","like");countElement.textContent=(data||[]).length
+ }catch(e){console.error(e);toast("Could not update like.","error")}
+}
+
+async function loadComments(postId,container){
+ container.innerHTML='<div class="small muted">Loading comments...</div>';
+ const {data,error}=await db.from("comments").select("id,user_id,content,created_at").eq("post_id",postId).order("created_at",{ascending:true});
+ if(error){console.error(error);container.innerHTML='<div class="small muted">Could not load comments.</div>';return}
+ if(!data?.length){container.innerHTML='<div class="small muted">No comments yet.</div>';return}
+ const profiles=await getProfiles(data.map(c=>c.user_id));container.innerHTML="";
+ data.forEach(c=>{const p=profiles[c.user_id]||{display_name:"User"};const div=document.createElement("div");div.className="comment";div.innerHTML=`<b>${escapeHTML(p.display_name||"User")}</b> <span class="small muted">• ${escapeHTML(timeAgo(c.created_at))}</span><p>${escapeHTML(c.content)}</p>`;container.appendChild(div)})
+}
+async function addComment(postId,input,list,countEl){
+ if(!currentUser)return toast("Please login first.","error");
+ const content=input.value.trim();if(!content)return toast("Write a comment first.","error");
+ const {error}=await db.from("comments").insert({post_id:postId,user_id:currentUser.id,content});
+ if(error)return toast("Could not add comment: "+error.message,"error");
+ input.value="";await loadComments(postId,list);
+ if(countEl)countEl.textContent=String(Number(countEl.textContent||0)+1);
+ $("statComments").textContent=String(Number($("statComments").textContent||0)+1);
+}
+
+async function loadFeed(){
+ const feed=$("feed");feed.innerHTML='<div class="loader">Loading reports...</div>';
+ try{const posts=await fetchPosts(50),profiles=await getProfiles(posts.map(p=>p.user_id));await renderPosts(posts,profiles,feed);await updateStats(posts)}catch(e){console.error(e);feed.innerHTML='<div class="card empty">Could not load reports.<br><span class="small">'+escapeHTML(e.message||"Unknown error")+'</span></div>'}
+}
+async function updateStats(posts){
+ $("statReports").textContent=posts.length;
+ const counts=await getCommentCounts(posts.map(p=>p.id));
+ $("statComments").textContent=Object.values(counts).reduce((a,b)=>a+b,0)
+}
+async function loadAllPosts(){
+ const box=$("allPosts");box.innerHTML='<div class="loader">Loading reports...</div>';
+ try{const posts=await fetchPosts(100),profiles=await getProfiles(posts.map(p=>p.user_id));await renderPosts(posts,profiles,box)}catch(e){box.innerHTML='<div class="empty">'+escapeHTML(e.message||"Could not load reports.")+'</div>'}
+}
+async function searchPosts(){
+ const term=$("searchInput").value.trim().toLowerCase(),box=$("searchResults");
+ if(!term){box.innerHTML='<div class="empty">Enter something to search.</div>';return}
+ box.innerHTML='<div class="loader">Searching...</div>';
+ try{const posts=await fetchPosts(100),filtered=posts.filter(p=>String(p.content||"").toLowerCase().includes(term)||String(p.category||"").toLowerCase().includes(term));const profiles=await getProfiles(filtered.map(p=>p.user_id));await renderPosts(filtered,profiles,box)}catch(e){console.error(e);box.innerHTML='<div class="empty">Search failed.</div>'}
+}
+
+function renderProfile(){
+ if(!currentProfile)return;
+ const name=currentProfile.display_name||"User";
+ $("profileName").textContent=name;$("profileUsername").textContent="@"+(currentProfile.username||"user");$("profilePhone").textContent=currentProfile.phone?"Phone: "+currentProfile.phone:"";$("profileBio").textContent=currentProfile.bio||"";$("bigAvatar").textContent=initials(name);$("editName").value=name;$("editBio").value=currentProfile.bio||""
+}
+function openEditProfile(){$("editProfileBox").classList.remove("hidden")}
+async function saveProfile(){
+ if(!currentUser)return;const name=$("editName").value.trim(),bio=$("editBio").value.trim();if(name.length<2)return toast("Name is too short.","error");
+ const {data,error}=await db.from("profiles").update({display_name:name,bio}).eq("id",currentUser.id).select().single();
+ if(error)return toast("Could not update profile: "+error.message,"error");
+ currentProfile=data;renderProfile();updateMiniUser();$("editProfileBox").classList.add("hidden");toast("Profile updated.","success")
+}
+async function loadMyPosts(){
+ if(!currentUser)return;const box=$("myPosts");box.innerHTML='<div class="loader">Loading...</div>';
+ try{const {data,error}=await db.from("posts").select(`id,user_id,content,category,is_anonymous,created_at,post_media(id,media_url,media_type,created_at)`).eq("user_id",currentUser.id).order("created_at",{ascending:false});if(error)throw error;await renderPosts(data||[],{[currentUser.id]:currentProfile},box)}catch(e){console.error(e);box.innerHTML='<div class="empty">Could not load your reports.</div>'}
+}
+async function logout(){if(!db)return;const {error}=await db.auth.signOut();if(error)return toast("Could not logout.","error");currentUser=null;currentProfile=null;showAuthScreen();$("loginPassword").value="";toast("Logged out.","success")}
+function showAuthScreenSafe(){showAuthScreen()}
+if(db)db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_OUT"){currentUser=null;currentProfile=null;showAuthScreenSafe()}});
+
+$("loginPassword").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+renderCategories();
+
+(async()=>{
+ if(!db)return toast("Supabase could not be initialized.","error");
+ try{const {data:{session}}=await db.auth.getSession();if(session)await loadCurrentUser();else showAuthScreen()}catch(e){console.error(e);showAuthScreen()}
+})();
+
+/* ================= GHUSH SITE STORIES & PRIVATE PROFILE ================= */
+async function openStoryPicker(){
+  const input=document.getElementById('storyFileInput');
+  if(input) input.click();
+}
+
+async function uploadStories(files){
+  if(!files || !files.length || !db || !currentUser) return;
+  const filesArr=[...files].slice(0,5);
+  const postId=(crypto.randomUUID ? crypto.randomUUID() : Date.now().toString());
+  let uploaded=0;
+
+  for(const file of filesArr){
+    try{
+      const ext=(file.name.split('.').pop()||'bin').toLowerCase();
+      const type=file.type.startsWith('video/')?'video':'image';
+      const path=`${currentUser.id}/stories/${postId}-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const up=await db.storage.from('media').upload(path,file,{upsert:false,contentType:file.type});
+      if(up.error) throw up.error;
+      const pub=db.storage.from('media').getPublicUrl(path);
+      const ins=await db.from('stories').insert({
+        user_id:currentUser.id,
+        media_url:pub.data.publicUrl,
+        media_type:type,
+        caption:''
+      });
+      if(ins.error) throw ins.error;
+      uploaded++;
+    }catch(err){
+      console.error('Story upload error',err);
+    }
+  }
+
+  const input=document.getElementById('storyFileInput');
+  if(input) input.value='';
+  if(uploaded) await loadStories();
+}
+
+async function loadStories(){
+  const section=document.getElementById('storiesSection');
+  const row=document.getElementById('storiesRow');
+  if(!section || !row || !db || !currentUser) return;
+  section.style.display='block';
+
+  const since=new Date(Date.now()-24*60*60*1000).toISOString();
+  const {data,error}=await db.from('stories')
+    .select('id,user_id,media_url,media_type,caption,created_at')
+    .gte('created_at',since)
+    .order('created_at',{ascending:false});
+
+  if(error){
+    console.warn('Stories table not ready:',error.message);
+    row.innerHTML='<div class="story-empty">Stories will appear after the Stories database setup is completed.</div>';
+    return;
+  }
+
+  if(!data || !data.length){
+    row.innerHTML='<div class="story-empty">No stories yet. Add the first story.</div>';
+    return;
+  }
+
+  const ids=[...new Set(data.map(x=>x.user_id))];
+  let profiles=[];
+  if(ids.length){
+    const p=await db.from('profiles').select('id,display_name,avatar_url').in('id',ids);
+    profiles=p.data||[];
+  }
+  const pm=new Map(profiles.map(p=>[p.id,p]));
+
+  row.innerHTML=data.map(st=>{
+    const p=pm.get(st.user_id)||{display_name:'User',avatar_url:''};
+    const name=escapeHtml(p.display_name||'User');
+    const media=st.media_type==='video'
+      ? `<video src="${escapeAttr(st.media_url)}" muted playsinline preload="metadata"></video>`
+      : `<img src="${escapeAttr(st.media_url)}" alt="">`;
+    const avatar=p.avatar_url
+      ? `<div class="story-ring"><img src="${escapeAttr(p.avatar_url)}" alt=""></div>`
+      : `<div class="story-ring"></div>`;
+    return `<div class="story-card" onclick='openStoryViewer(${JSON.stringify(st)})'>
+      ${media}${avatar}<div class="story-overlay">${name}</div>
+    </div>`;
+  }).join('');
+}
+
+function openStoryViewer(st){
+  const viewer=document.getElementById('storyViewer');
+  const media=document.getElementById('storyViewerMedia');
+  const user=document.getElementById('storyViewerUser');
+  const cap=document.getElementById('storyViewerCaption');
+  if(!viewer||!media) return;
+  media.innerHTML=st.media_type==='video'
+    ? `<video src="${escapeAttr(st.media_url)}" controls autoplay playsinline></video>`
+    : `<img src="${escapeAttr(st.media_url)}" alt="">`;
+  user.textContent='Story';
+  cap.textContent=st.caption||'';
+  viewer.style.display='flex';
+}
+function closeStoryViewer(e){
+  if(e && e.target && e.target.id!=='storyViewer') return;
+  const v=document.getElementById('storyViewer');
+  if(v) v.style.display='none';
+  const m=document.getElementById('storyViewerMedia');
+  if(m) m.innerHTML='';
+}
+
+async function openPrivateProfile(){
+  if(!currentUser || !db) return;
+  const {data,error}=await db.from('profiles').select('*').eq('id',currentUser.id).maybeSingle();
+  if(error){ alert(error.message); return; }
+  const p=data||{};
+  document.getElementById('privateName').value=p.display_name||'';
+  document.getElementById('privatePhone').value=p.phone||'';
+  document.getElementById('privateUsername').value=p.username||'';
+  document.getElementById('privateProfession').value=p.profession||'';
+  document.getElementById('privateDob').value=p.date_of_birth||'';
+  document.getElementById('privateAddress').value=p.address||'';
+  document.getElementById('privateBio').value=p.bio||'';
+  document.getElementById('privateNewPassword').value='';
+  document.getElementById('privateProfilePanel').style.display='flex';
+}
+function closePrivateProfile(){
+  const el=document.getElementById('privateProfilePanel');
+  if(el) el.style.display='none';
+}
+async function savePrivateProfile(){
+  if(!currentUser || !db) return;
+  const payload={
+    display_name:document.getElementById('privateName').value.trim()||'User',
+    profession:document.getElementById('privateProfession').value.trim(),
+    date_of_birth:document.getElementById('privateDob').value||null,
+    address:document.getElementById('privateAddress').value.trim(),
+    bio:document.getElementById('privateBio').value.trim()
+  };
+  const {error}=await db.from('profiles').update(payload).eq('id',currentUser.id);
+  if(error){alert(error.message);return;}
+
+  const newPassword=document.getElementById('privateNewPassword').value;
+  if(newPassword){
+    if(newPassword.length<6){alert('Password must be at least 6 characters.');return;}
+    const pw=await db.auth.updateUser({password:newPassword});
+    if(pw.error){alert(pw.error.message);return;}
+  }
+  alert('Private profile updated successfully.');
+  document.getElementById('privateNewPassword').value='';
+  closePrivateProfile();
+  if(typeof loadCurrentUser==='function') await loadCurrentUser();
+}
+
+function escapeAttr(v){
+  return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escapeHtml(v){
+  return escapeAttr(v);
+}
+
+/* Try to load stories after login/profile initialization. */
+const _ghushOriginalLoadCurrentUser = (typeof loadCurrentUser==='function') ? loadCurrentUser : null;
+if(_ghushOriginalLoadCurrentUser){
+  loadCurrentUser = async function(){
+    const result=await _ghushOriginalLoadCurrentUser.apply(this,arguments);
+    try{ await loadStories(); }catch(e){ console.warn(e); }
+    return result;
+  };
+}
+
+/* Add a private profile button to the existing Profile page when it exists. */
+document.addEventListener('DOMContentLoaded',()=>{
+  const candidates=[...document.querySelectorAll('button,a')];
+  const profileBtn=candidates.find(x=>/profile/i.test(x.textContent||'') && !x.closest('.mobile-bottom-nav'));
+  if(profileBtn && !document.getElementById('openPrivateProfileBtn')){
+    const b=document.createElement('button');
+    b.id='openPrivateProfileBtn';
+    b.type='button';
+    b.textContent='🔒 Private Profile';
+    b.onclick=openPrivateProfile;
+    b.style.cssText='margin:10px 0;padding:10px 14px;border:0;border-radius:10px;background:#1f7045;color:#fff;font-weight:800;cursor:pointer;';
+    const parent=profileBtn.parentElement;
+    if(parent) parent.appendChild(b);
+  }
+});
+
+</script>
+
+<nav class="mobile-bottom-nav" aria-label="Mobile navigation">
+  <button type="button" data-page="home" onclick="showPage('home')">
+    <span>⌂</span><small>Home</small>
+  </button>
+  <button type="button" data-page="reports" onclick="showPage('reports')">
+    <span>▣</span><small>Reports</small>
+  </button>
+  <button type="button" data-page="search" onclick="showPage('search')">
+    <span>⌕</span><small>Search</small>
+  </button>
+  <button type="button" data-page="news" onclick="showPage('news')">
+    <span>◉</span><small>News</small>
+  </button>
+  <button type="button" data-page="help" onclick="showPage('help')">
+    <span>?</span><small>Help</small>
+  </button>
+  <button type="button" data-page="profile" onclick="showPage('profile')">
+    <span>●</span><small>Profile</small>
+  </button>
+</nav>
+
+</body>
+</html>
